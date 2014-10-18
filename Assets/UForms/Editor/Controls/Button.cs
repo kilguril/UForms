@@ -11,17 +11,30 @@ namespace UForms.Controls
         public event Click MouseDown;
         public event Click MouseUp;
 
-        public string Text { get; set; }        
+        public string Text { get; set; }
 
-        public Button( Rect bounds = new Rect(), string text = "") : base( bounds )
-        {
-            Bounds = bounds;
+        private Rect  m_buttonRect;
+
+        public Button( Vector2 position, Vector2 size, string text = "") : base( position, size )
+        {            
             Text = text;
         }
 
-        public override void Draw()
+
+        protected override void OnLayout()
         {
-            if ( GUI.Button( Bounds, Text ) )
+            m_buttonRect.Set(
+                ScreenPosition.x,
+                ScreenPosition.y,
+                Size.x,
+                Size.y
+            );
+        }
+
+
+        protected override void OnDraw()
+        {
+            if ( GUI.Button( m_buttonRect, Text ) )
             {
                 int button = 0;
 
@@ -31,15 +44,16 @@ namespace UForms.Controls
                 }
 
                 if ( Clicked != null )
-                {                    
+                {
                     Clicked( this, new ClickEventArgs( button ), Event.current );
                 }
             }
         }
 
+
         protected override void OnMouseDown( Event e )
         {
-            if ( ScreenBounds.Contains( e.mousePosition ) )
+            if ( m_buttonRect.Contains( e.mousePosition ) )
             {
                 if ( MouseDown != null )
                 {
@@ -48,9 +62,10 @@ namespace UForms.Controls
             }
         }
 
+
         protected override void OnMouseUp( Event e )
         {
-            if ( ScreenBounds.Contains( e.mousePosition ) )
+            if ( m_buttonRect.Contains( e.mousePosition ) )
             {
                 if ( MouseUp != null )
                 {

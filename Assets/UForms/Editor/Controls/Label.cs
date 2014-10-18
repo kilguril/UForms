@@ -7,15 +7,28 @@ namespace UForms.Controls
     {
         public string Text { get; set; }
 
-        public Label( Rect bounds = new Rect(), string text = "") : base( bounds )
-        {
-            Bounds = bounds;
+        private Rect  m_labelRect;
+
+        public Label( Vector2 position, Vector2 size, string text = "") : base( position, size )
+        {            
             Text = text;
         }
 
-        public override void Draw()
+
+        protected override void OnLayout()
         {
-            GUI.Label( Bounds, Text );
+            m_labelRect.Set(
+                ScreenPosition.x,
+                ScreenPosition.y,
+                Size.x,
+                Size.y
+            );
+        }
+
+
+        protected override void OnDraw()
+        {
+            GUI.Label( m_labelRect, Text );
         }
     }
 }

@@ -17,9 +17,11 @@ public class TestApp : UFormsApplication
 
     protected override void OnInitialize()
     {
-        ScrollPanel panel = new ScrollPanel( Vector2.zero, Vector2.zero, true, true, true );
-        panel.AddChild( new Button( new Vector2( 100.0f, 100.0f ), new Vector2( 100.0f, 30.0f ), "Hello World!" ) );
-
+        StackPanel panel = new StackPanel( Vector2.zero, Vector2.zero, StackPanel.StackMode.Vertical, StackPanel.OverflowMode.Contain );
+        panel.AddChild( new Button( new Vector2( 100.0f, 100.0f ), new Vector2( 100.0f, 100.0f ), "Hello World!" ) );
+        panel.AddChild( new Button( new Vector2( 200.0f, 100.0f ), new Vector2( 100.0f, 100.0f ), "Hello World2" ) );
+        panel.AddChild( new Button( new Vector2( 300.0f, 100.0f ), new Vector2( 100.0f, 100.0f ), "Hello World3" ) );
+        panel.AddChild( new Button( new Vector2( 400.0f, 100.0f ), new Vector2( 100.0f, 100.0f ), "Hello World4" ) );
         AddControl( panel );
     }
 

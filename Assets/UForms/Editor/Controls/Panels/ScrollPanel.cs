@@ -5,22 +5,29 @@ namespace UForms.Controls.Panels
 {
     public class ScrollPanel : Control
     {
-        public bool FillContainer           
+        public bool FillContainerVertical           
         {
-            get { return m_fillContainer; }
-            set { m_fillContainer = value; SetDirty(); }
+            get { return m_fillContainerVertical; }
+            set { m_fillContainerVertical = value; SetDirty(); }
+        }
+
+        public bool FillContainerHorizontal
+        {
+            get { return m_fillContainerHorizontal; }
+            set { m_fillContainerHorizontal = value; SetDirty(); }
         }
 
         public bool VerticalScrollbar       { get; set; }
         public bool HorizontalScrollbar     { get; set; }
         public bool HandleMouseWheel        { get; set; }
-
+        
         private Vector2 m_scrollPosition;
         private Rect m_scrollableRect;
 
         private Rect m_displayRect;
 
-        private bool m_fillContainer;
+        private bool m_fillContainerHorizontal;
+        private bool m_fillContainerVertical;
         private bool m_doScrollbars;
 
         // The size of Unity's built in scrollbar in screen units (used to offset from actual display area)
@@ -28,10 +35,11 @@ namespace UForms.Controls.Panels
 
         public ScrollPanel( Vector2 position, Vector2 size, bool verticalScroll = true, bool horizontalScroll = true, bool fillContainer = false, bool handleMouseWheel = true ) : base( position, size )
         {
-            VerticalScrollbar   = verticalScroll;
-            HorizontalScrollbar = horizontalScroll;
-            FillContainer       = fillContainer;
-            HandleMouseWheel    = handleMouseWheel;
+            VerticalScrollbar       = verticalScroll;
+            HorizontalScrollbar     = horizontalScroll;
+            FillContainerVertical   = fillContainer;
+            FillContainerHorizontal = fillContainer;
+            HandleMouseWheel        = handleMouseWheel;
         }
 
 
@@ -72,13 +80,16 @@ namespace UForms.Controls.Panels
 
         protected override void OnLayout()
         {
-            if ( m_fillContainer )
+            if ( m_fillContainerVertical && m_container != null )
             {
-                if ( m_container != null )
-                {
-                    Position = Vector2.zero;
-                    Size     = m_container.Size;                    
-                }
+                Position = new Vector2( Position.x, 0.0f );
+                Size     = new Vector2( Size.x, m_container.Size.y );
+            }
+
+            if ( m_fillContainerHorizontal && m_container != null )
+            {
+                Position = new Vector2( 0.0f, Position.y );
+                Size = new Vector2( m_container.Size.x, Size.y );
             }
 
             m_displayRect.Set(

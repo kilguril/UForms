@@ -71,14 +71,14 @@ namespace UForms.Controls.Panels
                     case StackMode.Horizontal:
 
                     child.Position = new Vector2( offset, 0.0f );
-                    offset += child.Size.x;
+                    offset += child.ScreenSize.x;
 
                     break;
 
                     case StackMode.Vertical:
 
                     child.Position = new Vector2( 0.0f, offset );
-                    offset += child.Size.y;
+                    offset += child.ScreenSize.y;
 
                     break;
                 }
@@ -98,27 +98,27 @@ namespace UForms.Controls.Panels
                 {
                     case StackMode.Horizontal:
 
-                        if ( offset + child.Size.x >= Size.x )
+                        if ( offset + child.ScreenSize.x >= Size.x )
                         {
                             offset2 += LayoutContainedCloseGroup( group, offset2 );
                             offset = 0.0f;
                         }
 
-                        offset += child.Size.x;
+                        offset += child.ScreenSize.x;
                         group.Add( child );
 
                     break;
 
                     case StackMode.Vertical:
 
-                        if ( offset + child.Size.y >= Size.y )
+                        if ( offset + child.ScreenSize.y >= Size.y )
                         {
                             offset2 += LayoutContainedCloseGroup( group, offset2 );
                             offset = 0.0f;
                             
                         }
                         
-                        offset += child.Size.y;
+                        offset += child.ScreenSize.y;
                         group.Add( child );
 
                     break;
@@ -144,22 +144,22 @@ namespace UForms.Controls.Panels
                     case StackMode.Horizontal:
                     
                         item.Position = new Vector2( localOffset, offset );
-                        localOffset += item.Size.x;
-                        
-                        if ( item.Size.y > groupSize )
+                        localOffset += item.ScreenSize.x;
+
+                        if ( item.ScreenSize.y > groupSize )
                         {
-                            groupSize = item.Size.y;
+                            groupSize = item.ScreenSize.y;
                         }
                     break;
 
                     case StackMode.Vertical:
 
                         item.Position = new Vector2( offset, localOffset );
-                        localOffset += item.Size.y;
+                        localOffset += item.ScreenSize.y;
 
-                        if ( item.Size.x > groupSize )
+                        if ( item.ScreenSize.x > groupSize )
                         {
-                            groupSize = item.Size.x;
+                            groupSize = item.ScreenSize.x;
                         }
                     break;
                 }

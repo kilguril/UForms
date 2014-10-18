@@ -24,8 +24,8 @@ namespace UForms.Controls
         protected override void OnLayout()
         {
             m_buttonRect.Set(
-                ScreenPosition.x,
-                ScreenPosition.y,
+                ScreenPosition.x + MarginLeftTop.x,
+                ScreenPosition.y + MarginLeftTop.y,
                 Size.x,
                 Size.y
             );

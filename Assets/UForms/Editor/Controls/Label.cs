@@ -18,8 +18,8 @@ namespace UForms.Controls
         protected override void OnLayout()
         {
             m_labelRect.Set(
-                ScreenPosition.x,
-                ScreenPosition.y,
+                ScreenPosition.x + MarginLeftTop.x,
+                ScreenPosition.y + MarginLeftTop.y,
                 Size.x,
                 Size.y
             );

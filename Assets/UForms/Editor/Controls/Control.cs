@@ -33,8 +33,25 @@ namespace UForms.Controls
         {
             get { return m_size; }
             set { m_size = value; SetDirty(); } 
-        }                
+        }           
+     
+        public Vector2 ScreenSize
+        {
+            get { return m_size + MarginLeftTop + MarginRightBottom; }
+            set { m_size = value - MarginLeftTop - MarginRightBottom; SetDirty(); }
+        }
 
+        public Vector2 MarginLeftTop
+        {
+            get { return m_marginLeftTop; }
+            set { m_marginLeftTop = value; SetDirty(); }
+        }
+
+        public Vector2 MarginRightBottom
+        {
+            get { return m_marginRightBottom; }
+            set { m_marginRightBottom = value; SetDirty(); }
+        }
 
         public      List<Control> Children      { get; private set; }        // Contained children elements.               
 
@@ -46,6 +63,9 @@ namespace UForms.Controls
 
         private     Vector2       m_position;
         private     Vector2       m_size;
+
+        private     Vector2       m_marginLeftTop;
+        private     Vector2       m_marginRightBottom;
 
         #region Internal Drawing Events
 
@@ -106,6 +126,11 @@ namespace UForms.Controls
             }
         }
 
+        public void SetMargin( float left, float top, float right, float bottom )
+        {
+            MarginLeftTop       = new Vector2( left, top );
+            MarginRightBottom   = new Vector2( right, bottom );
+        }
 
         public void Draw()
         {
@@ -259,8 +284,8 @@ namespace UForms.Controls
             Bounds = new Rect(                
                 Mathf.Min( Position.x + content.xMin, Position.x ),
                 Mathf.Min( Position.y + content.yMin, Position.y ),
-                Mathf.Max( content.width, Size.x ),
-                Mathf.Max( content.height, Size.y )
+                Mathf.Max( content.width, Size.x + MarginLeftTop.x + MarginRightBottom.x ),
+                Mathf.Max( content.height, Size.y + MarginLeftTop.y + MarginRightBottom.y )
             );
         }
 

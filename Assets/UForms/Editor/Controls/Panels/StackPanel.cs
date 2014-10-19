@@ -55,7 +55,6 @@ namespace UForms.Controls.Panels
                 LayoutContained();
             }
             
-
             base.OnLayout();
         }
 

@@ -50,7 +50,7 @@ namespace UForms.Application
             if ( m_rootObject != null )
             {
                 m_rootObject.ProcessEvents( Event.current );
-                m_rootObject.Draw();
+                m_rootObject.Draw();                
             }            
         }   
 

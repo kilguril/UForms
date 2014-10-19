@@ -52,7 +52,7 @@ namespace UForms.Controls.Panels
             // Note this is an expensive call and should not be used outside of OnBeforeDraw as in OnDraw the value will be in sync AND more reliable as it will be evaluated after the actual layout step
             Rect contentBounds = GetContentBounds(); 
 
-            if ( contentBounds.xMin < Position.x || contentBounds.yMin < Position.y || contentBounds.xMax > Size.x || contentBounds.yMax > Size.y )
+            if ( contentBounds.xMin < Position.x + MarginLeftTop.x || contentBounds.yMin < Position.y + MarginLeftTop.y || contentBounds.xMax > Size.x - MarginLeftTop.x - MarginRightBottom.x || contentBounds.yMax > Size.y - MarginLeftTop.y - MarginRightBottom.y )
             {
                 m_doScrollbars = true;
             }
@@ -60,8 +60,8 @@ namespace UForms.Controls.Panels
             if ( m_doScrollbars )
             {
                 float w,h;
-                w = ( HorizontalScrollbar ? contentBounds.width : Size.x - SCROLLBAR_SIZE );
-                h = ( VerticalScrollbar ? contentBounds.height : Size.y - SCROLLBAR_SIZE );
+                w = ( HorizontalScrollbar ? contentBounds.width : Size.x - MarginLeftTop.x - MarginRightBottom.x - SCROLLBAR_SIZE );
+                h = ( VerticalScrollbar ? contentBounds.height : Size.y - MarginLeftTop.y - MarginRightBottom.y - SCROLLBAR_SIZE );
                 m_scrollableRect.Set( Bounds.xMin, Bounds.yMin, w, h );                
 
                 m_scrollPosition = GUI.BeginScrollView( m_displayRect, m_scrollPosition, m_scrollableRect );
@@ -93,10 +93,10 @@ namespace UForms.Controls.Panels
             }
 
             m_displayRect.Set(
-                ScreenPosition.x,
-                ScreenPosition.y,
-                Size.x,
-                Size.y
+                ScreenPosition.x + MarginLeftTop.x,
+                ScreenPosition.y + MarginLeftTop.y,
+                Size.x - MarginLeftTop.x - MarginRightBottom.x,
+                Size.y - MarginLeftTop.y - MarginRightBottom.y
             );
         }
     }

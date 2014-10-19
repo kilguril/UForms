@@ -7,7 +7,24 @@ namespace UForms.Controls.Fields
 {
     public class MaskField : AbstractField<int>
     {
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 200.0f, 16.0f ); }
+        }
+
         public List<string> Options { get; private set; }
+
+
+        public MaskField( int value = 0, string[] options = default(string[]), string label = "" ) : base( value, label )
+        {
+            Options = new List<string>();
+
+            if ( options != null )
+            {
+                Options.AddRange( options );
+            }           
+        }
+
 
         public MaskField( Vector2 position, Vector2 size, int value = 0, string[] options = default(string[]), string label = "" ) : base( position, size, value, label )
         {

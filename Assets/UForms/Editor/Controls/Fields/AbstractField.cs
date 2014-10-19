@@ -17,6 +17,14 @@ namespace UForms.Controls.Fields
         protected T         m_cachedValue;
         protected Rect      m_fieldRect;
 
+
+        public AbstractField( T value = default(T), string label = "" ) : base()
+        {
+            Label = label;
+            m_cachedValue = value;
+        }
+
+
         public AbstractField( Vector2 position, Vector2 size, T value = default(T), string label = "" ) : base( position, size )
         {
             Label         = label;

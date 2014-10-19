@@ -15,6 +15,18 @@ namespace UForms.Controls
 
         private Rect  m_buttonRect;
 
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 100.0f, 30.0f ); }
+        }
+
+
+        public Button( string text = "" ) : base()
+        {
+            Text = text;
+        }
+
+
         public Button( Vector2 position, Vector2 size, string text = "") : base( position, size )
         {            
             Text = text;

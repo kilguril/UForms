@@ -5,9 +5,22 @@ using System.Collections;
 namespace UForms.Controls.Fields
 {
     public class ObjectField : AbstractField< Object >
-    {
+    {         
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 200.0f, 16.0f ); }
+        }
+
         public System.Type          Type              { get; set; }
         public bool                 AllowSceneObjects { get; set; }
+
+
+        public ObjectField(  System.Type type, bool allowSceneObjects = false, Object value = null, string label = "" ) : base(  value, label )
+        {
+            Type = type;
+            AllowSceneObjects = allowSceneObjects;
+        }
+
 
         public ObjectField( Vector2 position, Vector2 size, System.Type type, bool allowSceneObjects = false, Object value = null, string label = "" ) : base( position, size, value, label )
         {

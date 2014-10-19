@@ -6,6 +6,16 @@ namespace UForms.Controls.Fields
 {
     public class IntField : AbstractField< int >
     {
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 100.0f, 16.0f ); }
+        }
+
+        public IntField( int value = 0, string label = "" ) : base( value, label )
+        {
+            
+        }
+
         public IntField( Vector2 position, Vector2 size, int value = 0, string label = "" ) : base( position, size, value, label )
         {
 

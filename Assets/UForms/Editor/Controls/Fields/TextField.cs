@@ -6,6 +6,16 @@ namespace UForms.Controls.Fields
 {
     public class TextField : AbstractField< string >
     {
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 200.0f, 16.0f ); }
+        }
+
+        public TextField( string value = "", string label = "" ) : base( value, label )
+        {
+            
+        }
+
         public TextField( Vector2 position, Vector2 size, string value = "", string label = "" ) : base( position, size, value, label )
         {
 

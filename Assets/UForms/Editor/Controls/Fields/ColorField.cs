@@ -6,6 +6,16 @@ namespace UForms.Controls.Fields
 {
     public class ColorField : AbstractField< Color >
     {
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 200.0f, 16.0f ); }
+        }
+
+        public ColorField( Color value = default(Color), string label = "" ) : base( value, label )
+        {
+            
+        }
+
         public ColorField( Vector2 position, Vector2 size, Color value = default(Color), string label = "" ) : base( position, size, value, label )
         {
 

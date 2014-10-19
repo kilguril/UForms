@@ -11,6 +11,17 @@ namespace UForms.Controls
 
         private Rect    m_labelRect;
 
+        protected override Vector2 DefaultSize {
+            get { return new Vector2( 100.0f, 30.0f ); }
+        }
+
+        public Label( string text = "", bool selectable = false ) : base()
+        {
+            Text = text;
+            Selectable = selectable;
+        }
+
+
         public Label( Vector2 position, Vector2 size, string text = "", bool selectable = false) : base( position, size )
         {            
             Text        = text;

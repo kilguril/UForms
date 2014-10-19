@@ -6,6 +6,17 @@ namespace UForms.Controls.Fields
 {
     public class BoundsField : AbstractField< Bounds >
     {
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 200.0f, 48.0f ); }
+        }
+
+        public BoundsField( Bounds value = default(Bounds), string label = "" ) : base( value, label )
+        {
+            
+        }
+        
+
         public BoundsField( Vector2 position, Vector2 size, Bounds value = default(Bounds), string label = "" ) : base( position, size, value, label )
         {
             

@@ -61,6 +61,12 @@ namespace UForms.Controls
             set;
         }
 
+        // Default size for this control
+        protected virtual Vector2 DefaultSize
+        {
+            get { return Vector2.zero; }
+        }
+
         public      List<Control> Children      { get; private set; }        // Contained children elements.               
 
         protected   bool          m_dirty;                                   // Do we need to do a layout step before drawing?
@@ -106,6 +112,17 @@ namespace UForms.Controls
         #endregion
 
 
+        public Control()
+        {
+            Children = new List<Control>();
+
+            Position = Vector2.zero;
+            Size     = DefaultSize;
+
+            Enabled  = true;
+        }
+
+
         public Control( Vector2 position, Vector2 size )
         {
             Children = new List<Control>();
@@ -136,11 +153,40 @@ namespace UForms.Controls
             }
         }
 
-        public void SetMargin( float left, float top, float right, float bottom )
+        public Control SetMargin( float left, float top, float right, float bottom )
         {
             MarginLeftTop       = new Vector2( left, top );
             MarginRightBottom   = new Vector2( right, bottom );
+
+            return this;
         }
+
+
+        public Control SetSize ( float x, float y )
+        {
+            return SetSize( new Vector2( x, y ) );
+        }
+
+
+        public Control SetSize( Vector2 size )
+        {
+            Size = size;
+            return this;
+        }
+
+
+        public Control SetPosition( float x, float y )
+        {
+            return SetPosition( new Vector2( x, y ) );
+        }
+
+
+        public Control SetPosition( Vector2 position )
+        {
+            Position = position;
+            return this;
+        }
+
 
         public void Draw()
         {

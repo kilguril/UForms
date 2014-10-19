@@ -30,8 +30,23 @@ namespace UForms.Controls.Panels
         private bool m_fillContainerVertical;
         private bool m_doScrollbars;
 
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 100.0f, 100.0f ); }
+        }
+
         // The size of Unity's built in scrollbar in screen units (used to offset from actual display area)
         private const float SCROLLBAR_SIZE = 16.0f;
+
+
+        public ScrollPanel( bool verticalScroll = true, bool horizontalScroll = true, bool fillContainer = false, bool handleMouseWheel = true ) : base()
+        {
+            VerticalScrollbar = verticalScroll;
+            HorizontalScrollbar = horizontalScroll;
+            FillContainerVertical = fillContainer;
+            FillContainerHorizontal = fillContainer;
+            HandleMouseWheel = handleMouseWheel;
+        }
 
         public ScrollPanel( Vector2 position, Vector2 size, bool verticalScroll = true, bool horizontalScroll = true, bool fillContainer = false, bool handleMouseWheel = true ) : base( position, size )
         {

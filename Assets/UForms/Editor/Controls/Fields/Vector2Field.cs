@@ -6,8 +6,17 @@ namespace UForms.Controls.Fields
 {
     public class Vector2Field : AbstractField< Vector2 >
     {
-        public Vector2Field( Vector2 position, Vector2 size, Vector2 value = default(Vector2), string label = "" )
-            : base( position, size, value, label )
+        protected override Vector2 DefaultSize
+        {
+            get { return new Vector2( 200.0f, 16.0f ); }
+        }
+
+        public Vector2Field( Vector2 value = default(Vector2), string label = "" ) : base( value, label )
+        {
+            
+        }
+
+        public Vector2Field( Vector2 position, Vector2 size, Vector2 value = default(Vector2), string label = "" ) : base( position, size, value, label )
         {
 
         }

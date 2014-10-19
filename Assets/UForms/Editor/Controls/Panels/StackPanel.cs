@@ -33,6 +33,19 @@ namespace UForms.Controls.Panels
         private OverflowMode m_overflow;
         private StackMode    m_mode;
 
+
+        public StackPanel( StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow ) : base()
+        {
+            VerticalScrollbar       = true;
+            HorizontalScrollbar     = true;
+            FillContainerVertical   = true;
+            FillContainerHorizontal = true;
+            HandleMouseWheel        = true;
+            Mode                    = mode;
+            Overflow                = overflow;
+        }
+
+
         public StackPanel( Vector2 position, Vector2 size, StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow ) : base( position, size )
         {
             VerticalScrollbar       = true;

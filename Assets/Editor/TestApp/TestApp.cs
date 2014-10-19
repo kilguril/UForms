@@ -28,7 +28,11 @@ public class TestApp : UFormsApplication
         panel.Children[ 2 ].SetMargin( 10.0f, 10.0f, 10.0f, 0.0f );
         panel.Children[ 3 ].SetMargin( 10.0f, 10.0f, 10.0f, 0.0f );
 
-        AddControl( panel );
+        panel.Children[ 0 ].Enabled = false;
+
+        AddControl( panel );        
+
+        
     }
 
 }

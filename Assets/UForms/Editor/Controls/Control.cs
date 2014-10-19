@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -53,6 +54,13 @@ namespace UForms.Controls
             set { m_marginRightBottom = value; SetDirty(); }
         }
 
+        // Is this control enabled? this property will propagate to all child contorls and can be applied to interactive controls as well as containers
+        public bool Enabled
+        {
+            get;
+            set;
+        }
+
         public      List<Control> Children      { get; private set; }        // Contained children elements.               
 
         protected   bool          m_dirty;                                   // Do we need to do a layout step before drawing?
@@ -104,6 +112,8 @@ namespace UForms.Controls
 
             Position = position;
             Size     = size;
+
+            Enabled = true;
         }
 
         public void AddChild( Control child )
@@ -139,6 +149,14 @@ namespace UForms.Controls
                 CacheScreenPosition();
             }
 
+            // We will cache the enabled property at the beginning of the draw phase so we can safely determine if we should close it as soon as drawing completes.
+            // This is a fail safe in case the state changes while drawing is being processed (one example would be buttons invoking actions if clicked immediately, inside the draw call).
+            bool localScopeEnabled = Enabled;
+            if ( !localScopeEnabled )
+            {
+                EditorGUI.BeginDisabledGroup( true );
+            }
+
             OnBeforeDraw();
 
             foreach( Control child in Children )
@@ -152,6 +170,11 @@ namespace UForms.Controls
             }
 
             OnDraw();
+
+            if ( !localScopeEnabled )
+            {
+                EditorGUI.EndDisabledGroup();
+            }
 
             m_dirty = false;
         }

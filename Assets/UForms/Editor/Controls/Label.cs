@@ -1,17 +1,20 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 
 namespace UForms.Controls
 {
     public class Label : Control
     {
-        public string Text { get; set; }
+        public bool     Selectable  { get; set; }
+        public string   Text        { get; set; }
 
-        private Rect  m_labelRect;
+        private Rect    m_labelRect;
 
-        public Label( Vector2 position, Vector2 size, string text = "") : base( position, size )
+        public Label( Vector2 position, Vector2 size, string text = "", bool selectable = false) : base( position, size )
         {            
-            Text = text;
+            Text        = text;
+            Selectable  = selectable;
         }
 
 
@@ -28,7 +31,14 @@ namespace UForms.Controls
 
         protected override void OnDraw()
         {
-            GUI.Label( m_labelRect, Text );
+            if ( Selectable )
+            {
+                EditorGUI.SelectableLabel( m_labelRect, Text );
+            }
+            else
+            {
+                GUI.Label( m_labelRect, Text );    
+            }            
         }
     }
 }

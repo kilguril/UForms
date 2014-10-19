@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+using UnityEditor;
+using System.Collections;
+
+namespace UForms.Controls.Fields
+{
+    public class Vector2Field : AbstractField< Vector2 >
+    {
+        public Vector2Field( Vector2 position, Vector2 size, Vector2 value = default(Vector2), string label = "" )
+            : base( position, size, value, label )
+        {
+
+        }
+
+        protected override Vector2 DrawAndUpdateValue()
+        {
+            return EditorGUI.Vector2Field( m_fieldRect, Label, m_cachedValue );
+        }
+
+        protected override bool TestValueEquality( Vector2 oldval, Vector2 newval )
+        {
+            return oldval.Equals( newval );
+        }
+    }
+}

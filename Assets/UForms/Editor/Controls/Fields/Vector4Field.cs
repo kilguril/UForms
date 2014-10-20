@@ -11,6 +11,11 @@ namespace UForms.Controls.Fields
             get { return new Vector2( 200.0f, 32.0f ); }
         }
 
+        protected override bool UseBackingFieldChangeDetection
+        {
+            get { return true; }
+        }
+
         public Vector4Field( Vector4 value = default(Vector4), string label = "" ) : base( value, label )
         {
             

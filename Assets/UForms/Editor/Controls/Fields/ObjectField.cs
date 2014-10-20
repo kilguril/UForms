@@ -11,6 +11,11 @@ namespace UForms.Controls.Fields
             get { return new Vector2( 200.0f, 16.0f ); }
         }
 
+        protected override bool UseBackingFieldChangeDetection
+        {
+            get { return true; }
+        }
+
         public System.Type          Type              { get; set; }
         public bool                 AllowSceneObjects { get; set; }
 

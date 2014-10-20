@@ -11,6 +11,11 @@ namespace UForms.Controls.Fields
             get { return new Vector2( 200.0f, 48.0f ); }
         }
 
+        protected override bool UseBackingFieldChangeDetection
+        {
+            get { return true; }
+        }
+
         public BoundsField( Bounds value = default(Bounds), string label = "" ) : base( value, label )
         {
             
@@ -31,5 +36,7 @@ namespace UForms.Controls.Fields
         {
             return oldval.Equals( newval );
         }
+
+        
     }
 }

@@ -6,24 +6,38 @@ namespace UForms.Controls.Fields
 {
     public class TextField : AbstractField< string >
     {
+        public bool PasswordMask { get; set; }
+
         protected override Vector2 DefaultSize
         {
             get { return new Vector2( 200.0f, 16.0f ); }
         }
 
-        public TextField( string value = "", string label = "" ) : base( value, label )
+        protected override bool UseBackingFieldChangeDetection
         {
-            
+            get { return true; }
         }
 
-        public TextField( Vector2 position, Vector2 size, string value = "", string label = "" ) : base( position, size, value, label )
+        public TextField( string value = "", string label = "", bool passwordMask = false ) : base( value, label )
         {
+            PasswordMask = passwordMask;
+        }
 
+        public TextField( Vector2 position, Vector2 size, string value = "", string label = "", bool passwordMask = false ) : base( position, size, value, label )
+        {
+            PasswordMask = passwordMask;
         }
 
         protected override string DrawAndUpdateValue()
         {
-            return EditorGUI.TextField( m_fieldRect, Label, m_cachedValue );
+            if ( PasswordMask )
+            {
+                return EditorGUI.PasswordField( m_fieldRect, Label, m_cachedValue );
+            }
+            else
+            {
+                return EditorGUI.TextField( m_fieldRect, Label, m_cachedValue );
+            }
         }
 
         protected override bool TestValueEquality( string oldval, string newval )

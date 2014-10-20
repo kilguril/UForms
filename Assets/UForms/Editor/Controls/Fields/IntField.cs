@@ -11,6 +11,11 @@ namespace UForms.Controls.Fields
             get { return new Vector2( 100.0f, 16.0f ); }
         }
 
+        protected override bool UseBackingFieldChangeDetection
+        {
+            get { return true; }
+        }
+
         public IntField( int value = 0, string label = "" ) : base( value, label )
         {
             

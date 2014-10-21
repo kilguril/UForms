@@ -7,6 +7,8 @@ namespace UForms.Controls
     public class Label : Control
     {
         public bool     Selectable  { get; set; }
+
+        public  bool    DropShadow { get; set; }
         public string   Text        { get; set; }
 
         private Rect    m_labelRect;
@@ -48,7 +50,14 @@ namespace UForms.Controls
             }
             else
             {
-                GUI.Label( m_labelRect, Text );    
+                if ( DropShadow )
+                {
+                    EditorGUI.DropShadowLabel( m_labelRect, Text );
+                }
+                else
+                {
+                    GUI.Label( m_labelRect, Text );
+                }
             }            
         }
     }

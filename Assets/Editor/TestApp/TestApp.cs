@@ -6,6 +6,8 @@ using UForms.Application;
 using UForms.Controls;
 using UForms.Controls.Panels;
 using UForms.Controls.Fields;
+using UForms.Controls.Dropdowns;
+using UForms.Controls.Sliders;
 
 public class TestApp : UFormsApplication
 {
@@ -44,6 +46,32 @@ public class TestApp : UFormsApplication
             "MultiFloat"
         ) );
 
+        panel.AddChild( new IntDropdown(
+            new int[] { 10, 20, 30, 40, 50, 100 },
+            new string[] { "Some", "More", "Even More", "Lots", "WAAAY MORE", "A MEEELION!" },
+            "Int Dropdown:"
+        ) );
+
+        panel.AddChild( new EnumDropdown( UForms.Controls.Panels.StackPanel.OverflowMode.Contain ) );
+
+        panel.AddChild( new Dropdown(
+            new string[] { "Apples", "Oranges", "Bananas" },
+            "Dropdown: "
+        ) );
+
+        panel.AddChild( new IntSlider( 0, 100, "Sliderific!" ) );
+        panel.AddChild( new FloatSlider( -100.0f, 100.0f, "Floatslider!~", 50.0f ) );
+
+        panel.AddChild( new MinMaxSlider( -10.0f, 10.0f, -1.0f, 1.0f, "MinMax" ) );
+
+        panel.AddChild( new Foldout( "Foldout" ) );
+        panel.AddChild( new TextArea() );
+        panel.AddChild( new HelpBox( "This is some help!", MessageType.Error ) );
+
+        panel.AddChild( new ProgressBar( "Progress", 0.68f ) );
+        panel.AddChild( new Toggle( "Hello", true, true ) );
+        panel.AddChild( new Toggle( "World", true, false ) );
+
         //GameObject go = new GameObject();
         //SerializedObject so = new SerializedObject( go );
         //SerializedProperty sp = so.GetIterator();
@@ -66,6 +94,7 @@ public class TestApp : UFormsApplication
             }
         }
 
+
         AddControl( panel );
     }
 
@@ -76,9 +105,9 @@ public class TestApp : UFormsApplication
     }
 
     protected override void OnGUI()
-    {
+    {        
         base.OnGUI();
-
+  
     }
 
 

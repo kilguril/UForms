@@ -9,49 +9,73 @@ namespace UForms.Controls
 {
     public class Control : IDrawable
     {
+        public enum VisibilityMode
+        {
+            Visible,
+            Hidden,
+            Collapsed
+        }
+
+        // Dirty flag should be used to trigger a repaint on internal component changes, as otherwise repaint will only be invoked by specific editor events
+        // flag will propagate upwards and will be collected by the application from the root component if it reaches it.
+        public bool Dirty
+        {
+            get { return m_dirty; }
+            set 
+            {
+                m_dirty = value;
+
+                if ( value && m_container != null )
+                {
+                    m_container.Dirty = value;
+                }
+            }
+        }
+
         public Rect Bounds        
         {
             get             { return m_bounds; }
             private set     { m_bounds = value; } 
         }
 
-        // Screen position are the coordinates relative to the topmost hierarchy element
-        public Vector2 ScreenPosition         
+        // Final computed screen rect taking into account screen position, margins and size
+        public Rect ScreenRect
+        {
+            get         { return m_screenRect; }
+            private set { m_screenRect = value; }
+        }
+
+        // Cached parent's screen position so deep elements don't have to traverse all the way up
+        public Vector2 ParentScreenPosition         
         {
             get             { return m_screenPosition; } 
-            private set     { m_screenPosition = value; } 
+            set             { m_screenPosition = value; } 
         }
 
         // Position is used to hint to the control it's desired position on screen.
         public Vector2 Position 
         {
             get { return m_position; }
-            set { m_position = value; SetDirty(); } 
+            set { m_position = value; } 
         }
 
         // Size is used to hint to the control it's desired size on screen.
         public Vector2 Size 
         {
             get { return m_size; }
-            set { m_size = value; SetDirty(); } 
+            set { m_size = value; } 
         }           
      
-        public Vector2 ScreenSize
-        {
-            get { return m_size + MarginLeftTop + MarginRightBottom; }
-            set { m_size = value - MarginLeftTop - MarginRightBottom; SetDirty(); }
-        }
-
         public Vector2 MarginLeftTop
         {
             get { return m_marginLeftTop; }
-            set { m_marginLeftTop = value; SetDirty(); }
+            set { m_marginLeftTop = value; }
         }
 
         public Vector2 MarginRightBottom
         {
             get { return m_marginRightBottom; }
-            set { m_marginRightBottom = value; SetDirty(); }
+            set { m_marginRightBottom = value; }
         }
 
         // Is this control enabled? this property will propagate to all child contorls and can be applied to interactive controls as well as containers
@@ -61,32 +85,48 @@ namespace UForms.Controls
             set;
         }
 
+        // What is the visibility mode of the control?
+        // Visible = default
+        // Hidden = layout control and reserve space but don't draw
+        // Collapsed = don't layout, generate empty rect and don't draw
+        public VisibilityMode    Visibility
+        {
+            get { return m_visibility; }
+            set { m_visibility = value; }
+        }
+
+
         // Default size for this control
         protected virtual Vector2 DefaultSize
         {
             get { return Vector2.zero; }
         }
 
-        public      List<Control> Children      { get; private set; }        // Contained children elements.               
+        public      List<Control>     Children      { get; private set; }        // Contained children elements.               
+        
+        protected   Control           m_container;                               // Containing element if control is in a hierarchy.
 
-        protected   bool          m_dirty;                                   // Do we need to do a layout step before drawing?
-        protected   Control       m_container;                               // Containing element if control is in a hierarchy.
+        private     Rect              m_bounds;
+        private     Rect              m_screenRect;
 
-        private     Rect          m_bounds;
-        private     Vector2       m_screenPosition;
+        private     Vector2           m_screenPosition;
 
-        private     Vector2       m_position;
-        private     Vector2       m_size;
+        private     Vector2           m_position;
+        private     Vector2           m_size;
 
-        private     Vector2       m_marginLeftTop;
-        private     Vector2       m_marginRightBottom;
+        private     Vector2           m_marginLeftTop;
+        private     Vector2           m_marginRightBottom;
+
+        private     VisibilityMode    m_visibility;
+
+        private     bool              m_dirty;
 
         #region Internal Drawing Events
 
         protected virtual void OnBeforeDraw() { }
         protected virtual void OnDraw() { }
         protected virtual void OnLayout() { }
-
+        protected virtual void OnAfterLayout() { }
         #endregion
 
         #region Internal System Events
@@ -114,23 +154,25 @@ namespace UForms.Controls
 
         public Control()
         {
-            Children = new List<Control>();
+            Children    = new List<Control>();
 
-            Position = Vector2.zero;
-            Size     = DefaultSize;
+            Position    = Vector2.zero;
+            Size        = DefaultSize;
 
-            Enabled  = true;
+            Enabled     = true;
+            Visibility  = VisibilityMode.Visible;
         }
 
 
         public Control( Vector2 position, Vector2 size )
         {
-            Children = new List<Control>();
+            Children    = new List<Control>();
 
-            Position = position;
-            Size     = size;
+            Position    = position;
+            Size        = size;
 
-            Enabled = true;
+            Enabled     = true;
+            Visibility  = VisibilityMode.Visible;
         }
 
         public void AddChild( Control child )
@@ -138,7 +180,6 @@ namespace UForms.Controls
             child.m_container = this;
 
             Children.Add( child );
-            SetDirty();
         }
 
 
@@ -149,7 +190,6 @@ namespace UForms.Controls
                 child.m_container = null;
 
                 Children.Remove( child );
-                SetDirty();
             }
         }
 
@@ -187,14 +227,77 @@ namespace UForms.Controls
             return this;
         }
 
-
-        public void Draw()
+        // Returns the content bounds rectangle without factoring the Size property
+        public Rect GetContentBounds()
         {
-            if ( m_dirty )
+            Rect r = new Rect( 0, 0, 0, 0 );
+
+            foreach ( Control child in Children )
             {
-                CacheScreenPosition();
+                r.x      = Mathf.Min( r.x, child.Position.x );
+                r.y      = Mathf.Min( r.y, child.Position.y );
+                r.width  = Mathf.Max( r.width, child.Visibility == VisibilityMode.Collapsed ? 0.0f : child.Position.x + child.Size.x );
+                r.height = Mathf.Max( r.height, child.Visibility == VisibilityMode.Collapsed ? 0.0f : child.Position.y + child.Size.y );
             }
 
+            return r;
+        }
+
+        public void Layout()
+        {
+            // Cache parent screen position
+            if ( m_container == null )
+            {
+                ParentScreenPosition = Vector2.zero;
+            }
+            else
+            {
+                ParentScreenPosition = m_container.ParentScreenPosition + m_container.Position;
+            }
+
+            ScreenRect = new Rect(
+                ParentScreenPosition.x + Position.x + MarginLeftTop.x,
+                ParentScreenPosition.y + Position.y + MarginLeftTop.y,
+                Size.x - MarginLeftTop.x - MarginRightBottom.x,
+                Size.y - MarginLeftTop.y - MarginRightBottom.y
+            );
+
+            OnLayout();
+
+            if ( m_visibility != VisibilityMode.Collapsed )
+            {
+                foreach( Control child in Children )
+                {
+                    child.Layout();
+                }
+
+                // Update bounds
+                float x = 0.0f;
+                float y = 0.0f;
+                float w = Size.x;
+                float h = Size.y;
+
+                Rect content = GetContentBounds();
+                x = Mathf.Min( x, content.x );
+                y = Mathf.Min( y, content.y );
+                w = Mathf.Max( w, content.width );
+                h = Mathf.Max( h, content.height );
+
+                x += Position.x;
+                y += Position.y;
+
+                Bounds = new Rect( x, y, w, h );
+            }
+            else
+            {
+                Bounds = new Rect( Position.x, Position.y, 0.0f, 0.0f );
+            }           
+
+            OnAfterLayout();
+        }
+
+        public void Draw()
+        {            
             // We will cache the enabled property at the beginning of the draw phase so we can safely determine if we should close it as soon as drawing completes.
             // This is a fail safe in case the state changes while drawing is being processed (one example would be buttons invoking actions if clicked immediately, inside the draw call).
             bool localScopeEnabled = Enabled;
@@ -203,26 +306,22 @@ namespace UForms.Controls
                 EditorGUI.BeginDisabledGroup( true );
             }
 
-            OnBeforeDraw();
-
-            foreach( Control child in Children )
+            if ( m_visibility == VisibilityMode.Visible )
             {
-                child.Draw();
-            }
+                OnBeforeDraw();
 
-            if ( m_dirty )
-            {
-                Layout();
-            }
+                foreach ( Control child in Children )
+                {
+                    child.Draw();
+                }
 
-            OnDraw();
+                OnDraw();
+            }                        
 
             if ( !localScopeEnabled )
             {
                 EditorGUI.EndDisabledGroup();
             }
-
-            m_dirty = false;
         }
 
 
@@ -313,86 +412,6 @@ namespace UForms.Controls
                 }
 
                 child.ProcessEvents( e );
-            }
-        }
-
-
-        // Content bounds are handle automatically for most cases, this method can be used to estimate the content bounds before a layout step has been processed on all children
-        public Rect GetContentBounds()
-        {
-            float xmin = 0.0f;
-            float xmax = 0.0f;
-            float ymin = 0.0f;
-            float ymax = 0.0f;
-
-            foreach ( Control child in Children )
-            {
-                xmin = Mathf.Min( xmin, child.Bounds.xMin );
-                xmax = Mathf.Max( xmax, child.Bounds.xMax );
-                ymin = Mathf.Min( ymin, child.Bounds.yMin );
-                ymax = Mathf.Max( ymax, child.Bounds.yMax );
-            }
-
-            return new Rect( xmin, ymin, xmax - xmin, ymax - ymin );
-        }
-
-
-        private void Layout()
-        {
-            RecalculateBounds();
-            OnLayout();
-
-            m_dirty = false;
-        }
-
-
-        private void RecalculateBounds()
-        {
-            Rect content =  GetContentBounds();
-
-            Bounds = new Rect(                
-                Mathf.Min( Position.x + content.xMin, Position.x ),
-                Mathf.Min( Position.y + content.yMin, Position.y ),
-                Mathf.Max( content.width, Size.x + MarginLeftTop.x + MarginRightBottom.x ),
-                Mathf.Max( content.height, Size.y + MarginLeftTop.y + MarginRightBottom.y )
-            );
-        }
-
-        
-        private void CacheScreenPosition()
-        {
-            if ( m_container != null )
-            {
-                ScreenPosition = m_container.ScreenPosition + Position;
-            }
-            else
-            {
-                ScreenPosition = Position;
-            }
-        }
-
-
-        protected void SetDirty()
-        {
-            if ( !m_dirty )
-            {
-                m_dirty = true;
-
-                if ( m_container != null )
-                {
-                    if ( !m_container.m_dirty )
-                    {
-                        m_container.SetDirty();
-                    }
-                }
-
-                foreach ( Control child in Children )
-                {
-                    if ( !child.m_dirty )
-                    {
-                        child.SetDirty();
-                    }
-                }
             }
         }
     }

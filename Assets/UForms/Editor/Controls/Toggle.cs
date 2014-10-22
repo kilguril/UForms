@@ -34,11 +34,11 @@ namespace UForms.Controls
         {            
             if ( LabelOnRight )
             {
-                return EditorGUI.ToggleLeft( m_fieldRect, Label, m_cachedValue );
+                return EditorGUI.ToggleLeft( ScreenRect, Label, m_cachedValue );
             }
             else
             {
-                return EditorGUI.Toggle( m_fieldRect, Label, m_cachedValue );
+                return EditorGUI.Toggle( ScreenRect, Label, m_cachedValue );
             }            
         }
 

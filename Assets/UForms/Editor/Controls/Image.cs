@@ -12,8 +12,6 @@ namespace UForms.Controls
         public bool         DrawAlpha       { get; set; }
         public ScaleMode    Scale { get; set; }
 
-        private Rect    m_boxRect;
-
         protected override Vector2 DefaultSize {
             get { return new Vector2( 64.0f, 64.0f ); }
         }
@@ -37,18 +35,6 @@ namespace UForms.Controls
             DrawMaterial = mat;
         }
 
-
-        protected override void OnLayout()
-        {
-            m_boxRect.Set(
-                ScreenPosition.x + MarginLeftTop.x,
-                ScreenPosition.y + MarginLeftTop.y,
-                Size.x,
-                Size.y
-            );
-        }
-
-
         protected override void OnDraw()
         {
             if ( DrawTexture == null )
@@ -58,17 +44,17 @@ namespace UForms.Controls
 
             if ( DrawAlpha )
             {
-                EditorGUI.DrawTextureAlpha( m_boxRect, DrawTexture, Scale );
+                EditorGUI.DrawTextureAlpha( ScreenRect, DrawTexture, Scale );
             }
             else
             {
                 if ( DrawTransparent )
                 {
-                    EditorGUI.DrawTextureTransparent( m_boxRect, DrawTexture, Scale );
+                    EditorGUI.DrawTextureTransparent( ScreenRect, DrawTexture, Scale );
                 }
                 else
                 {
-                    EditorGUI.DrawPreviewTexture( m_boxRect, DrawTexture, DrawMaterial, Scale );
+                    EditorGUI.DrawPreviewTexture( ScreenRect, DrawTexture, DrawMaterial, Scale );
                 }
             }
         }

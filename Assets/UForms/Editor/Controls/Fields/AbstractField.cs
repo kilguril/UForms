@@ -22,8 +22,6 @@ namespace UForms.Controls.Fields
         protected abstract bool UseBackingFieldChangeDetection { get; }
 
         protected T         m_cachedValue;
-        protected Rect      m_fieldRect;
-
 
         public AbstractField( T value = default(T), string label = "" ) : base()
         {
@@ -43,16 +41,6 @@ namespace UForms.Controls.Fields
         // We need to implement a custom equality evaluator per control as the field data can be both value and reference types.
         // Additionally, since we're wrapping built in Unity controls, using nullable value types is not an option.        
         protected abstract bool TestValueEquality( T oldval, T newval );
-
-        protected override void OnLayout()
-        {
-            m_fieldRect.Set(
-                ScreenPosition.x + MarginLeftTop.x,
-                ScreenPosition.y + MarginLeftTop.y,
-                Size.x,
-                Size.y
-            );
-        }
 
         protected override void OnDraw()
         {

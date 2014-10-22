@@ -31,7 +31,7 @@ namespace UForms.Controls.Fields
 
         protected override SerializedProperty DrawAndUpdateValue()
         {
-            IncludeChildren = EditorGUI.PropertyField( m_fieldRect, m_cachedValue, new GUIContent( Label ), IncludeChildren );
+            IncludeChildren = EditorGUI.PropertyField( ScreenRect, m_cachedValue, new GUIContent( Label ), IncludeChildren );
             return m_cachedValue;
         }
 

@@ -32,7 +32,7 @@ namespace UForms.Controls
 
         protected override bool DrawAndUpdateValue()
         {
-            return EditorGUI.Foldout( m_fieldRect, m_cachedValue, Label, ToggleOnLabelClick );            
+            return EditorGUI.Foldout( ScreenRect, m_cachedValue, Label, ToggleOnLabelClick );            
         }
 
         protected override bool TestValueEquality( bool oldval, bool newval )

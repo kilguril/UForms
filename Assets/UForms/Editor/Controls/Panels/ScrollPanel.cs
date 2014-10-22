@@ -8,13 +8,13 @@ namespace UForms.Controls.Panels
         public bool FillContainerVertical           
         {
             get { return m_fillContainerVertical; }
-            set { m_fillContainerVertical = value; SetDirty(); }
+            set { m_fillContainerVertical = value; }
         }
 
         public bool FillContainerHorizontal
         {
             get { return m_fillContainerHorizontal; }
-            set { m_fillContainerHorizontal = value; SetDirty(); }
+            set { m_fillContainerHorizontal = value; }
         }
 
         public bool VerticalScrollbar       { get; set; }
@@ -23,8 +23,6 @@ namespace UForms.Controls.Panels
         
         private Vector2 m_scrollPosition;
         private Rect m_scrollableRect;
-
-        private Rect m_displayRect;
 
         private bool m_fillContainerHorizontal;
         private bool m_fillContainerVertical;
@@ -62,12 +60,9 @@ namespace UForms.Controls.Panels
         {
             m_doScrollbars = false;
 
-            // Since the content bounds are evaluated during the layout step, which is invoked after BeforeDraw and before Draw, the current value will be out of sync
-            // That's why we need to evaluate the expected bounds using GetContentBounds().
-            // Note this is an expensive call and should not be used outside of OnBeforeDraw as in OnDraw the value will be in sync AND more reliable as it will be evaluated after the actual layout step
-            Rect contentBounds = GetContentBounds(); 
+            Rect content = GetContentBounds();
 
-            if ( contentBounds.xMin < Position.x + MarginLeftTop.x || contentBounds.yMin < Position.y + MarginLeftTop.y || contentBounds.xMax > Size.x - MarginLeftTop.x - MarginRightBottom.x || contentBounds.yMax > Size.y - MarginLeftTop.y - MarginRightBottom.y )
+            if ( content.xMin < 0.0f || content.yMin < 0.0f || content.xMax > Size.x - MarginLeftTop.x - MarginRightBottom.x || content.yMax > Size.y - MarginLeftTop.y - MarginRightBottom.y )
             {
                 m_doScrollbars = true;
             }
@@ -75,11 +70,11 @@ namespace UForms.Controls.Panels
             if ( m_doScrollbars )
             {
                 float w,h;
-                w = ( HorizontalScrollbar ? contentBounds.width : Size.x - MarginLeftTop.x - MarginRightBottom.x - SCROLLBAR_SIZE );
-                h = ( VerticalScrollbar ? contentBounds.height : Size.y - MarginLeftTop.y - MarginRightBottom.y - SCROLLBAR_SIZE );
-                m_scrollableRect.Set( Bounds.xMin, Bounds.yMin, w, h );                
+                w = ( HorizontalScrollbar ? content.width : Size.x - MarginLeftTop.x - MarginRightBottom.x - SCROLLBAR_SIZE );
+                h = ( VerticalScrollbar ? content.height : Size.y - MarginLeftTop.y - MarginRightBottom.y - SCROLLBAR_SIZE );
+                m_scrollableRect.Set( content.xMin, content.yMin, w, h );                
 
-                m_scrollPosition = GUI.BeginScrollView( m_displayRect, m_scrollPosition, m_scrollableRect );
+                m_scrollPosition = GUI.BeginScrollView( ScreenRect, m_scrollPosition, m_scrollableRect );
             }
         }
 
@@ -106,13 +101,6 @@ namespace UForms.Controls.Panels
                 Position = new Vector2( 0.0f, Position.y );
                 Size = new Vector2( m_container.Size.x, Size.y );
             }
-
-            m_displayRect.Set(
-                ScreenPosition.x + MarginLeftTop.x,
-                ScreenPosition.y + MarginLeftTop.y,
-                Size.x - MarginLeftTop.x - MarginRightBottom.x,
-                Size.y - MarginLeftTop.y - MarginRightBottom.y
-            );
         }
     }
 }

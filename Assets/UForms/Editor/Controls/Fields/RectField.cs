@@ -30,7 +30,7 @@ namespace UForms.Controls.Fields
 
         protected override Rect DrawAndUpdateValue()
         {
-            return EditorGUI.RectField( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.RectField( ScreenRect, Label, m_cachedValue );
         }
 
 

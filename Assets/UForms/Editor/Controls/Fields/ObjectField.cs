@@ -35,7 +35,7 @@ namespace UForms.Controls.Fields
 
         protected override Object DrawAndUpdateValue()
         {
-            return EditorGUI.ObjectField( m_fieldRect, Label, m_cachedValue, Type, AllowSceneObjects );
+            return EditorGUI.ObjectField( ScreenRect, Label, m_cachedValue, Type, AllowSceneObjects );
         }
 
         protected override bool TestValueEquality( Object oldval, Object newval )

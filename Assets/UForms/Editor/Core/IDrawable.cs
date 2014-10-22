@@ -4,8 +4,7 @@ namespace UForms.Core
 {
     public interface IDrawable
     {
-        Rect Bounds { get; }     // Bounds metrics used for layouting and drawing
-
+        Rect ScreenRect { get; }     // Screen rect used for drawing
         void Draw();                  
     }
 }

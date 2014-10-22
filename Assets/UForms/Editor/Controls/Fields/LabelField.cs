@@ -29,7 +29,7 @@ namespace UForms.Controls.Fields
         protected override string DrawAndUpdateValue()
         {
             // Not sure why this is a field by Unity's definition...
-            EditorGUI.LabelField( m_fieldRect, Label, m_cachedValue );
+            EditorGUI.LabelField( ScreenRect, Label, m_cachedValue );
             return Value;
         }
 

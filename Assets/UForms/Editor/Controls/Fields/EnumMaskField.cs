@@ -35,7 +35,7 @@ namespace UForms.Controls.Fields
                 return null;
             }
 
-            return EditorGUI.EnumMaskField( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.EnumMaskField( ScreenRect, Label, m_cachedValue );
         }
 
         protected override bool TestValueEquality( System.Enum oldval, System.Enum newval )

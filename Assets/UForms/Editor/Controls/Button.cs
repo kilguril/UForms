@@ -13,7 +13,6 @@ namespace UForms.Controls
 
         public string Text { get; set; }
 
-        private Rect  m_buttonRect;
 
         protected override Vector2 DefaultSize
         {
@@ -33,20 +32,9 @@ namespace UForms.Controls
         }
 
 
-        protected override void OnLayout()
-        {
-            m_buttonRect.Set(
-                ScreenPosition.x + MarginLeftTop.x,
-                ScreenPosition.y + MarginLeftTop.y,
-                Size.x,
-                Size.y
-            );
-        }
-
-
         protected override void OnDraw()
         {
-            if ( GUI.Button( m_buttonRect, Text ) )
+            if ( GUI.Button( ScreenRect, Text ) )
             {
                 int button = 0;
 
@@ -65,7 +53,7 @@ namespace UForms.Controls
 
         protected override void OnMouseDown( Event e )
         {
-            if ( m_buttonRect.Contains( e.mousePosition ) )
+            if ( ScreenRect.Contains( e.mousePosition ) )
             {
                 if ( MouseDown != null )
                 {
@@ -77,7 +65,7 @@ namespace UForms.Controls
 
         protected override void OnMouseUp( Event e )
         {
-            if ( m_buttonRect.Contains( e.mousePosition ) )
+            if ( ScreenRect.Contains( e.mousePosition ) )
             {
                 if ( MouseUp != null )
                 {

@@ -28,7 +28,7 @@ namespace UForms.Controls.Fields
 
         protected override Color DrawAndUpdateValue()
         {            
-            return EditorGUI.ColorField( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.ColorField( ScreenRect, Label, m_cachedValue );
         }
 
         protected override bool TestValueEquality( Color oldval, Color newval )

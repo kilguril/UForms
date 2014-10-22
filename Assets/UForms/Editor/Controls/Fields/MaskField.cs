@@ -43,7 +43,7 @@ namespace UForms.Controls.Fields
 
         protected override int DrawAndUpdateValue()
         {            
-            return EditorGUI.MaskField( m_fieldRect, Label, m_cachedValue, Options.ToArray() );
+            return EditorGUI.MaskField( ScreenRect, Label, m_cachedValue, Options.ToArray() );
         }
 
         protected override bool TestValueEquality( int oldval, int newval )

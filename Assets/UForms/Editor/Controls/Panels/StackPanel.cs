@@ -20,46 +20,48 @@ namespace UForms.Controls.Panels
 
         public StackMode Mode
         {
-            get { return m_mode;}
-            set { m_mode = value; SetDirty(); }
+            get { return m_mode; }
+            set { m_mode = value; }
         }
 
         public OverflowMode Overflow
         {
             get { return m_overflow; }
-            set { m_overflow = value; SetDirty(); }
+            set { m_overflow = value; }
         }
 
         private OverflowMode m_overflow;
         private StackMode    m_mode;
 
 
-        public StackPanel( StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow ) : base()
+        public StackPanel( StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow )
+            : base()
         {
-            VerticalScrollbar       = true;
-            HorizontalScrollbar     = true;
-            FillContainerVertical   = true;
+            VerticalScrollbar = true;
+            HorizontalScrollbar = true;
+            FillContainerVertical = true;
             FillContainerHorizontal = true;
-            HandleMouseWheel        = true;
-            Mode                    = mode;
-            Overflow                = overflow;
+            HandleMouseWheel = true;
+            Mode = mode;
+            Overflow = overflow;
         }
 
 
-        public StackPanel( Vector2 position, Vector2 size, StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow ) : base( position, size )
+        public StackPanel( Vector2 position, Vector2 size, StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow )
+            : base( position, size )
         {
-            VerticalScrollbar       = true;
-            HorizontalScrollbar     = true;
-            FillContainerVertical   = true;
+            VerticalScrollbar = true;
+            HorizontalScrollbar = true;
+            FillContainerVertical = true;
             FillContainerHorizontal = true;
-            HandleMouseWheel        = true;
-            Mode                    = mode;
-            Overflow                = overflow;
+            HandleMouseWheel = true;
+            Mode = mode;
+            Overflow = overflow;
         }
 
-        protected override void OnLayout()
+        protected override void OnAfterLayout()
         {
-            if( Overflow == OverflowMode.Flow )
+            if ( Overflow == OverflowMode.Flow )
             {
                 LayoutWithOverflow();
             }
@@ -67,8 +69,6 @@ namespace UForms.Controls.Panels
             {
                 LayoutContained();
             }
-            
-            base.OnLayout();
         }
 
 
@@ -83,14 +83,14 @@ namespace UForms.Controls.Panels
                     case StackMode.Horizontal:
 
                     child.Position = new Vector2( offset, 0.0f );
-                    offset += child.ScreenSize.x;
+                    offset += child.Bounds.width;
 
                     break;
 
                     case StackMode.Vertical:
 
                     child.Position = new Vector2( 0.0f, offset );
-                    offset += child.ScreenSize.y;
+                    offset += child.Bounds.height;
 
                     break;
                 }
@@ -104,34 +104,34 @@ namespace UForms.Controls.Panels
             float offset    = 0.0f;
             float offset2   = 0.0f;
 
-            foreach( Control child in Children )
+            foreach ( Control child in Children )
             {
-                switch( m_mode )
+                switch ( m_mode )
                 {
                     case StackMode.Horizontal:
 
-                        if ( offset + child.ScreenSize.x >= Size.x )
-                        {
-                            offset2 += LayoutContainedCloseGroup( group, offset2 );
-                            offset = 0.0f;
-                        }
+                    if ( offset + child.Bounds.width >= Size.x )
+                    {
+                        offset2 += LayoutContainedCloseGroup( group, offset2 );
+                        offset = 0.0f;
+                    }
 
-                        offset += child.ScreenSize.x;
-                        group.Add( child );
+                    offset += child.Bounds.width;
+                    group.Add( child );
 
                     break;
 
                     case StackMode.Vertical:
 
-                        if ( offset + child.ScreenSize.y >= Size.y )
-                        {
-                            offset2 += LayoutContainedCloseGroup( group, offset2 );
-                            offset = 0.0f;
-                            
-                        }
-                        
-                        offset += child.ScreenSize.y;
-                        group.Add( child );
+                    if ( offset + child.Bounds.height >= Size.y )
+                    {
+                        offset2 += LayoutContainedCloseGroup( group, offset2 );
+                        offset = 0.0f;
+
+                    }
+
+                    offset += child.Bounds.height;
+                    group.Add( child );
 
                     break;
                 }
@@ -140,8 +140,8 @@ namespace UForms.Controls.Panels
             LayoutContainedCloseGroup( group, offset2 );
         }
 
-        
-        private float LayoutContainedCloseGroup( List< Control > group, float offset )
+
+        private float LayoutContainedCloseGroup( List<Control> group, float offset )
         {
             float groupSize   = 0.0f;
             float localOffset = 0.0f;
@@ -151,28 +151,28 @@ namespace UForms.Controls.Panels
                 Control item = group[ 0 ];
                 group.RemoveAt( 0 );
 
-                switch( m_mode )
+                switch ( m_mode )
                 {
                     case StackMode.Horizontal:
-                    
-                        item.Position = new Vector2( localOffset, offset );
-                        localOffset += item.ScreenSize.x;
 
-                        if ( item.ScreenSize.y > groupSize )
-                        {
-                            groupSize = item.ScreenSize.y;
-                        }
+                    item.Position = new Vector2( localOffset, offset );
+                    localOffset += item.Bounds.width;
+
+                    if ( item.Bounds.height > groupSize )
+                    {
+                        groupSize = item.Bounds.height;
+                    }
                     break;
 
                     case StackMode.Vertical:
 
-                        item.Position = new Vector2( offset, localOffset );
-                        localOffset += item.ScreenSize.y;
+                    item.Position = new Vector2( offset, localOffset );
+                    localOffset += item.Bounds.height;
 
-                        if ( item.ScreenSize.x > groupSize )
-                        {
-                            groupSize = item.ScreenSize.x;
-                        }
+                    if ( item.Bounds.width > groupSize )
+                    {
+                        groupSize = item.Bounds.width;
+                    }
                     break;
                 }
 

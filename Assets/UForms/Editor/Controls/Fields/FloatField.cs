@@ -28,7 +28,7 @@ namespace UForms.Controls.Fields
 
         protected override float DrawAndUpdateValue()
         {
-            return EditorGUI.FloatField( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.FloatField( ScreenRect, Label, m_cachedValue );
         }
 
         protected override bool TestValueEquality( float oldval, float newval )

@@ -35,7 +35,7 @@ namespace UForms.Controls.Sliders
 
         protected override float DrawAndUpdateValue()
         {
-            return EditorGUI.Slider( m_fieldRect, Label, m_cachedValue, LeftValue, RightValue );
+            return EditorGUI.Slider( ScreenRect, Label, m_cachedValue, LeftValue, RightValue );
         }
 
         protected override bool TestValueEquality( float oldval, float newval )

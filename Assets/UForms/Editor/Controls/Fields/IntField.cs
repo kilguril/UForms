@@ -28,7 +28,7 @@ namespace UForms.Controls.Fields
 
         protected override int DrawAndUpdateValue()
         {
-            return EditorGUI.IntField( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.IntField( ScreenRect, Label, m_cachedValue );
         }
 
         protected override bool TestValueEquality( int oldval, int newval )

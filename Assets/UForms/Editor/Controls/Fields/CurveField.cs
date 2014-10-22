@@ -51,12 +51,12 @@ namespace UForms.Controls.Fields
 
             if ( isActive )
             {
-                temp = EditorGUI.CurveField( m_fieldRect, Label, m_cachedValue, CurveColor, CurveRect );
+                temp = EditorGUI.CurveField( ScreenRect, Label, m_cachedValue, CurveColor, CurveRect );
             }
             else
             {
                 EditorGUI.BeginDisabledGroup( true );
-                EditorGUI.CurveField( m_fieldRect, Label, m_cachedValue, CurveColor, CurveRect );
+                EditorGUI.CurveField( ScreenRect, Label, m_cachedValue, CurveColor, CurveRect );
                 EditorGUI.EndDisabledGroup();
             }
 

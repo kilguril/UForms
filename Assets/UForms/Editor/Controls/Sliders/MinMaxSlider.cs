@@ -50,8 +50,8 @@ namespace UForms.Controls.Sliders
 
         protected override float[] DrawAndUpdateValue()
         {
-            EditorGUI.MinMaxSlider( new GUIContent( Label ), m_fieldRect, ref m_cachedValue[ 0 ], ref m_cachedValue[ 1 ], MinLimit, MaxLimit );
-            //return EditorGUI.Slider( m_fieldRect, Label, m_cachedValue, LeftValue, RightValue );
+            EditorGUI.MinMaxSlider( new GUIContent( Label ), ScreenRect, ref m_cachedValue[ 0 ], ref m_cachedValue[ 1 ], MinLimit, MaxLimit );
+            //return EditorGUI.Slider( ScreenRect, Label, m_cachedValue, LeftValue, RightValue );
             return m_cachedValue;
         }
 

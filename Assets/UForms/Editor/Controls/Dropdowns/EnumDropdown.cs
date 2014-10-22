@@ -30,7 +30,7 @@ namespace UForms.Controls.Dropdowns
 
         protected override System.Enum DrawAndUpdateValue()
         {
-            return EditorGUI.EnumPopup( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.EnumPopup( ScreenRect, Label, m_cachedValue );
         }
 
         protected override bool TestValueEquality( System.Enum oldval, System.Enum newval )

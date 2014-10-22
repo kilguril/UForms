@@ -32,11 +32,11 @@ namespace UForms.Controls.Fields
         {
             if ( PasswordMask )
             {
-                return EditorGUI.PasswordField( m_fieldRect, Label, m_cachedValue );
+                return EditorGUI.PasswordField( ScreenRect, Label, m_cachedValue );
             }
             else
             {
-                return EditorGUI.TextField( m_fieldRect, Label, m_cachedValue );
+                return EditorGUI.TextField( ScreenRect, Label, m_cachedValue );
             }
         }
 

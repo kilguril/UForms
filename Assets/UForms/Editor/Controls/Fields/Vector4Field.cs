@@ -28,7 +28,7 @@ namespace UForms.Controls.Fields
 
         protected override Vector4 DrawAndUpdateValue()
         {
-            return EditorGUI.Vector4Field( m_fieldRect, Label, m_cachedValue );
+            return EditorGUI.Vector4Field( ScreenRect, Label, m_cachedValue );
         }
 
         protected override bool TestValueEquality( Vector4 oldval, Vector4 newval )

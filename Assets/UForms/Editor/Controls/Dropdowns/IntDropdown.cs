@@ -36,7 +36,7 @@ namespace UForms.Controls.Dropdowns
 
         protected override int DrawAndUpdateValue()
         {
-            return EditorGUI.IntPopup( m_fieldRect, Label, m_cachedValue, OptionNames, OptionValues );
+            return EditorGUI.IntPopup( ScreenRect, Label, m_cachedValue, OptionNames, OptionValues );
         }
 
         protected override bool TestValueEquality( int oldval, int newval )

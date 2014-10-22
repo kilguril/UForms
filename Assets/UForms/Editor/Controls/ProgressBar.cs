@@ -9,8 +9,6 @@ namespace UForms.Controls
         public string           Text           { get; set; }
         public float            Progress       { get; set; }
 
-        private Rect            m_boxRect;
-
         protected override Vector2 DefaultSize {
             get { return new Vector2( 200.0f, 16.0f ); }
         }
@@ -29,21 +27,10 @@ namespace UForms.Controls
         }
 
 
-        protected override void OnLayout()
-        {
-            m_boxRect.Set(
-                ScreenPosition.x + MarginLeftTop.x,
-                ScreenPosition.y + MarginLeftTop.y,
-                Size.x,
-                Size.y
-            );
-        }
-
-
         protected override void OnDraw()
         {
             Progress = Mathf.Clamp01( Progress );
-            EditorGUI.ProgressBar( m_boxRect, Progress, Text );
+            EditorGUI.ProgressBar( ScreenRect, Progress, Text );
         }
     }
 }

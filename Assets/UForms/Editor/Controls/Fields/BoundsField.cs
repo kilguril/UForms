@@ -29,7 +29,7 @@ namespace UForms.Controls.Fields
 
         protected override Bounds DrawAndUpdateValue()
         {
-            return EditorGUI.BoundsField( m_fieldRect, new GUIContent( Label ), m_cachedValue );
+            return EditorGUI.BoundsField( ScreenRect, new GUIContent( Label ), m_cachedValue );
         }
 
         protected override bool TestValueEquality( Bounds oldval, Bounds newval )

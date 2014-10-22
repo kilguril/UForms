@@ -37,7 +37,7 @@ namespace UForms.Controls.Fields
 
         protected override float[] DrawAndUpdateValue()
         {
-            EditorGUI.MultiFloatField( m_fieldRect, new GUIContent( Label ), m_sublabelGuiContent, m_cachedValue );
+            EditorGUI.MultiFloatField( ScreenRect, new GUIContent( Label ), m_sublabelGuiContent, m_cachedValue );
             return m_cachedValue;
         }
 

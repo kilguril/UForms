@@ -28,7 +28,7 @@ namespace UForms.Controls
 
         protected override string DrawAndUpdateValue()
         {
-            return EditorGUI.TextArea( m_fieldRect, m_cachedValue );
+            return EditorGUI.TextArea( ScreenRect, m_cachedValue );
         }
 
         protected override bool TestValueEquality( string oldval, string newval )

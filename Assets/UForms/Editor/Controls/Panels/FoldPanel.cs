@@ -45,8 +45,6 @@ namespace UForms.Controls.Panels
             HandleMouseWheel = false;
             HorizontalScrollbar = false;
             VerticalScrollbar = false;
-            FillContainerHorizontal = false;
-            FillContainerVertical = false;
 
             m_foldoutHeader = new Foldout( label, unfolded, toggleOnClick );
             AddChild( m_foldoutHeader );

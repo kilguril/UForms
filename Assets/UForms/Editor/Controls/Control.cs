@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#define UFORMS_DEBUG_RECTS
+
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +18,12 @@ namespace UForms.Controls
             Collapsed
         }
 
+        public enum MetricsUnits
+        {
+            Pixel,
+            Percentage
+        }
+
         // Dirty flag should be used to trigger a repaint on internal component changes, as otherwise repaint will only be invoked by specific editor events
         // flag will propagate upwards and will be collected by the application from the root component if it reaches it.
         public bool Dirty
@@ -25,7 +33,7 @@ namespace UForms.Controls
             {
                 m_dirty = value;
 
-                if ( value && m_container != null )
+                if ( m_container != null && m_container.Dirty != value )
                 {
                     m_container.Dirty = value;
                 }
@@ -59,12 +67,35 @@ namespace UForms.Controls
             set { m_position = value; } 
         }
 
+        public MetricsUnits PositionXUnits
+        {
+            get;
+            set;
+        }
+
+        public MetricsUnits PositionYUnits
+        {
+            get;
+            set;
+        }
+
         // Size is used to hint to the control it's desired size on screen.
         public Vector2 Size 
         {
             get { return m_size; }
             set { m_size = value; } 
-        }           
+        }
+
+        public MetricsUnits WidthUnits
+        {
+            get; set;
+        }
+
+        public MetricsUnits HeightUnits
+        {
+            get;
+            set;
+        }
      
         public Vector2 MarginLeftTop
         {
@@ -76,6 +107,30 @@ namespace UForms.Controls
         {
             get { return m_marginRightBottom; }
             set { m_marginRightBottom = value; }
+        }
+
+        public MetricsUnits MarginLeftUnits
+        {
+            get;
+            set;
+        }
+
+        public MetricsUnits MarginRightUnits
+        {
+            get;
+            set;
+        }
+
+        public MetricsUnits MarginTopUnits
+        {
+            get;
+            set;
+        }
+
+        public MetricsUnits MarginBottomUnits
+        {
+            get;
+            set;
         }
 
         // Is this control enabled? this property will propagate to all child contorls and can be applied to interactive controls as well as containers
@@ -100,6 +155,12 @@ namespace UForms.Controls
         protected virtual Vector2 DefaultSize
         {
             get { return Vector2.zero; }
+        }
+
+        // Panels should override this property to specify they reset the pivot offset to 0,0
+        protected virtual bool ResetPivotRoot
+        {
+            get { return false; }
         }
 
         public      List<Control>     Children      { get; private set; }        // Contained children elements.               
@@ -151,6 +212,9 @@ namespace UForms.Controls
 
         #endregion
 
+#if UFORMS_DEBUG_RECTS
+        private Color m_debugColor;
+#endif
 
         public Control()
         {
@@ -161,6 +225,10 @@ namespace UForms.Controls
 
             Enabled     = true;
             Visibility  = VisibilityMode.Visible;
+
+#if UFORMS_DEBUG_RECTS
+            m_debugColor = new Color( Random.value, Random.value, Random.value );
+#endif
         }
 
 
@@ -173,6 +241,10 @@ namespace UForms.Controls
 
             Enabled     = true;
             Visibility  = VisibilityMode.Visible;
+
+#if UFORMS_DEBUG_RECTS
+            m_debugColor = new Color( Random.value, Random.value, Random.value );
+#endif
         }
 
         public void AddChild( Control child )
@@ -193,37 +265,47 @@ namespace UForms.Controls
             }
         }
 
-        public Control SetMargin( float left, float top, float right, float bottom )
+        public Control SetMargin( float left, float top, float right, float bottom,
+            MetricsUnits leftu = MetricsUnits.Pixel, MetricsUnits topu = MetricsUnits.Pixel, MetricsUnits rightu = MetricsUnits.Pixel, MetricsUnits bottomu = MetricsUnits.Pixel )
         {
             MarginLeftTop       = new Vector2( left, top );
             MarginRightBottom   = new Vector2( right, bottom );
 
+            MarginLeftUnits     = leftu;
+            MarginRightUnits    = rightu;
+            MarginTopUnits      = topu;
+            MarginBottomUnits   = bottomu;
+
             return this;
         }
 
 
-        public Control SetSize ( float x, float y )
+        public Control SetSize( float x, float y, MetricsUnits wu = MetricsUnits.Pixel, MetricsUnits hu = MetricsUnits.Pixel )
         {
-            return SetSize( new Vector2( x, y ) );
+            return SetSize( new Vector2( x, y ), wu, hu );
         }
 
 
-        public Control SetSize( Vector2 size )
+        public Control SetSize( Vector2 size, MetricsUnits wu = MetricsUnits.Pixel, MetricsUnits hu = MetricsUnits.Pixel )
         {
-            Size = size;
+            Size        = size;
+            WidthUnits  = wu;
+            HeightUnits = hu;
             return this;
         }
 
 
-        public Control SetPosition( float x, float y )
+        public Control SetPosition( float x, float y, MetricsUnits xu = MetricsUnits.Pixel, MetricsUnits yu = MetricsUnits.Pixel )
         {
-            return SetPosition( new Vector2( x, y ) );
+            return SetPosition( new Vector2( x, y ), xu, yu );
         }
 
 
-        public Control SetPosition( Vector2 position )
+        public Control SetPosition( Vector2 position, MetricsUnits xu = MetricsUnits.Pixel, MetricsUnits yu = MetricsUnits.Pixel )
         {
-            Position = position;
+            Position        = position;
+            PositionXUnits  = xu;
+            PositionYUnits  = yu;
             return this;
         }
 
@@ -246,20 +328,31 @@ namespace UForms.Controls
         public void Layout()
         {
             // Cache parent screen position
-            if ( m_container == null )
+            if ( m_container == null || m_container.ResetPivotRoot )
             {
                 ParentScreenPosition = Vector2.zero;
             }
             else
             {
-                ParentScreenPosition = m_container.ParentScreenPosition + m_container.Position;
-            }
+                ParentScreenPosition = m_container.ParentScreenPosition + m_container.Position + m_container.MarginLeftTop;
+            }            
 
             ScreenRect = new Rect(
-                ParentScreenPosition.x + Position.x + MarginLeftTop.x,
-                ParentScreenPosition.y + Position.y + MarginLeftTop.y,
-                Size.x - MarginLeftTop.x - MarginRightBottom.x,
-                Size.y - MarginLeftTop.y - MarginRightBottom.y
+                ParentScreenPosition.x 
+                + ( PositionXUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( Position.x / 100.0f ) : Position.x )
+                + ( MarginLeftUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginLeftTop.x / 100.0f ) : MarginLeftTop.x ),
+
+                ParentScreenPosition.y
+                + ( PositionYUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( Position.y / 100.0f ) : Position.y )
+                + ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y ),
+
+                ( WidthUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( Size.x / 100.0f ) : Size.x )
+                - ( MarginLeftUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginLeftTop.x / 100.0f ) : MarginLeftTop.x )
+                - ( MarginRightUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginRightBottom.x / 100.0f ) : MarginRightBottom.x ),
+
+                ( HeightUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( Size.y / 100.0f ) : Size.y )
+                - ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y )
+                - ( MarginBottomUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginRightBottom.y / 100.0f ) : MarginRightBottom.y )
             );
 
             OnLayout();
@@ -310,6 +403,10 @@ namespace UForms.Controls
             {
                 OnBeforeDraw();
 
+#if UFORMS_DEBUG_RECTS
+                EditorGUI.DrawRect( ScreenRect, m_debugColor );
+#endif
+
                 foreach ( Control child in Children )
                 {
                     child.Draw();
@@ -322,6 +419,8 @@ namespace UForms.Controls
             {
                 EditorGUI.EndDisabledGroup();
             }
+
+            Dirty = false;
         }
 
 

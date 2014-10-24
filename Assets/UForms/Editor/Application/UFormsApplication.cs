@@ -51,14 +51,20 @@ namespace UForms.Application
             {                                
                 m_rootObject.Layout();
                 m_rootObject.Draw();
-                m_rootObject.ProcessEvents( Event.current );
-                
+                m_rootObject.ProcessEvents( Event.current );               
+            }            
+        }   
+
+        protected virtual void Update()
+        {
+            if ( m_rootObject != null )
+            {
                 if ( m_rootObject.Dirty )
                 {
                     Repaint();
                 }
-            }            
-        }   
+            }
+        }
 
         private void Initialize()
         {            

@@ -39,8 +39,6 @@ namespace UForms.Controls.Panels
         {
             VerticalScrollbar = true;
             HorizontalScrollbar = true;
-            FillContainerVertical = true;
-            FillContainerHorizontal = true;
             HandleMouseWheel = true;
             Mode = mode;
             Overflow = overflow;
@@ -52,8 +50,6 @@ namespace UForms.Controls.Panels
         {
             VerticalScrollbar = true;
             HorizontalScrollbar = true;
-            FillContainerVertical = true;
-            FillContainerHorizontal = true;
             HandleMouseWheel = true;
             Mode = mode;
             Overflow = overflow;

@@ -5,27 +5,12 @@ namespace UForms.Controls.Panels
 {
     public class ScrollPanel : Control
     {
-        public bool FillContainerVertical           
-        {
-            get { return m_fillContainerVertical; }
-            set { m_fillContainerVertical = value; }
-        }
-
-        public bool FillContainerHorizontal
-        {
-            get { return m_fillContainerHorizontal; }
-            set { m_fillContainerHorizontal = value; }
-        }
-
         public bool VerticalScrollbar       { get; set; }
         public bool HorizontalScrollbar     { get; set; }
         public bool HandleMouseWheel        { get; set; }
         
         private Vector2 m_scrollPosition;
         private Rect m_scrollableRect;
-
-        private bool m_fillContainerHorizontal;
-        private bool m_fillContainerVertical;
         private bool m_doScrollbars;
 
         protected override Vector2 DefaultSize
@@ -33,25 +18,26 @@ namespace UForms.Controls.Panels
             get { return new Vector2( 100.0f, 100.0f ); }
         }
 
+        protected override bool ResetPivotRoot
+        {
+            get { return m_doScrollbars; }
+        }
+
         // The size of Unity's built in scrollbar in screen units (used to offset from actual display area)
         private const float SCROLLBAR_SIZE = 16.0f;
 
 
-        public ScrollPanel( bool verticalScroll = true, bool horizontalScroll = true, bool fillContainer = false, bool handleMouseWheel = true ) : base()
+        public ScrollPanel( bool verticalScroll = true, bool horizontalScroll = true, bool handleMouseWheel = true ) : base()
         {
             VerticalScrollbar = verticalScroll;
             HorizontalScrollbar = horizontalScroll;
-            FillContainerVertical = fillContainer;
-            FillContainerHorizontal = fillContainer;
             HandleMouseWheel = handleMouseWheel;
         }
 
-        public ScrollPanel( Vector2 position, Vector2 size, bool verticalScroll = true, bool horizontalScroll = true, bool fillContainer = false, bool handleMouseWheel = true ) : base( position, size )
+        public ScrollPanel( Vector2 position, Vector2 size, bool verticalScroll = true, bool horizontalScroll = true, bool handleMouseWheel = true ) : base( position, size )
         {
             VerticalScrollbar       = verticalScroll;
             HorizontalScrollbar     = horizontalScroll;
-            FillContainerVertical   = fillContainer;
-            FillContainerHorizontal = fillContainer;
             HandleMouseWheel        = handleMouseWheel;
         }
 
@@ -84,22 +70,6 @@ namespace UForms.Controls.Panels
             if ( m_doScrollbars )
             {
                 GUI.EndScrollView( HandleMouseWheel );
-            }
-        }
-
-
-        protected override void OnLayout()
-        {
-            if ( m_fillContainerVertical && m_container != null )
-            {
-                Position = new Vector2( Position.x, 0.0f );
-                Size     = new Vector2( Size.x, m_container.Size.y );
-            }
-
-            if ( m_fillContainerHorizontal && m_container != null )
-            {
-                Position = new Vector2( 0.0f, Position.y );
-                Size = new Vector2( m_container.Size.x, Size.y );
             }
         }
     }

@@ -20,30 +20,38 @@ public class TestApp : UFormsApplication
 
     protected override void OnInitialize()
     {
-        StackPanel root = new StackPanel( Vector2.zero, new Vector2( 600.0f, 0.0f ), StackPanel.StackMode.Vertical );
-        root.FillContainerVertical   = true;
-        root.FillContainerHorizontal = false;
-        root.HorizontalScrollbar     = true;
-        root.VerticalScrollbar       = true;
+        //ScrollPanel panel = new ScrollPanel( true, true, false );
+        //panel.SetSize( 100.0f, 100.0f, Control.MetricsUnits.Percentage, Control.MetricsUnits.Percentage );
+
+        //panel.AddChild( new Button().SetPosition( 0.0f, 0.0f ) );
+        //panel.AddChild( new Button().SetPosition( 0.0f, 30.0f ) );
+        //panel.AddChild( new Button().SetPosition( 0.0f, 60.0f ) );
+        //panel.AddChild( new Button().SetPosition( 0.0f, 90.0f ) );
+        //panel.AddChild( new Button().SetPosition( 0.0f, 120.0f ) );
+        //panel.AddChild( new Button().SetPosition( 0.0f, 150.0f ) );
+        //panel.AddChild( new Button().SetPosition( 0.0f, 180.0f ) );
+
+        //AddControl( panel );
+
+        StackPanel root = new StackPanel( StackPanel.StackMode.Vertical );
+        root.SetSize( 100.0f, 100.0f, Control.MetricsUnits.Percentage, Control.MetricsUnits.Percentage );
+        root.HorizontalScrollbar = true;
+        root.VerticalScrollbar = true;
 
         FoldPanel devicePanel = new FoldPanel( "Device:" );
-        devicePanel.FillContainerHorizontal = true;
+        devicePanel.AddChild( new LabelField( SystemInfo.deviceName, "Name:" ) );
+        devicePanel.AddChild( new LabelField( SystemInfo.deviceUniqueIdentifier, "UDID:" ) );
+        devicePanel.AddChild( new LabelField( SystemInfo.deviceModel, "Model:" ) );
+        devicePanel.AddChild( new LabelField( SystemInfo.deviceType.ToString(), "Type:" ) );
+        devicePanel.AddChild( new LabelField( SystemInfo.processorType, "Processor Type:" ) );
+        devicePanel.AddChild( new LabelField( SystemInfo.processorCount.ToString(), "Processor Count:" ) );
+        devicePanel.AddChild( new LabelField( string.Format( "{0} MB", SystemInfo.systemMemorySize ), "System Memory:" ) );
+        devicePanel.AddChild( new LabelField( SystemInfo.operatingSystem, "Operating System:" ) );
 
-        devicePanel.AddChild( new LabelField( SystemInfo.deviceName,                  "Name:" ) );
-        devicePanel.AddChild( new LabelField( SystemInfo.deviceUniqueIdentifier,      "UDID:" ) );
-        devicePanel.AddChild( new LabelField( SystemInfo.deviceModel,                 "Model:" ) );
-        devicePanel.AddChild( new LabelField( SystemInfo.deviceType.ToString(),       "Type:" ) );
-        devicePanel.AddChild( new LabelField( SystemInfo.processorType,               "Processor Type:") );
-        devicePanel.AddChild( new LabelField( SystemInfo.processorCount.ToString(),   "Processor Count:" ) );
-        devicePanel.AddChild( new LabelField( string.Format("{0} MB", SystemInfo.systemMemorySize), "System Memory:" ) );
-        devicePanel.AddChild( new LabelField( SystemInfo.operatingSystem,             "Operating System:" ) );
-        
         SetControlsStyle( devicePanel.Children );
 
 
         FoldPanel featuresPanel = new FoldPanel( "Features:" );
-        featuresPanel.FillContainerHorizontal = true;
-
         featuresPanel.AddChild( new LabelField( SystemInfo.supportsVibration.ToString(), "Vibration:" ) );
         featuresPanel.AddChild( new LabelField( SystemInfo.supportsGyroscope.ToString(), "Gyroscope:" ) );
         featuresPanel.AddChild( new LabelField( SystemInfo.supportsAccelerometer.ToString(), "Accelerometer:" ) );
@@ -53,8 +61,6 @@ public class TestApp : UFormsApplication
 
 
         FoldPanel graphicsPanel = new FoldPanel( "Graphics Device:" );
-        graphicsPanel.FillContainerHorizontal = true;
-
         graphicsPanel.AddChild( new LabelField( SystemInfo.graphicsDeviceID.ToString(), "ID:" ) );
         graphicsPanel.AddChild( new LabelField( SystemInfo.graphicsDeviceName, "Name:" ) );
         graphicsPanel.AddChild( new LabelField( SystemInfo.graphicsDeviceVendorID.ToString(), "VendorID:" ) );
@@ -68,9 +74,7 @@ public class TestApp : UFormsApplication
 
 
         FoldPanel gfeaturePanel = new FoldPanel( "Graphics Features:" );
-        gfeaturePanel.FillContainerHorizontal = true;
-
-        gfeaturePanel.AddChild( new LabelField( SystemInfo.supportedRenderTargetCount.ToString(), "Render Target Count:") );
+        gfeaturePanel.AddChild( new LabelField( SystemInfo.supportedRenderTargetCount.ToString(), "Render Target Count:" ) );
         gfeaturePanel.AddChild( new LabelField( SystemInfo.supports3DTextures.ToString(), "3D Textures:" ) );
         gfeaturePanel.AddChild( new LabelField( SystemInfo.supportsComputeShaders.ToString(), "Compute Shaders:" ) );
         gfeaturePanel.AddChild( new LabelField( SystemInfo.supportsImageEffects.ToString(), "Image Effects:" ) );
@@ -85,11 +89,9 @@ public class TestApp : UFormsApplication
 
 
         FoldPanel texPanel = new FoldPanel( "Texture Support:" );
-        texPanel.FillContainerHorizontal = true;
+        texPanel.AddChild( new LabelField( SystemInfo.npotSupport.ToString(), "Non Power of Two:" ) );
 
-        texPanel.AddChild( new LabelField( SystemInfo.npotSupport.ToString(), "Non Power of Two:" ) );        
-
-        foreach( RenderTextureFormat format in System.Enum.GetValues( typeof( RenderTextureFormat ) ) )
+        foreach ( RenderTextureFormat format in System.Enum.GetValues( typeof( RenderTextureFormat ) ) )
         {
             texPanel.AddChild( new LabelField( SystemInfo.SupportsRenderTextureFormat( format ).ToString(), format.ToString() ) );
         }

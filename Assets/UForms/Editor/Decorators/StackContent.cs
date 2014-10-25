@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace UForms.Controls.Panels
+using UForms.Controls;
+
+namespace UForms.Decorators
 {
-    public class StackPanel : ScrollPanel
+    public class StackContent : Decorator
     {
         public enum StackMode
         {
@@ -18,42 +21,33 @@ namespace UForms.Controls.Panels
             Contain
         }
 
+
         public StackMode Mode
         {
-            get { return m_mode; }
-            set { m_mode = value; }
+            get;
+            set;
         }
 
         public OverflowMode Overflow
         {
-            get { return m_overflow; }
-            set { m_overflow = value; }
+            get;
+            set;
         }
+        
 
-        private OverflowMode m_overflow;
-        private StackMode    m_mode;
-
-
-        public StackPanel( StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow )
+        public StackContent()
             : base()
         {
-            VerticalScrollbar = true;
-            HorizontalScrollbar = true;
-            HandleMouseWheel = true;
-            Mode = mode;
-            Overflow = overflow;
         }
 
 
-        public StackPanel( Vector2 position, Vector2 size, StackMode mode = StackMode.Horizontal, OverflowMode overflow = OverflowMode.Flow )
-            : base( position, size )
+        public StackContent( StackMode mode, OverflowMode overflow )
+            : base()
         {
-            VerticalScrollbar = true;
-            HorizontalScrollbar = true;
-            HandleMouseWheel = true;
             Mode = mode;
             Overflow = overflow;
         }
+
 
         protected override void OnAfterLayout()
         {
@@ -67,14 +61,13 @@ namespace UForms.Controls.Panels
             }
         }
 
-
         private void LayoutWithOverflow()
         {
             float offset = 0.0f;
 
-            foreach ( Control child in Children )
+            foreach ( Control child in m_boundControl.Children )
             {
-                switch ( m_mode )
+                switch ( Mode )
                 {
                     case StackMode.Horizontal:
 
@@ -100,13 +93,13 @@ namespace UForms.Controls.Panels
             float offset    = 0.0f;
             float offset2   = 0.0f;
 
-            foreach ( Control child in Children )
+            foreach ( Control child in m_boundControl.Children )
             {
-                switch ( m_mode )
+                switch ( Mode )
                 {
                     case StackMode.Horizontal:
 
-                    if ( offset + child.Bounds.width >= Size.x )
+                    if ( offset + child.Bounds.width >= m_boundControl.Size.x )
                     {
                         offset2 += LayoutContainedCloseGroup( group, offset2 );
                         offset = 0.0f;
@@ -119,7 +112,7 @@ namespace UForms.Controls.Panels
 
                     case StackMode.Vertical:
 
-                    if ( offset + child.Bounds.height >= Size.y )
+                    if ( offset + child.Bounds.height >= m_boundControl.Size.y )
                     {
                         offset2 += LayoutContainedCloseGroup( group, offset2 );
                         offset = 0.0f;
@@ -147,7 +140,7 @@ namespace UForms.Controls.Panels
                 Control item = group[ 0 ];
                 group.RemoveAt( 0 );
 
-                switch ( m_mode )
+                switch ( Mode )
                 {
                     case StackMode.Horizontal:
 

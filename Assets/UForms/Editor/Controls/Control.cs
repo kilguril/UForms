@@ -5,6 +5,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
+using UForms.Decorators;
 using UForms.Core;
 
 namespace UForms.Controls
@@ -150,6 +151,12 @@ namespace UForms.Controls
             set { m_visibility = value; }
         }
 
+        // Panels should override this property to specify they reset the pivot offset to 0,0
+        public bool ResetPivotRoot
+        {
+            get;
+            set;
+        }
 
         // Default size for this control
         protected virtual Vector2 DefaultSize
@@ -157,14 +164,11 @@ namespace UForms.Controls
             get { return Vector2.zero; }
         }
 
-        // Panels should override this property to specify they reset the pivot offset to 0,0
-        protected virtual bool ResetPivotRoot
-        {
-            get { return false; }
-        }
 
         public      List<Control>     Children      { get; private set; }        // Contained children elements.               
-        
+        public      List<Decorator>   Decorators { get; private set; }
+
+
         protected   Control           m_container;                               // Containing element if control is in a hierarchy.
 
         private     Rect              m_bounds;
@@ -212,38 +216,32 @@ namespace UForms.Controls
 
         #endregion
 
-#if UFORMS_DEBUG_RECTS
-        private Color m_debugColor;
-#endif
-
         public Control()
         {
-            Children    = new List<Control>();
-
-            Position    = Vector2.zero;
-            Size        = DefaultSize;
-
-            Enabled     = true;
-            Visibility  = VisibilityMode.Visible;
-
-#if UFORMS_DEBUG_RECTS
-            m_debugColor = new Color( Random.value, Random.value, Random.value );
-#endif
+            Init( Vector2.zero, DefaultSize );
         }
 
 
         public Control( Vector2 position, Vector2 size )
         {
-            Children    = new List<Control>();
+            Init( position, size );
+        }
 
-            Position    = position;
-            Size        = size;
+        private void Init( Vector2 position, Vector2 size )
+        {
+            Children = new List<Control>();
+            Decorators = new List<Decorator>();
 
-            Enabled     = true;
-            Visibility  = VisibilityMode.Visible;
+            Position = position;
+            Size = size;
+
+            Enabled = true;
+            Visibility = VisibilityMode.Visible;
+
+            ResetPivotRoot = false;
 
 #if UFORMS_DEBUG_RECTS
-            m_debugColor = new Color( Random.value, Random.value, Random.value );
+            AddDecorator( new BackgroundColor( new Color( Random.value, Random.value, Random.value ) ) );
 #endif
         }
 
@@ -264,6 +262,26 @@ namespace UForms.Controls
                 Children.Remove( child );
             }
         }
+
+
+        public void AddDecorator( Decorator decorator )
+        {
+            decorator.SetControl( this );
+
+            Decorators.Add( decorator );
+        }
+
+
+        public void RemoveDecorator( Decorator decorator )
+        {
+            if ( Decorators.Contains( decorator ) )
+            {
+                decorator.SetControl( null );
+
+                Decorators.Remove( decorator );
+            }
+        }
+
 
         public Control SetMargin( float left, float top, float right, float bottom,
             MetricsUnits leftu = MetricsUnits.Pixel, MetricsUnits topu = MetricsUnits.Pixel, MetricsUnits rightu = MetricsUnits.Pixel, MetricsUnits bottomu = MetricsUnits.Pixel )
@@ -327,6 +345,8 @@ namespace UForms.Controls
 
         public void Layout()
         {
+            ResetPivotRoot = false;
+
             // Cache parent screen position
             if ( m_container == null || m_container.ResetPivotRoot )
             {
@@ -354,6 +374,11 @@ namespace UForms.Controls
                 - ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y )
                 - ( MarginBottomUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginRightBottom.y / 100.0f ) : MarginRightBottom.y )
             );
+
+            foreach ( Decorator decorator in Decorators )
+            {
+                decorator.Layout();
+            }
 
             OnLayout();
 
@@ -387,6 +412,11 @@ namespace UForms.Controls
             }           
 
             OnAfterLayout();
+
+            foreach ( Decorator decorator in Decorators )
+            {
+                decorator.AfterLayout();
+            }
         }
 
         public void Draw()
@@ -401,11 +431,17 @@ namespace UForms.Controls
 
             if ( m_visibility == VisibilityMode.Visible )
             {
+                foreach ( Decorator decorator in Decorators )
+                {
+                    decorator.BeforeDraw();
+                }
+
                 OnBeforeDraw();
 
-#if UFORMS_DEBUG_RECTS
-                EditorGUI.DrawRect( ScreenRect, m_debugColor );
-#endif
+                foreach ( Decorator decorator in Decorators )
+                {
+                    decorator.Draw();
+                }
 
                 foreach ( Control child in Children )
                 {
@@ -413,6 +449,11 @@ namespace UForms.Controls
                 }
 
                 OnDraw();
+
+                foreach ( Decorator decorator in Decorators )
+                {
+                    decorator.AfterDraw();
+                }
             }                        
 
             if ( !localScopeEnabled )
@@ -426,6 +467,12 @@ namespace UForms.Controls
 
         public void ProcessEvents( Event e )
         {
+            // Don't process events for collapsed elements
+            if ( Visibility == VisibilityMode.Collapsed )
+            {
+                return;
+            }
+
             if ( e == null )
             {
                 return;

@@ -55,7 +55,7 @@ namespace UForms.Decorators
             {
                 if ( AllowShrinkVertical )
                 {
-                    sizex = content.yMax;
+                    sizey = content.yMax;
                 }
                 else
                 {
@@ -64,10 +64,10 @@ namespace UForms.Decorators
             }
             else
             {
-                sizex = m_boundControl.Size.y;
+                sizey = m_boundControl.Size.y;
             }
 
-            m_boundControl.SetSize( sizex, sizey, Control.MetricsUnits.Pixel, Control.MetricsUnits.Pixel );
+            m_boundControl.SetSize( sizex, sizey, FitHorizontal ? Control.MetricsUnits.Pixel : m_boundControl.WidthUnits, FitVertical ? Control.MetricsUnits.Pixel : m_boundControl.HeightUnits );
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿#define UFORMS_DEBUG_RECTS
+﻿// Uncomment this to visually debug control screen rects
+//#define UFORMS_DEBUG_RECTS
 
 using UnityEngine;
 using UnityEditor;
@@ -32,9 +33,10 @@ namespace UForms.Controls
             get { return m_dirty; }
             set 
             {
-                m_dirty = value;
+                m_dirty      = value;
+                m_dirtyFrame = Time.frameCount;
 
-                if ( m_container != null && m_container.Dirty != value )
+                if ( m_container != null && m_dirty && m_container.Dirty != value )
                 {
                     m_container.Dirty = value;
                 }
@@ -186,6 +188,9 @@ namespace UForms.Controls
 
         private     bool              m_dirty;
 
+        // Since event processing and drawing are one big spaghetti, we need this hack to make sure a dirty flag is not collected on the same frame it was raised. Should probably find a fix to this ugly hack sometime...
+        private     int               m_dirtyFrame;                             
+
         #region Internal Drawing Events
 
         protected virtual void OnBeforeDraw() { }
@@ -309,6 +314,24 @@ namespace UForms.Controls
             Size        = size;
             WidthUnits  = wu;
             HeightUnits = hu;
+            return this;
+        }
+
+
+        public Control SetWidth( float width, MetricsUnits wu = MetricsUnits.Pixel )
+        {
+            Size       = new Vector2( width, Size.y );
+            WidthUnits = wu;
+
+            return this;
+        }
+
+
+        public Control SetHeight( float height, MetricsUnits hu = MetricsUnits.Pixel )
+        {
+            Size        = new Vector2( Size.x, height );
+            HeightUnits = hu;
+
             return this;
         }
 
@@ -461,7 +484,10 @@ namespace UForms.Controls
                 EditorGUI.EndDisabledGroup();
             }
 
-            Dirty = false;
+            if ( Dirty && Time.frameCount > m_dirtyFrame )
+            {
+                Dirty = false;
+            }
         }
 
 

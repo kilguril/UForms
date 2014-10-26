@@ -8,8 +8,12 @@ namespace UForms.Application
 {
     public class UFormsApplication : EditorWindow
     {
+        public uint       Frame { get { return m_frame; } }
+
         private Vector2   m_cachedScreenSize;
         private Control   m_rootObject;
+
+        private uint      m_frame;
 
         public void AddControl( Control control )
         {
@@ -52,25 +56,29 @@ namespace UForms.Application
                 m_rootObject.Layout();
                 m_rootObject.Draw();
                 m_rootObject.ProcessEvents( Event.current );               
-            }            
-        }   
+            }
+
+            m_frame++;
+        }
 
         protected virtual void Update()
         {
             if ( m_rootObject != null )
             {
                 if ( m_rootObject.Dirty )
-                {
-                    Debug.Log( "ROOT-DIRTY" );
+                {                    
                     Repaint();
                 }
             }
         }
 
         private void Initialize()
-        {            
+        {
+            m_frame = 0;
+
             m_cachedScreenSize = new Vector2( position.width, position.height );
             m_rootObject = new Control( Vector2.zero, m_cachedScreenSize );
+            m_rootObject.SetApplicationContext( this );
 
             OnInitialize();
         }

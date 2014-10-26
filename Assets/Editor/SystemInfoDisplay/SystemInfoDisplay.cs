@@ -17,6 +17,7 @@ public class SystemInfoDisplay : UFormsApplication
         EditorWindow.GetWindow< SystemInfoDisplay >( true, "System Info", true );
     }
 
+    private static string UDID = SystemInfo.deviceUniqueIdentifier;
     private const float LIST_INDENTATION_PIXELS = 16.0f;
 
     protected override void OnInitialize()
@@ -38,7 +39,10 @@ public class SystemInfoDisplay : UFormsApplication
         FoldoutList systemGeneral = new FoldoutList( "General", LIST_INDENTATION_PIXELS, true );
         systemGeneral.SetWidth( 100.0f, Control.MetricsUnits.Percentage );
         systemGeneral.AddItem( new LabelField( SystemInfo.deviceName, "Device Name:" ) );
-        systemGeneral.AddItem( new LabelField( SystemInfo.deviceUniqueIdentifier, "UDID:" ) );
+        
+        // Trying to access SystemInfo.deviceUniqueIdentifier from OnGUI seems to made Unity bleed internally, so we pre-cache it
+        systemGeneral.AddItem( new LabelField( UDID, "UDID:" ) );
+        
         systemGeneral.AddItem( new LabelField( SystemInfo.deviceModel, "Model:" ) );
         systemGeneral.AddItem( new LabelField( SystemInfo.deviceType.ToString(), "Type:" ) );
         systemGeneral.AddItem( new LabelField( SystemInfo.processorType, "Processor Type:" ) );

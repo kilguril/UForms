@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 using UForms.Decorators;
 using UForms.Core;
+using UForms.Application;
 
 namespace UForms.Controls
 {
@@ -33,15 +34,25 @@ namespace UForms.Controls
             get { return m_dirty; }
             set 
             {
-                m_dirty      = value;
-                m_dirtyFrame = Time.frameCount;
-
-                if ( m_container != null && m_dirty && m_container.Dirty != value )
+                if ( m_container == null )
                 {
-                    m_container.Dirty = value;
+                    m_dirty = value;
+                    if ( value && m_application != null )
+                    {
+                        m_dirtyFrame = m_application.Frame;
+                    }
+                }
+                else
+                {
+                    if ( value )
+                    {
+                        m_container.Dirty = true;
+                    }
                 }
             }
         }
+
+        private uint m_dirtyFrame;
 
         public Rect Bounds        
         {
@@ -188,8 +199,7 @@ namespace UForms.Controls
 
         private     bool              m_dirty;
 
-        // Since event processing and drawing are one big spaghetti, we need this hack to make sure a dirty flag is not collected on the same frame it was raised. Should probably find a fix to this ugly hack sometime...
-        private     int               m_dirtyFrame;                             
+        private     UFormsApplication m_application;    
 
         #region Internal Drawing Events
 
@@ -250,9 +260,29 @@ namespace UForms.Controls
 #endif
         }
 
+
+        public void SetApplicationContext( UFormsApplication app )
+        {
+            if ( m_application != app )
+            {
+                m_application = app;
+
+                foreach( Control child in Children )
+                {
+                    child.SetApplicationContext( app );
+                }
+            }
+        }
+
         public void AddChild( Control child )
         {
+            if ( child.Dirty )
+            {
+                Dirty = true;
+            }
+
             child.m_container = this;
+            child.SetApplicationContext( m_application );
 
             Children.Add( child );
         }
@@ -484,9 +514,14 @@ namespace UForms.Controls
                 EditorGUI.EndDisabledGroup();
             }
 
-            if ( Dirty && Time.frameCount > m_dirtyFrame )
+            if ( m_container == null )
             {
-                Dirty = false;
+                // 10 seems to be the magic number of frames we need to keep a repaint request active for the layout to settle nicely and responsively.
+                // Should probably figure out why the hell this does not get resolved in 2 passes ( assuming in a single pass not all layouting elements are in sync due to execution order )
+                if ( Dirty && m_application && m_application.Frame > m_dirtyFrame + 10 )
+                {
+                    Dirty = false;
+                }
             }
         }
 

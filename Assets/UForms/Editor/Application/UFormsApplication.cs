@@ -69,6 +69,8 @@ namespace UForms.Application
                 {                    
                     Repaint();
                 }
+
+                m_rootObject.Update();
             }
         }
 

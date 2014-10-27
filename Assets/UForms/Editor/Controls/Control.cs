@@ -199,7 +199,15 @@ namespace UForms.Controls
 
         private     bool              m_dirty;
 
-        private     UFormsApplication m_application;    
+        private     UFormsApplication m_application;
+
+
+        #region Other events
+
+        protected virtual void OnUpdate() { }
+
+        #endregion
+
 
         #region Internal Drawing Events
 
@@ -395,6 +403,18 @@ namespace UForms.Controls
 
             return r;
         }
+
+
+        public void Update()
+        {
+            OnUpdate();
+
+            foreach( Control child in Children )
+            {
+                child.Update();
+            }
+        }
+
 
         public void Layout()
         {

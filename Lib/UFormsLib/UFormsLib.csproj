@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{87403A6A-7821-4E9A-A3A4-DCA78F7DD969}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UFormsLib</RootNamespace>
+    <AssemblyName>UFormsLib</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEditor">
+      <HintPath>..\UnityLib\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\UnityLib\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\Assets\UForms\Editor\Application\UFormsApplication.cs">
+      <Link>UForms\Editor\Application\UFormsApplication.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Button.cs">
+      <Link>UForms\Editor\Controls\Button.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Control.cs">
+      <Link>UForms\Editor\Controls\Control.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Dropdowns\Dropdown.cs">
+      <Link>UForms\Editor\Controls\Dropdowns\Dropdown.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Dropdowns\EnumDropdown.cs">
+      <Link>UForms\Editor\Controls\Dropdowns\EnumDropdown.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Dropdowns\IntDropdown.cs">
+      <Link>UForms\Editor\Controls\Dropdowns\IntDropdown.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\AbstractField.cs">
+      <Link>UForms\Editor\Controls\Fields\AbstractField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\BoundsField.cs">
+      <Link>UForms\Editor\Controls\Fields\BoundsField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\ColorField.cs">
+      <Link>UForms\Editor\Controls\Fields\ColorField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\CurveField.cs">
+      <Link>UForms\Editor\Controls\Fields\CurveField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\EnumMaskField.cs">
+      <Link>UForms\Editor\Controls\Fields\EnumMaskField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\FloatField.cs">
+      <Link>UForms\Editor\Controls\Fields\FloatField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\IntField.cs">
+      <Link>UForms\Editor\Controls\Fields\IntField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\LabelField.cs">
+      <Link>UForms\Editor\Controls\Fields\LabelField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\LayerField.cs">
+      <Link>UForms\Editor\Controls\Fields\LayerField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\MaskField.cs">
+      <Link>UForms\Editor\Controls\Fields\MaskField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\MultiFloatField.cs">
+      <Link>UForms\Editor\Controls\Fields\MultiFloatField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\ObjectField.cs">
+      <Link>UForms\Editor\Controls\Fields\ObjectField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\PropertyField.cs">
+      <Link>UForms\Editor\Controls\Fields\PropertyField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\RectField.cs">
+      <Link>UForms\Editor\Controls\Fields\RectField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\TagField.cs">
+      <Link>UForms\Editor\Controls\Fields\TagField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\TextField.cs">
+      <Link>UForms\Editor\Controls\Fields\TextField.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\Vector2Field.cs">
+      <Link>UForms\Editor\Controls\Fields\Vector2Field.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\Vector3Field.cs">
+      <Link>UForms\Editor\Controls\Fields\Vector3Field.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Fields\Vector4Field.cs">
+      <Link>UForms\Editor\Controls\Fields\Vector4Field.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Foldout.cs">
+      <Link>UForms\Editor\Controls\Foldout.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\HelpBox.cs">
+      <Link>UForms\Editor\Controls\HelpBox.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Image.cs">
+      <Link>UForms\Editor\Controls\Image.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Label.cs">
+      <Link>UForms\Editor\Controls\Label.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\ProgressBar.cs">
+      <Link>UForms\Editor\Controls\ProgressBar.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Sliders\FloatSlider.cs">
+      <Link>UForms\Editor\Controls\Sliders\FloatSlider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Sliders\IntSlider.cs">
+      <Link>UForms\Editor\Controls\Sliders\IntSlider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Sliders\MinMaxSlider.cs">
+      <Link>UForms\Editor\Controls\Sliders\MinMaxSlider.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\TextArea.cs">
+      <Link>UForms\Editor\Controls\TextArea.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\Toggle.cs">
+      <Link>UForms\Editor\Controls\Toggle.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Core\IDrawable.cs">
+      <Link>UForms\Editor\Core\IDrawable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Decorators\BackgroundColor.cs">
+      <Link>UForms\Editor\Decorators\BackgroundColor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Decorators\ClipContent.cs">
+      <Link>UForms\Editor\Decorators\ClipContent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Decorators\Decorator.cs">
+      <Link>UForms\Editor\Decorators\Decorator.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Decorators\FitContent.cs">
+      <Link>UForms\Editor\Decorators\FitContent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Decorators\Scrollbars.cs">
+      <Link>UForms\Editor\Decorators\Scrollbars.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Decorators\StackContent.cs">
+      <Link>UForms\Editor\Decorators\StackContent.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Events\IClickable.cs">
+      <Link>UForms\Editor\Events\IClickable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Events\IDraggable.cs">
+      <Link>UForms\Editor\Events\IDraggable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Events\IEditable.cs">
+      <Link>UForms\Editor\Events\IEditable.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -15,20 +15,24 @@ namespace UForms.Application
 
         private uint      m_frame;
 
-        public void AddControl( Control control )
+        public Control AddChild( Control control )
         {
             if ( m_rootObject != null )
             {
                 m_rootObject.AddChild( control );
             }
+
+            return control;
         }
 
-        public void RemoveControl( Control control )
+        public Control RemoveChild( Control control )
         {
             if ( m_rootObject != null )
             {
                 m_rootObject.RemoveChild( control );
             }
+
+            return control;
         }
 
         protected virtual void OnInitialize() { }

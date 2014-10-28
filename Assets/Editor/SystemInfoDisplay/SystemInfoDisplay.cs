@@ -111,6 +111,6 @@ public class SystemInfoDisplay : UFormsApplication
         sysinfo.AddChild( graphics );
 
         // Attach parent container
-        AddControl( sysinfo );
+        AddChild( sysinfo );
     }
 }

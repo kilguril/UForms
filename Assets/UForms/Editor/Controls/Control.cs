@@ -282,7 +282,7 @@ namespace UForms.Controls
             }
         }
 
-        public void AddChild( Control child )
+        public Control AddChild( Control child )
         {
             if ( child.Dirty )
             {
@@ -293,10 +293,12 @@ namespace UForms.Controls
             child.SetApplicationContext( m_application );
 
             Children.Add( child );
+
+            return child;
         }
 
 
-        public void RemoveChild( Control child )
+        public Control RemoveChild( Control child )
         {
             if ( child.m_container == this )
             {
@@ -304,18 +306,22 @@ namespace UForms.Controls
 
                 Children.Remove( child );
             }
+
+            return child;
         }
 
 
-        public void AddDecorator( Decorator decorator )
+        public Decorator AddDecorator( Decorator decorator )
         {
             decorator.SetControl( this );
 
             Decorators.Add( decorator );
+
+            return decorator;
         }
 
 
-        public void RemoveDecorator( Decorator decorator )
+        public Decorator RemoveDecorator( Decorator decorator )
         {
             if ( Decorators.Contains( decorator ) )
             {
@@ -323,6 +329,8 @@ namespace UForms.Controls
 
                 Decorators.Remove( decorator );
             }
+
+            return decorator;
         }
 
 

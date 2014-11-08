@@ -53,7 +53,7 @@ namespace UForms.Controls
 
         protected override void OnMouseDown( Event e )
         {
-            if ( ScreenRect.Contains( e.mousePosition ) )
+            if ( PointInControl( e.mousePosition ) )
             {
                 if ( MouseDown != null )
                 {
@@ -65,7 +65,7 @@ namespace UForms.Controls
 
         protected override void OnMouseUp( Event e )
         {
-            if ( ScreenRect.Contains( e.mousePosition ) )
+            if ( PointInControl( e.mousePosition ) )
             {
                 if ( MouseUp != null )
                 {

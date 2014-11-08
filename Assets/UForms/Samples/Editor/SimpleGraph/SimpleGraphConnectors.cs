@@ -5,9 +5,13 @@ using System.Collections.Generic;
 
 using UForms.Controls;
 using UForms.Decorators;
+using UForms.Events;
 
 public class SimpleGraphConnectors : Control 
 {
+    public delegate void ConnectorClicked( int index, MouseButton mouseButton );
+    public event ConnectorClicked OnConnectorClicked;
+
     public int Count
     {
         get
@@ -39,12 +43,19 @@ public class SimpleGraphConnectors : Control
         Buttons = new List<Button>();
 
         ResizeButtonCount( count );
-
-        for ( int i = 0; i < count; i++ )
-        {
-            
-        }
     }
+
+
+    public Vector2 GetConnectionPoint( int index )
+    {
+        if ( index >= 0 && index < Buttons.Count )
+        {
+            return  new Vector2( Buttons[ index ].ScreenRect.xMin, Buttons[ index ].ScreenRect.yMin ) + ( Buttons[ index ].Size / 2.0f );
+        }
+
+        return Vector2.zero;
+    }
+
 
     private void ResizeButtonCount( int count )
     {
@@ -55,6 +66,8 @@ public class SimpleGraphConnectors : Control
 
             Buttons.Add( b );
             AddChild( b );
+
+            b.Clicked += ConnectorButtonClicked;
         }
 
         while ( count < Count )
@@ -62,6 +75,26 @@ public class SimpleGraphConnectors : Control
             Button b = Buttons[ Buttons.Count - 1 ];
             Buttons.RemoveAt( Buttons.Count - 1 );
             RemoveChild( b );
+
+            b.Clicked -= ConnectorButtonClicked;
+        }
+    }
+
+    void ConnectorButtonClicked( UForms.Events.IClickable sender, UForms.Events.ClickEventArgs args, Event nativeEvent )
+    {
+        Button b = sender as Button;
+
+        if ( b != null )
+        {
+            int index = Buttons.IndexOf( b );
+
+            if ( index >= 0 )
+            {
+                if ( OnConnectorClicked != null )
+                {
+                    OnConnectorClicked( index, args.button );
+                }
+            }
         }
     }
 }

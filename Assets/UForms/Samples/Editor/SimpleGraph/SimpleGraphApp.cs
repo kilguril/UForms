@@ -8,10 +8,11 @@ using UForms.Decorators;
 
 public class SimpleGraphApp : UFormsApplication 
 {
-    [MenuItem( "Test/Simple Graph App" ) ]
+    [MenuItem( "UForms Samples/Simple Graph" ) ]
     private static void Run()
     {
-        EditorWindow.GetWindow< SimpleGraphApp >();
+        SimpleGraphApp app =EditorWindow.GetWindow<SimpleGraphApp>();
+        app.title = "Simple Graph";
     }
 
 
@@ -30,6 +31,8 @@ public class SimpleGraphApp : UFormsApplication
 
     protected override void OnInitialize()
     {
+        wantsMouseMove = true;
+
         m_graph = new SimpleGraph();
         m_graph.AddDecorator( new Scrollbars( true, true, true ) );
         m_graph.SetSize( 100.0f, 100.0f, Control.MetricsUnits.Percentage, Control.MetricsUnits.Percentage );
@@ -40,8 +43,13 @@ public class SimpleGraphApp : UFormsApplication
         m_contextMenu.Menu.AddItem( new GUIContent( "Create Branch" ), false, CreateNode, ContextActionType.CreateBranch );
         m_contextMenu.Menu.AddItem( new GUIContent( "Create Output" ), false, CreateNode, ContextActionType.CreateOutput );
 
+        Label helpLabel = new Label( "Simple graph sample:\n\nRight click to bring up new node menu.\nLeft click to create connections.\nRight click to break connections." );
+        helpLabel.SetSize( 300.0f, 100.0f );
+        helpLabel.SetMargin( 5.0f, 5.0f, 5.0f, 5.0f );
+
         AddChild( m_graph );
         AddChild( m_contextMenu );
+        AddChild( helpLabel );
     }
 
     private void CreateNode( object arg )
@@ -68,7 +76,7 @@ public class SimpleGraphApp : UFormsApplication
 
             case ContextActionType.CreateBranch:
                 inputs = 1;
-                outputs = 3;
+                outputs = 2;
                 text = "Branch";
             break;
 
@@ -82,7 +90,7 @@ public class SimpleGraphApp : UFormsApplication
         SimpleGraphNode node = new SimpleGraphNode( inputs, outputs, text );
         m_graph.AddNode( node );
 
-        node.SetPosition( m_lastMousePosition );
+        node.SetPosition( m_graph.ViewportToAbsolutePosition( m_lastMousePosition ) );
     }
 
     protected override void OnGUI()

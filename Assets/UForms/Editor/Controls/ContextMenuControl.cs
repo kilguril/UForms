@@ -19,7 +19,7 @@ namespace UForms.Controls
 
         protected override void OnContextClick( Event e )
         {
-            if ( ScreenRect.Contains( e.mousePosition ) )
+            if ( PointInControl( e.mousePosition ) )
             {
                 Menu.ShowAsContext();
                 e.Use();

@@ -9,12 +9,17 @@ using UForms.Events;
 
 public class SimpleGraphNode : Control, IDraggable
 {
+    public delegate void Connect( SimpleGraphNode node, int connectorIndex, bool origin );
+
+    public event Connect ConnectRequest;
+    public event Connect BreakRequest;
+
     public event Drag DragStarted;
     public event Drag DragMoved;
     public event Drag DragEnded;
 
-    public SimpleGraphConnectors Inputs { get; private set; }
-    public SimpleGraphConnectors Outputs { get; private set; }
+    public SimpleGraphConnectors        InputConnectors { get; private set; }
+    public SimpleGraphConnectors        OutputConnectors { get; private set; }
 
     public string Text { get; set; }
 
@@ -36,28 +41,67 @@ public class SimpleGraphNode : Control, IDraggable
     {
         Text = text;
 
-        Inputs  = new SimpleGraphConnectors( inputs );
-        Outputs = new SimpleGraphConnectors( outputs );
+        InputConnectors  = new SimpleGraphConnectors( inputs );
+        OutputConnectors = new SimpleGraphConnectors( outputs );
 
-        AddChild( Inputs );
-        AddChild( Outputs );
+        InputConnectors.OnConnectorClicked += OnInputClicked;
+        OutputConnectors.OnConnectorClicked += OnOutputClicked;
+
+        AddChild( InputConnectors );
+        AddChild( OutputConnectors );
 
         m_isDragging = false;
+    }
+
+    void OnOutputClicked( int index, MouseButton mouseButton )
+    {
+        if ( mouseButton == MouseButton.Left )
+        {
+            if ( ConnectRequest != null )
+            {
+                ConnectRequest( this, index, true );
+            }
+        }
+        else
+        { 
+            if ( BreakRequest != null )
+            {
+                BreakRequest( this, index, true );
+            }
+        }
+    }
+
+    void OnInputClicked( int index, MouseButton mouseButton )
+    {
+        if ( mouseButton == MouseButton.Left )
+        {
+            if ( ConnectRequest != null )
+            {
+                ConnectRequest( this, index, false );
+            }
+        }
+        else
+        {
+            if ( BreakRequest != null )
+            {
+                BreakRequest( this, index, false );
+            }
+        }
     }
     
 
     protected override void OnAfterLayout()
     {
-        Inputs.SetPosition( new Vector2( ( Size.x - Inputs.Size.x ) / 2.0f, 0.0f ) );
-        Outputs.SetPosition( new Vector2( ( Size.x - Outputs.Size.x ) / 2.0f, Size.y - Outputs.Size.y ) );
+        InputConnectors.SetPosition( new Vector2( ( Size.x - InputConnectors.Size.x ) / 2.0f, 0.0f ) );
+        OutputConnectors.SetPosition( new Vector2( ( Size.x - OutputConnectors.Size.x ) / 2.0f, Size.y - OutputConnectors.Size.y ) );
     }
 
 
     protected override void OnDraw()
     {
         Rect r      = ScreenRect;
-        r.y         = r.y + Inputs.Size.y;
-        r.height    = r.height - Inputs.Size.y - Outputs.Size.y;
+        r.y         = r.y + InputConnectors.Size.y;
+        r.height    = r.height - InputConnectors.Size.y - OutputConnectors.Size.y;
 
         GUI.Box( r, Text );
     }
@@ -67,7 +111,7 @@ public class SimpleGraphNode : Control, IDraggable
     {
         base.OnMouseDown( e );
 
-        if ( e != null && ScreenRect.Contains( e.mousePosition ) )
+        if ( e != null && PointInControl( e.mousePosition ) && e.button == 0 )
         {
             m_isDragging = true;
             m_dragStartPosition = Bounds.position;

@@ -49,7 +49,18 @@ namespace UForms.Decorators
 
             Rect content = m_boundControl.GetContentBounds();
 
-            if ( content.xMin < 0.0f || content.yMin < 0.0f || content.xMax > m_boundControl.Size.x - m_boundControl.MarginLeftTop.x - m_boundControl.MarginRightBottom.x || content.yMax > m_boundControl.Size.y - m_boundControl.MarginLeftTop.y - m_boundControl.MarginRightBottom.y )
+            // Hack for Control.GetContentBounds breaking with children with negative values...
+            float xMax = Mathf.Max( content.xMax, m_boundControl.ScreenRect.xMax );
+            float yMax = Mathf.Max( content.yMax, m_boundControl.ScreenRect.yMax );
+
+            content.Set(
+                content.xMin,
+                content.yMin,
+                xMax - content.xMin, 
+                yMax - content.yMin
+            );
+
+            if ( content.xMin < m_boundControl.ScreenRect.xMin || content.yMin < m_boundControl.ScreenRect.yMin || content.xMax > m_boundControl.ScreenRect.xMax - m_boundControl.MarginLeftTop.x - m_boundControl.MarginRightBottom.x || content.yMax > m_boundControl.ScreenRect.yMax - m_boundControl.MarginLeftTop.y - m_boundControl.MarginRightBottom.y )
             {
                 m_doScrollbars = true;
             }
@@ -62,6 +73,11 @@ namespace UForms.Decorators
                 m_scrollableRect.Set( content.xMin, content.yMin, w, h );
 
                 m_scrollPosition = GUI.BeginScrollView( m_boundControl.ScreenRect, m_scrollPosition, m_scrollableRect );
+                m_boundControl.ViewportOffset = new Vector2( content.xMin + m_scrollPosition.x, content.yMin + m_scrollPosition.y );
+            }
+            else
+            {
+                m_boundControl.ViewportOffset = Vector2.zero;
             }
         }
 

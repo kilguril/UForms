@@ -67,6 +67,15 @@ namespace UForms.Controls
             private set { m_screenRect = value; }
         }
 
+
+        // Since click coordinates are based on the current viewport, we will need to know the viewport offset in case of scrolling
+        public Vector2 ViewportOffset
+        {
+            get         { return m_container == null ? m_viewportOffset : m_container.ViewportOffset + m_viewportOffset; }
+            set         { m_viewportOffset = value; }
+        }
+
+
         // Cached parent's screen position so deep elements don't have to traverse all the way up
         public Vector2 ParentScreenPosition         
         {
@@ -188,6 +197,7 @@ namespace UForms.Controls
         private     Rect              m_screenRect;
 
         private     Vector2           m_screenPosition;
+        private     Vector2           m_viewportOffset;
 
         private     Vector2           m_position;
         private     Vector2           m_size;
@@ -346,7 +356,7 @@ namespace UForms.Controls
             MarginBottomUnits   = bottomu;
 
             return this;
-        }
+        }        
 
 
         public Control SetSize( float x, float y, MetricsUnits wu = MetricsUnits.Pixel, MetricsUnits hu = MetricsUnits.Pixel )
@@ -395,6 +405,19 @@ namespace UForms.Controls
             PositionYUnits  = yu;
             return this;
         }
+
+
+        public bool PointInControl( Vector2 p )
+        {
+            return ScreenRect.Contains( ViewportToAbsolutePosition( p ) );
+        }
+
+
+        public Vector2 ViewportToAbsolutePosition( Vector2 p )
+        {
+            return p + ViewportOffset;
+        }
+
 
         // Returns the content bounds rectangle without factoring the Size property
         public Rect GetContentBounds()

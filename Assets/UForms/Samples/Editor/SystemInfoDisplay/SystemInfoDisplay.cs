@@ -11,14 +11,16 @@ using UForms.Events;
 
 public class SystemInfoDisplay : UFormsApplication 
 {    
-    [MenuItem("Help/Display System Info")]
+    [MenuItem("UForms Samples/Display System Info")]
     private static void Run()
     {
         EditorWindow.GetWindow< SystemInfoDisplay >( true, "System Info", true );
     }
 
+
     private static string UDID = SystemInfo.deviceUniqueIdentifier;
     private const float LIST_INDENTATION_PIXELS = 16.0f;
+
 
     protected override void OnInitialize()
     {

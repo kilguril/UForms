@@ -10,6 +10,8 @@ namespace UForms.Controls
     {
         public GenericMenu Menu { get; private set; }
 
+        public bool Positionless { get; set; }
+
         public ContextMenuControl(  ) : base()
         {
             Menu = new GenericMenu();
@@ -19,7 +21,7 @@ namespace UForms.Controls
 
         protected override void OnContextClick( Event e )
         {
-            if ( PointInControl( e.mousePosition ) )
+            if ( Positionless || PointInControl( e.mousePosition ) )
             {
                 Menu.ShowAsContext();
                 e.Use();

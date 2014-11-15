@@ -47,6 +47,9 @@
     <Compile Include="..\..\Assets\UForms\Editor\Controls\Button.cs">
       <Link>UForms\Editor\Controls\Button.cs</Link>
     </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Controls\ContextMenuControl.cs">
+      <Link>UForms\Editor\Controls\ContextMenuControl.cs</Link>
+    </Compile>
     <Compile Include="..\..\Assets\UForms\Editor\Controls\Control.cs">
       <Link>UForms\Editor\Controls\Control.cs</Link>
     </Compile>
@@ -175,6 +178,18 @@
     </Compile>
     <Compile Include="..\..\Assets\UForms\Editor\Events\IEditable.cs">
       <Link>UForms\Editor\Events\IEditable.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Graphics\BezierCurve.cs">
+      <Link>UForms\Editor\Graphics\BezierCurve.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Graphics\GraphicsCanvas.cs">
+      <Link>UForms\Editor\Graphics\GraphicsCanvas.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Graphics\Line.cs">
+      <Link>UForms\Editor\Graphics\Line.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Assets\UForms\Editor\Graphics\Shape.cs">
+      <Link>UForms\Editor\Graphics\Shape.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

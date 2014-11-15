@@ -211,6 +211,8 @@ namespace UForms.Controls
 
         private     UFormsApplication m_application;
 
+        private     List< int >       m_pendingRemoval;
+
 
         #region Other events
 
@@ -273,6 +275,8 @@ namespace UForms.Controls
 
             ResetPivotRoot = false;
 
+            m_pendingRemoval = new List<int>();
+
 #if UFORMS_DEBUG_RECTS
             AddDecorator( new BackgroundColor( new Color( Random.value, Random.value, Random.value ) ) );
 #endif
@@ -287,7 +291,10 @@ namespace UForms.Controls
 
                 foreach( Control child in Children )
                 {
-                    child.SetApplicationContext( app );
+                    if ( child != null )
+                    {
+                        child.SetApplicationContext( app );
+                    }
                 }
             }
         }
@@ -314,7 +321,12 @@ namespace UForms.Controls
             {
                 child.m_container = null;
 
-                Children.Remove( child );
+                int index = Children.IndexOf( child );
+                if ( index >= 0 )
+                {
+                    child = null;
+                    m_pendingRemoval.Add( index );
+                }
             }
 
             return child;
@@ -426,10 +438,13 @@ namespace UForms.Controls
 
             foreach ( Control child in Children )
             {
-                r.x      = Mathf.Min( r.x, child.Position.x );
-                r.y      = Mathf.Min( r.y, child.Position.y );
-                r.width  = Mathf.Max( r.width, child.Visibility == VisibilityMode.Collapsed ? 0.0f : child.Position.x + child.Size.x );
-                r.height = Mathf.Max( r.height, child.Visibility == VisibilityMode.Collapsed ? 0.0f : child.Position.y + child.Size.y );
+                if ( child != null )
+                {
+                    r.x = Mathf.Min( r.x, child.Position.x );
+                    r.y = Mathf.Min( r.y, child.Position.y );
+                    r.width = Mathf.Max( r.width, child.Visibility == VisibilityMode.Collapsed ? 0.0f : child.Position.x + child.Size.x );
+                    r.height = Mathf.Max( r.height, child.Visibility == VisibilityMode.Collapsed ? 0.0f : child.Position.y + child.Size.y );
+                }
             }
 
             return r;
@@ -438,6 +453,20 @@ namespace UForms.Controls
 
         public void Update()
         {
+            if ( m_pendingRemoval.Count > 0 )
+            {
+                // Sort in descending order so removal does not affect indices on multile removes
+                m_pendingRemoval.Sort( ( a, b ) => { return b.CompareTo( a ); } );
+
+                foreach ( int index in m_pendingRemoval )
+                {
+                    Children.RemoveAt( index );
+                }
+
+                m_pendingRemoval.Clear();
+            }
+            
+
             OnUpdate();
 
             foreach( Control child in Children )
@@ -490,7 +519,10 @@ namespace UForms.Controls
             {
                 foreach( Control child in Children )
                 {
-                    child.Layout();
+                    if ( child != null )
+                    {
+                        child.Layout();
+                    }
                 }
 
                 // Update bounds
@@ -549,7 +581,10 @@ namespace UForms.Controls
 
                 foreach ( Control child in Children )
                 {
-                    child.Draw();
+                    if ( child != null )
+                    {
+                        child.Draw();
+                    }
                 }
 
                 OnDraw();
@@ -669,7 +704,10 @@ namespace UForms.Controls
                     return;
                 }
 
-                child.ProcessEvents( e );
+                if ( child != null )
+                {
+                    child.ProcessEvents( e );
+                }
             }
         }
     }

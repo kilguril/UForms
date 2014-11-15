@@ -67,21 +67,24 @@ namespace UForms.Decorators
 
             foreach ( Control child in m_boundControl.Children )
             {
-                switch ( Mode )
+                if ( child != null )
                 {
-                    case StackMode.Horizontal:
+                    switch ( Mode )
+                    {
+                        case StackMode.Horizontal:
 
-                    child.Position = new Vector2( offset, 0.0f );
-                    offset += child.Bounds.width;
+                        child.Position = new Vector2( offset, 0.0f );
+                        offset += child.Bounds.width;
 
-                    break;
+                        break;
 
-                    case StackMode.Vertical:
+                        case StackMode.Vertical:
 
-                    child.Position = new Vector2( 0.0f, offset );
-                    offset += child.Bounds.height;
+                        child.Position = new Vector2( 0.0f, offset );
+                        offset += child.Bounds.height;
 
-                    break;
+                        break;
+                    }
                 }
             }
         }
@@ -95,34 +98,37 @@ namespace UForms.Decorators
 
             foreach ( Control child in m_boundControl.Children )
             {
-                switch ( Mode )
+                if ( child != null )
                 {
-                    case StackMode.Horizontal:
-
-                    if ( offset + child.Bounds.width >= m_boundControl.Size.x )
+                    switch ( Mode )
                     {
-                        offset2 += LayoutContainedCloseGroup( group, offset2 );
-                        offset = 0.0f;
+                        case StackMode.Horizontal:
+
+                        if ( offset + child.Bounds.width >= m_boundControl.Size.x )
+                        {
+                            offset2 += LayoutContainedCloseGroup( group, offset2 );
+                            offset = 0.0f;
+                        }
+
+                        offset += child.Bounds.width;
+                        group.Add( child );
+
+                        break;
+
+                        case StackMode.Vertical:
+
+                        if ( offset + child.Bounds.height >= m_boundControl.Size.y )
+                        {
+                            offset2 += LayoutContainedCloseGroup( group, offset2 );
+                            offset = 0.0f;
+
+                        }
+
+                        offset += child.Bounds.height;
+                        group.Add( child );
+
+                        break;
                     }
-
-                    offset += child.Bounds.width;
-                    group.Add( child );
-
-                    break;
-
-                    case StackMode.Vertical:
-
-                    if ( offset + child.Bounds.height >= m_boundControl.Size.y )
-                    {
-                        offset2 += LayoutContainedCloseGroup( group, offset2 );
-                        offset = 0.0f;
-
-                    }
-
-                    offset += child.Bounds.height;
-                    group.Add( child );
-
-                    break;
                 }
             }
 

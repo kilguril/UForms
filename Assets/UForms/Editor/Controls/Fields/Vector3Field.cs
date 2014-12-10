@@ -8,7 +8,7 @@ namespace UForms.Controls.Fields
     {
         protected override Vector2 DefaultSize
         {
-            get { return new Vector2( 200.0f, 16.0f ); }
+            get { return new Vector2( 200.0f, 32.0f ); }
         }
 
         protected override bool UseBackingFieldChangeDetection

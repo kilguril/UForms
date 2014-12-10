@@ -22,6 +22,7 @@ public class DuplicateSpecial : UFormsApplication
     private Control             m_root;
 
     private ObjectField         m_original;
+    private Vector3Field        m_pivot;
     private TransformControl    m_transform;
     private IntField            m_count;
     private EnumDropdown        m_space;
@@ -31,9 +32,11 @@ public class DuplicateSpecial : UFormsApplication
 
     protected override void OnInitialize()
     {
-        Vector2 winSize = new Vector3( 312.0f, 225.0f );
+        Vector2 winSize = new Vector3( 312.0f, 265.0f );
         maxSize = winSize;
-        minSize = winSize;        
+        minSize = winSize;
+
+        autoRepaintOnSceneChange = true;
 
         m_root = new Control();
         m_root.SetSize( 100.0f, 100.0f, Control.MetricsUnits.Percentage, Control.MetricsUnits.Percentage );
@@ -47,6 +50,13 @@ public class DuplicateSpecial : UFormsApplication
         m_original.SetWidth( 100.0f, Control.MetricsUnits.Percentage );
         m_original.SetMargin( 5.0f, 5.0f, 5.0f, 5.0f );
         m_root.AddChild( m_original );
+
+        // Rotation pivot point
+        m_pivot = new Vector3Field( Vector3.zero, "Pivot:" );
+        m_pivot.SetHeight( 40.0f, Control.MetricsUnits.Pixel );
+        m_pivot.SetWidth( 100.0f, Control.MetricsUnits.Percentage );
+        m_pivot.SetMargin( 5.0f, 5.0f, 5.0f, 5.0f );
+        m_root.AddChild( m_pivot );
 
         // Transform control
         m_transform = new TransformControl();
@@ -79,7 +89,22 @@ public class DuplicateSpecial : UFormsApplication
         m_original.ValueChange += m_original_ValueChange;
         m_count.ValueChange += m_count_ValueChange;
         m_duplicate.Clicked += m_duplicate_Clicked;
+
+        SceneView.onSceneGUIDelegate += SceneViewGUI;
     }
+
+
+    void OnDestroy()
+    {
+        SceneView.onSceneGUIDelegate -= SceneViewGUI;
+    }
+
+
+    void SceneViewGUI( SceneView scene )
+    {
+        m_pivot.Value = Handles.DoPositionHandle( m_pivot.Value, Quaternion.Euler( Vector3.up ) );
+    }
+
 
 
     void m_count_ValueChange( UForms.Events.IEditable sender, UForms.Events.EditEventArgs args, Event nativeEvent )
@@ -114,7 +139,13 @@ public class DuplicateSpecial : UFormsApplication
 
     private void Duplicate( GameObject original, int count, Vector3 translate, Vector3 rotate, Vector3 scale, Space space )
     {
+        if ( original == null )
+        {
+            return;
+        }
+
         Vector3 t, r, s;
+        Vector3 pivot;
         Transform parent;
 
         parent = original.transform.parent;
@@ -128,19 +159,25 @@ public class DuplicateSpecial : UFormsApplication
         r = original.transform.localRotation.eulerAngles;
         s = original.transform.localScale;
 
+        pivot = original.transform.position - m_pivot.Value;
+
         for ( int i = 0; i < count; i++ )
         {
+            pivot += translate;
             t += translate;
             r += rotate;
-            s += scale;
+            s += scale;                        
 
             GameObject obj = Instantiate( original ) as GameObject;
 
             obj.transform.parent = parent;
 
-            obj.transform.localPosition = t;
-            obj.transform.localRotation = Quaternion.Euler( r );
-            obj.transform.localScale = s;            
+            obj.transform.localPosition = t;            
+            obj.transform.localScale = s;
+
+            obj.transform.RotateAround( obj.transform.position - pivot, space == Space.World ? Vector3.up : obj.transform.up, r.y );
+            obj.transform.RotateAround( obj.transform.position - pivot, space == Space.World ? Vector3.right : obj.transform.right, r.x );
+            obj.transform.RotateAround( obj.transform.position - pivot, space == Space.World ? Vector3.forward : obj.transform.forward, r.z );
 
             obj.name = original.name;
         }

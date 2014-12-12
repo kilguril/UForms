@@ -15,7 +15,7 @@ I've discovered the need for such solution when I started working on several edi
 ## License
 
 UForms is available under the MIT license.
-See **LICENSE.md** for more information.
+See **LICENSE** for more information.
 
 
 ## Design Philosophy

@@ -6,8 +6,15 @@ using UForms.Controls;
 
 namespace UForms.Application
 {
+    /// <summary>
+    /// <c>UFormsApplication</c> defines a basic editor application. 
+    /// Extend this class with your own functionality.
+    /// </summary>
     public class UFormsApplication : EditorWindow
     {
+        /// <summary>
+        /// OnGUI call frame counter, for internal use.
+        /// </summary>
         public uint       Frame { get { return m_frame; } }
 
         private Vector2   m_cachedScreenSize;
@@ -15,6 +22,11 @@ namespace UForms.Application
 
         private uint      m_frame;
 
+        /// <summary>
+        /// Adds a child to the control list.
+        /// </summary>
+        /// <param name="control">Control object to add.</param>
+        /// <returns>The method returns the control that was added.</returns>
         public Control AddChild( Control control )
         {
             if ( m_rootObject != null )
@@ -25,6 +37,11 @@ namespace UForms.Application
             return control;
         }
 
+        /// <summary>
+        /// Removes a child from the control list.
+        /// </summary>
+        /// <param name="control">Control object to remove.</param>
+        /// <returns>The method returns the control that was removed.</returns>
         public Control RemoveChild( Control control )
         {
             if ( m_rootObject != null )
@@ -35,8 +52,14 @@ namespace UForms.Application
             return control;
         }
 
+        /// <summary>
+        /// Override this method to provide additional functionality on initialization
+        /// </summary>
         protected virtual void OnInitialize() { }
 
+        /// <summary>
+        /// Standard Unity OnGUI call. Make sure to call <c>base.OnGUI()</c> when overriding this method.
+        /// </summary>
         protected virtual void OnGUI()
         {
             if ( m_rootObject == null )
@@ -65,6 +88,9 @@ namespace UForms.Application
             m_frame++;
         }
 
+        /// <summary>
+        /// Standard Unity Update call. Make sure to call <c>base.Update()</c> when overriding this method.
+        /// </summary>
         protected virtual void Update()
         {
             if ( m_rootObject != null )

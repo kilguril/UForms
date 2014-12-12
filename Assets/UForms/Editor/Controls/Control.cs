@@ -12,23 +12,53 @@ using UForms.Application;
 
 namespace UForms.Controls
 {
+    /// <summary>
+    /// Defines a base class for all controls.
+    /// </summary>
     public class Control : IDrawable
     {
+        /// <summary>
+        /// Control visibility mode.
+        /// </summary>
         public enum VisibilityMode
         {
+            /// <summary>
+            /// Control is visible.
+            /// </summary>
             Visible,
+
+            /// <summary>
+            /// Control is not visible, but it's space is reserved.
+            /// </summary>
             Hidden,
+
+            /// <summary>
+            /// Control is not visible, and takes no space when doing layout.
+            /// </summary>
             Collapsed
         }
 
+        /// <summary>
+        /// Defines available metrics units for measuring sizes.
+        /// </summary>
         public enum MetricsUnits
         {
+            /// <summary>
+            /// Absolute pixel value.
+            /// </summary>
             Pixel,
+
+            /// <summary>
+            /// Relative percentage value.
+            /// </summary>
             Percentage
         }
 
-        // Dirty flag should be used to trigger a repaint on internal component changes, as otherwise repaint will only be invoked by specific editor events
-        // flag will propagate upwards and will be collected by the application from the root component if it reaches it.
+
+        /// <summary>        
+        /// Dirty flag should be used to trigger a repaint on internal component changes, as otherwise repaint will only be invoked by specific editor events
+        /// flag will propagate upwards and will be collected by the application from the root component if it reaches it.
+        /// </summary>
         public bool Dirty
         {
             get { return m_dirty; }
@@ -54,13 +84,18 @@ namespace UForms.Controls
 
         private uint m_dirtyFrame;
 
+        /// <summary>
+        /// I honestly don't remember what this one does...
+        /// </summary>
         public Rect Bounds        
         {
             get             { return m_bounds; }
             private set     { m_bounds = value; } 
         }
 
-        // Final computed screen rect taking into account screen position, margins and size
+        /// <summary>
+        /// Final computed screen rect taking into account screen position, margins and size
+        /// </summary>
         public Rect ScreenRect
         {
             get         { return m_screenRect; }
@@ -68,7 +103,9 @@ namespace UForms.Controls
         }
 
 
-        // Since click coordinates are based on the current viewport, we will need to know the viewport offset in case of scrolling
+        /// <summary>
+        /// Since click coordinates are based on the current viewport, we will need to know the viewport offset in case of scrolling
+        /// </summary>
         public Vector2 ViewportOffset
         {
             get         { return m_container == null ? m_viewportOffset : m_container.ViewportOffset + m_viewportOffset; }
@@ -76,122 +113,175 @@ namespace UForms.Controls
         }
 
 
-        // Cached parent's screen position so deep elements don't have to traverse all the way up
+        /// <summary>
+        /// Cached parent's screen position so deep elements don't have to traverse all the way up
+        /// </summary>
         public Vector2 ParentScreenPosition         
         {
             get             { return m_screenPosition; } 
             set             { m_screenPosition = value; } 
         }
 
-        // Position is used to hint to the control it's desired position on screen.
+        /// <summary>
+        /// Position is used to hint to the control it's desired position on screen.
+        /// </summary>
         public Vector2 Position 
         {
             get { return m_position; }
             set { m_position = value; } 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits PositionXUnits
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits PositionYUnits
         {
             get;
             set;
         }
 
-        // Size is used to hint to the control it's desired size on screen.
+        /// <summary>
+        /// Size is used to hint to the control it's desired size on screen.
+        /// </summary>
         public Vector2 Size 
         {
             get { return m_size; }
             set { m_size = value; } 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits WidthUnits
         {
             get; set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits HeightUnits
         {
             get;
             set;
         }
      
+        /// <summary>
+        /// 
+        /// </summary>
         public Vector2 MarginLeftTop
         {
             get { return m_marginLeftTop; }
             set { m_marginLeftTop = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public Vector2 MarginRightBottom
         {
             get { return m_marginRightBottom; }
             set { m_marginRightBottom = value; }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits MarginLeftUnits
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits MarginRightUnits
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits MarginTopUnits
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MetricsUnits MarginBottomUnits
         {
             get;
             set;
         }
-
-        // Is this control enabled? this property will propagate to all child contorls and can be applied to interactive controls as well as containers
+        
+        /// <summary>
+        /// Is this control enabled? this property will propagate to all child contorls and can be applied to interactive controls as well as containers 
+        /// </summary>
         public bool Enabled
         {
             get;
             set;
         }
 
-        // What is the visibility mode of the control?
-        // Visible = default
-        // Hidden = layout control and reserve space but don't draw
-        // Collapsed = don't layout, generate empty rect and don't draw
+
+        /// <summary>
+        /// What is the visibility mode of the control?
+        /// Visible = default
+        /// Hidden = layout control and reserve space but don't draw
+        /// Collapsed = don't layout, generate empty rect and don't draw
+        /// </summary>
         public VisibilityMode    Visibility
         {
             get { return m_visibility; }
             set { m_visibility = value; }
         }
 
-        // Panels should override this property to specify they reset the pivot offset to 0,0
+        /// <summary>
+        /// Panels should override this property to specify they reset the pivot offset to 0,0
+        /// </summary>
         public bool ResetPivotRoot
         {
             get;
             set;
         }
 
-        // Default size for this control
+        /// <summary>
+        /// Default size for this control
+        /// </summary>
         protected virtual Vector2 DefaultSize
         {
             get { return Vector2.zero; }
         }
 
+        /// <summary>
+        /// Contained children elements.               
+        /// </summary>
+        public      List<Control>     Children      { get; private set; }         
 
-        public      List<Control>     Children      { get; private set; }        // Contained children elements.               
+        /// <summary>
+        /// 
+        /// </summary>
         public      List<Decorator>   Decorators { get; private set; }
 
-
-        protected   Control           m_container;                               // Containing element if control is in a hierarchy.
+        /// <summary>
+        /// Containing element if control is in a hierarchy.
+        /// </summary>
+        protected   Control           m_container;                               
 
         private     Rect              m_bounds;
         private     Rect              m_screenRect;
@@ -216,6 +306,9 @@ namespace UForms.Controls
 
         #region Other events
 
+        /// <summary>
+        /// Override this method to add functionality on update.
+        /// </summary>
         protected virtual void OnUpdate() { }
 
         #endregion
@@ -223,40 +316,146 @@ namespace UForms.Controls
 
         #region Internal Drawing Events
 
+        /// <summary>
+        /// Override this method to add functionality to an early draw pass.
+        /// </summary>
         protected virtual void OnBeforeDraw() { }
+
+        /// <summary>
+        /// Override this method to add functionality to the main draw pass. 
+        /// </summary>
         protected virtual void OnDraw() { }
+
+        /// <summary>
+        /// Override this method to add functionality to the layout pass.
+        /// </summary>
         protected virtual void OnLayout() { }
+
+        /// <summary>
+        /// Override this method to add functionality to a late layout pass.
+        /// </summary>
         protected virtual void OnAfterLayout() { }
         #endregion
 
         #region Internal System Events
 
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnContextClick( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnDragExited( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnDragPerform( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnDragUpdated( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnExecuteCommand( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnIgnore( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnKeyDown( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnKeyUp( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnLayout( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnMouseDown( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnMouseDrag( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnMouseMove( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnMouseUp( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnRepaint( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnScrollWheel( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnUsed( Event e ) { }
+
+        /// <summary>
+        /// Override this to handle this event type.
+        /// </summary>
+        /// <param name="e"></param>
         protected virtual void OnValidateCommand( Event e ) { }
 
         #endregion
 
+        /// <summary>
+        /// Parameterless constructor.
+        /// </summary>
         public Control()
         {
             Init( Vector2.zero, DefaultSize );
         }
 
-
+        /// <summary>
+        /// Constructor with position and size initializers.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="size"></param>
         public Control( Vector2 position, Vector2 size )
         {
             Init( position, size );
@@ -283,6 +482,10 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Used internally to reference the application context to this control.
+        /// </summary>
+        /// <param name="app"></param>
         public void SetApplicationContext( UFormsApplication app )
         {
             if ( m_application != app )
@@ -299,6 +502,11 @@ namespace UForms.Controls
             }
         }
 
+        /// <summary>
+        /// Adds a child control.
+        /// </summary>
+        /// <param name="child">Control objec to add.</param>
+        /// <returns>Added control object.</returns>
         public Control AddChild( Control child )
         {
             if ( child.Dirty )
@@ -315,6 +523,11 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Removes a child control.
+        /// </summary>
+        /// <param name="child">Control object to remove.</param>
+        /// <returns>Removed control object.</returns>
         public Control RemoveChild( Control child )
         {
             if ( child.m_container == this )
@@ -333,6 +546,11 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Adds a decorator to this control.
+        /// </summary>
+        /// <param name="decorator">Decorator object to add.</param>
+        /// <returns>Added decorator object.</returns>
         public Decorator AddDecorator( Decorator decorator )
         {
             decorator.SetControl( this );
@@ -343,6 +561,11 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Removes a decorator from this control.
+        /// </summary>
+        /// <param name="decorator">Decorator object to remove.</param>
+        /// <returns>Removed decorator object.</returns>
         public Decorator RemoveDecorator( Decorator decorator )
         {
             if ( Decorators.Contains( decorator ) )
@@ -356,6 +579,18 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="top"></param>
+        /// <param name="right"></param>
+        /// <param name="bottom"></param>
+        /// <param name="leftu"></param>
+        /// <param name="topu"></param>
+        /// <param name="rightu"></param>
+        /// <param name="bottomu"></param>
+        /// <returns></returns>
         public Control SetMargin( float left, float top, float right, float bottom,
             MetricsUnits leftu = MetricsUnits.Pixel, MetricsUnits topu = MetricsUnits.Pixel, MetricsUnits rightu = MetricsUnits.Pixel, MetricsUnits bottomu = MetricsUnits.Pixel )
         {
@@ -371,12 +606,27 @@ namespace UForms.Controls
         }        
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="wu"></param>
+        /// <param name="hu"></param>
+        /// <returns></returns>
         public Control SetSize( float x, float y, MetricsUnits wu = MetricsUnits.Pixel, MetricsUnits hu = MetricsUnits.Pixel )
         {
             return SetSize( new Vector2( x, y ), wu, hu );
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="wu"></param>
+        /// <param name="hu"></param>
+        /// <returns></returns>
         public Control SetSize( Vector2 size, MetricsUnits wu = MetricsUnits.Pixel, MetricsUnits hu = MetricsUnits.Pixel )
         {
             Size        = size;
@@ -386,6 +636,12 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="wu"></param>
+        /// <returns></returns>
         public Control SetWidth( float width, MetricsUnits wu = MetricsUnits.Pixel )
         {
             Size       = new Vector2( width, Size.y );
@@ -395,6 +651,12 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="height"></param>
+        /// <param name="hu"></param>
+        /// <returns></returns>
         public Control SetHeight( float height, MetricsUnits hu = MetricsUnits.Pixel )
         {
             Size        = new Vector2( Size.x, height );
@@ -404,12 +666,27 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="xu"></param>
+        /// <param name="yu"></param>
+        /// <returns></returns>
         public Control SetPosition( float x, float y, MetricsUnits xu = MetricsUnits.Pixel, MetricsUnits yu = MetricsUnits.Pixel )
         {
             return SetPosition( new Vector2( x, y ), xu, yu );
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="xu"></param>
+        /// <param name="yu"></param>
+        /// <returns></returns>
         public Control SetPosition( Vector2 position, MetricsUnits xu = MetricsUnits.Pixel, MetricsUnits yu = MetricsUnits.Pixel )
         {
             Position        = position;
@@ -419,19 +696,32 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Tests if a given screen point is inside this control
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public bool PointInControl( Vector2 p )
         {
             return ScreenRect.Contains( ViewportToAbsolutePosition( p ) );
         }
 
 
+        /// <summary>
+        /// Transforms viewport position to absolute position?
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public Vector2 ViewportToAbsolutePosition( Vector2 p )
         {
             return p + ViewportOffset;
         }
 
 
-        // Returns the content bounds rectangle without factoring the Size property
+        /// <summary>
+        /// Returns the content bounds rectangle without factoring the Size property
+        /// </summary>
+        /// <returns></returns>
         public Rect GetContentBounds()
         {
             Rect r = new Rect( 0, 0, 0, 0 );
@@ -451,6 +741,9 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Update method, used internally.
+        /// </summary>
         public void Update()
         {
             if ( m_pendingRemoval.Count > 0 )
@@ -476,6 +769,9 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Layout method, used internally.
+        /// </summary>
         public void Layout()
         {
             ResetPivotRoot = false;
@@ -555,6 +851,9 @@ namespace UForms.Controls
             }
         }
 
+        /// <summary>
+        /// Draw method, used internally.
+        /// </summary>
         public void Draw()
         {            
             // We will cache the enabled property at the beginning of the draw phase so we can safely determine if we should close it as soon as drawing completes.
@@ -612,6 +911,10 @@ namespace UForms.Controls
         }
 
 
+        /// <summary>
+        /// Event processing method, used internally.
+        /// </summary>
+        /// <param name="e"></param>
         public void ProcessEvents( Event e )
         {
             // Don't process events for collapsed elements

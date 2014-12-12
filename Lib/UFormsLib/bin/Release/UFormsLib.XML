@@ -1,0 +1,2857 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>UFormsLib</name>
+    </assembly>
+    <members>
+        <member name="T:UForms.Application.UFormsApplication">
+            <summary>
+            <c>UFormsApplication</c> defines a basic editor application. 
+            Extend this class with your own functionality.
+            </summary>
+        </member>
+        <member name="M:UForms.Application.UFormsApplication.AddChild(UForms.Controls.Control)">
+            <summary>
+            Adds a child to the control list.
+            </summary>
+            <param name="control">Control object to add.</param>
+            <returns>The method returns the control that was added.</returns>
+        </member>
+        <member name="M:UForms.Application.UFormsApplication.RemoveChild(UForms.Controls.Control)">
+            <summary>
+            Removes a child from the control list.
+            </summary>
+            <param name="control">Control object to remove.</param>
+            <returns>The method returns the control that was removed.</returns>
+        </member>
+        <member name="M:UForms.Application.UFormsApplication.OnInitialize">
+            <summary>
+            Override this method to provide additional functionality on initialization
+            </summary>
+        </member>
+        <member name="M:UForms.Application.UFormsApplication.OnGUI">
+            <summary>
+            Standard Unity OnGUI call. Make sure to call <c>base.OnGUI()</c> when overriding this method.
+            </summary>
+        </member>
+        <member name="M:UForms.Application.UFormsApplication.Update">
+            <summary>
+            Standard Unity Update call. Make sure to call <c>base.Update()</c> when overriding this method.
+            </summary>
+        </member>
+        <member name="P:UForms.Application.UFormsApplication.Frame">
+            <summary>
+            OnGUI call frame counter, for internal use.
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Button">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Control">
+            <summary>
+            Defines a base class for all controls.
+            </summary>
+        </member>
+        <member name="T:UForms.Core.IDrawable">
+            <summary>
+            Provides a uniform interface for all drawable elements.
+            </summary>
+        </member>
+        <member name="M:UForms.Core.IDrawable.Draw">
+            <summary>
+            Draw method used to render the element.
+            </summary>
+        </member>
+        <member name="P:UForms.Core.IDrawable.ScreenRect">
+            <summary>
+            The element's screen rect, used for rendering.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Control.m_container">
+            <summary>
+            Containing element if control is in a hierarchy.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.OnUpdate">
+            <summary>
+            Override this method to add functionality on update.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.OnBeforeDraw">
+            <summary>
+            Override this method to add functionality to an early draw pass.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.OnDraw">
+            <summary>
+            Override this method to add functionality to the main draw pass. 
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.OnLayout">
+            <summary>
+            Override this method to add functionality to the layout pass.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.OnAfterLayout">
+            <summary>
+            Override this method to add functionality to a late layout pass.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.OnContextClick(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnDragExited(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnDragPerform(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnDragUpdated(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnExecuteCommand(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnIgnore(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnKeyDown(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnKeyUp(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnLayout(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnMouseDown(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnMouseDrag(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnMouseMove(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnMouseUp(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnRepaint(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnScrollWheel(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnUsed(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.OnValidateCommand(UnityEngine.Event)">
+            <summary>
+            Override this to handle this event type.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.#ctor">
+            <summary>
+            Parameterless constructor.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.#ctor(UnityEngine.Vector2,UnityEngine.Vector2)">
+            <summary>
+            Constructor with position and size initializers.
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.SetApplicationContext(UForms.Application.UFormsApplication)">
+            <summary>
+            Used internally to reference the application context to this control.
+            </summary>
+            <param name="app"></param>
+        </member>
+        <member name="M:UForms.Controls.Control.AddChild(UForms.Controls.Control)">
+            <summary>
+            Adds a child control.
+            </summary>
+            <param name="child">Control objec to add.</param>
+            <returns>Added control object.</returns>
+        </member>
+        <member name="M:UForms.Controls.Control.RemoveChild(UForms.Controls.Control)">
+            <summary>
+            Removes a child control.
+            </summary>
+            <param name="child">Control object to remove.</param>
+            <returns>Removed control object.</returns>
+        </member>
+        <member name="M:UForms.Controls.Control.AddDecorator(UForms.Decorators.Decorator)">
+            <summary>
+            Adds a decorator to this control.
+            </summary>
+            <param name="decorator">Decorator object to add.</param>
+            <returns>Added decorator object.</returns>
+        </member>
+        <member name="M:UForms.Controls.Control.RemoveDecorator(UForms.Decorators.Decorator)">
+            <summary>
+            Removes a decorator from this control.
+            </summary>
+            <param name="decorator">Decorator object to remove.</param>
+            <returns>Removed decorator object.</returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetMargin(System.Single,System.Single,System.Single,System.Single,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="left"></param>
+            <param name="top"></param>
+            <param name="right"></param>
+            <param name="bottom"></param>
+            <param name="leftu"></param>
+            <param name="topu"></param>
+            <param name="rightu"></param>
+            <param name="bottomu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetSize(System.Single,System.Single,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="wu"></param>
+            <param name="hu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetSize(UnityEngine.Vector2,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="size"></param>
+            <param name="wu"></param>
+            <param name="hu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetWidth(System.Single,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="width"></param>
+            <param name="wu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetHeight(System.Single,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="height"></param>
+            <param name="hu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetPosition(System.Single,System.Single,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="x"></param>
+            <param name="y"></param>
+            <param name="xu"></param>
+            <param name="yu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.SetPosition(UnityEngine.Vector2,UForms.Controls.Control.MetricsUnits,UForms.Controls.Control.MetricsUnits)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="xu"></param>
+            <param name="yu"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.PointInControl(UnityEngine.Vector2)">
+            <summary>
+            Tests if a given screen point is inside this control
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.ViewportToAbsolutePosition(UnityEngine.Vector2)">
+            <summary>
+            Transforms viewport position to absolute position?
+            </summary>
+            <param name="p"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.GetContentBounds">
+            <summary>
+            Returns the content bounds rectangle without factoring the Size property
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Control.Update">
+            <summary>
+            Update method, used internally.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.Layout">
+            <summary>
+            Layout method, used internally.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.Draw">
+            <summary>
+            Draw method, used internally.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Control.ProcessEvents(UnityEngine.Event)">
+            <summary>
+            Event processing method, used internally.
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:UForms.Controls.Control.Dirty">
+            <summary>        
+            Dirty flag should be used to trigger a repaint on internal component changes, as otherwise repaint will only be invoked by specific editor events
+            flag will propagate upwards and will be collected by the application from the root component if it reaches it.
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Bounds">
+            <summary>
+            I honestly don't remember what this one does...
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.ScreenRect">
+            <summary>
+            Final computed screen rect taking into account screen position, margins and size
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.ViewportOffset">
+            <summary>
+            Since click coordinates are based on the current viewport, we will need to know the viewport offset in case of scrolling
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.ParentScreenPosition">
+            <summary>
+            Cached parent's screen position so deep elements don't have to traverse all the way up
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Position">
+            <summary>
+            Position is used to hint to the control it's desired position on screen.
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.PositionXUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.PositionYUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Size">
+            <summary>
+            Size is used to hint to the control it's desired size on screen.
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.WidthUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.HeightUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.MarginLeftTop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.MarginRightBottom">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.MarginLeftUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.MarginRightUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.MarginTopUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.MarginBottomUnits">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Enabled">
+            <summary>
+            Is this control enabled? this property will propagate to all child contorls and can be applied to interactive controls as well as containers 
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Visibility">
+            <summary>
+            What is the visibility mode of the control?
+            Visible = default
+            Hidden = layout control and reserve space but don't draw
+            Collapsed = don't layout, generate empty rect and don't draw
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.ResetPivotRoot">
+            <summary>
+            Panels should override this property to specify they reset the pivot offset to 0,0
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.DefaultSize">
+            <summary>
+            Default size for this control
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Children">
+            <summary>
+            Contained children elements.               
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Control.Decorators">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Control.VisibilityMode">
+            <summary>
+            Control visibility mode.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Control.VisibilityMode.Visible">
+            <summary>
+            Control is visible.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Control.VisibilityMode.Hidden">
+            <summary>
+            Control is not visible, but it's space is reserved.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Control.VisibilityMode.Collapsed">
+            <summary>
+            Control is not visible, and takes no space when doing layout.
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Control.MetricsUnits">
+            <summary>
+            Defines available metrics units for measuring sizes.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Control.MetricsUnits.Pixel">
+            <summary>
+            Absolute pixel value.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Control.MetricsUnits.Percentage">
+            <summary>
+            Relative percentage value.
+            </summary>
+        </member>
+        <member name="T:UForms.Events.IClickable">
+            <summary>
+            Clickable element interface.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IClickable.Clicked">
+            <summary>
+            Click event.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IClickable.MouseDown">
+            <summary>
+            Mouse down event.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IClickable.MouseUp">
+            <summary>
+            Mouse up event.
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Button.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:UForms.Controls.Button.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="text"></param>
+        </member>
+        <member name="M:UForms.Controls.Button.OnDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Button.OnMouseDown(UnityEngine.Event)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:UForms.Controls.Button.OnMouseUp(UnityEngine.Event)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="E:UForms.Controls.Button.Clicked">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:UForms.Controls.Button.MouseDown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:UForms.Controls.Button.MouseUp">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Button.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Button.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.ContextMenuControl">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.ContextMenuControl.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.ContextMenuControl.OnContextClick(UnityEngine.Event)">
+            <summary>
+            
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="P:UForms.Controls.ContextMenuControl.Menu">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.ContextMenuControl.Positionless">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Dropdowns.Dropdown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.AbstractField`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:UForms.Events.IEditable">
+            <summary>
+            Editable object interface.
+            An editable object is an object representing a value which can be edited by the user.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IEditable.ValueChange">
+            <summary>
+            Value changed event. Dispatched when the object's value changes.
+            </summary>
+        </member>
+        <member name="F:UForms.Controls.Fields.AbstractField`1.m_cachedValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.AbstractField`1.#ctor(`0,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.AbstractField`1.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,`0,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.AbstractField`1.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.AbstractField`1.TestValueEquality(`0,`0)">
+            <summary>
+            We need to implement a custom equality evaluator per control as the field data can be both value and reference types.
+            Additionally, since we're wrapping built in Unity controls, using nullable value types is not an option.        
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.AbstractField`1.OnDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="E:UForms.Controls.Fields.AbstractField`1.ValueChange">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.AbstractField`1.Label">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.AbstractField`1.Value">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.AbstractField`1.UseBackingFieldChangeDetection">
+            <summary>
+            Should we use the backing field to detect value changes and dispatch events.        
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.Dropdown.#ctor(System.String[],System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="optionNames"></param>
+            <param name="label"></param>
+            <param name="selection"></param>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.Dropdown.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String[],System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="optionNames"></param>
+            <param name="label"></param>
+            <param name="selection"></param>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.Dropdown.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.Dropdown.TestValueEquality(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.Dropdown.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.Dropdown.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.Dropdown.OptionNames">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Dropdowns.EnumDropdown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.EnumDropdown.#ctor(System.Enum,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.EnumDropdown.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Enum,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.EnumDropdown.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.EnumDropdown.TestValueEquality(System.Enum,System.Enum)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.EnumDropdown.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.EnumDropdown.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Dropdowns.IntDropdown">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.IntDropdown.#ctor(System.Int32[],System.String[],System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="optionValues"></param>
+            <param name="optionNames"></param>
+            <param name="label"></param>
+            <param name="selection"></param>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.IntDropdown.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32[],System.String[],System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="optionValues"></param>
+            <param name="optionNames"></param>
+            <param name="label"></param>
+            <param name="selection"></param>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.IntDropdown.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Dropdowns.IntDropdown.TestValueEquality(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.IntDropdown.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.IntDropdown.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.IntDropdown.OptionValues">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Dropdowns.IntDropdown.OptionNames">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.BoundsField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.BoundsField.#ctor(UnityEngine.Bounds,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.BoundsField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Bounds,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.BoundsField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.BoundsField.TestValueEquality(UnityEngine.Bounds,UnityEngine.Bounds)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.BoundsField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.BoundsField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.ColorField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.ColorField.#ctor(UnityEngine.Color,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.ColorField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Color,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.ColorField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.ColorField.TestValueEquality(UnityEngine.Color,UnityEngine.Color)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.ColorField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.ColorField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.CurveField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.CurveField.#ctor(UnityEngine.Color,UnityEngine.Rect,UnityEngine.AnimationCurve,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="curveColor"></param>
+            <param name="curveRect"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.CurveField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Color,UnityEngine.Rect,UnityEngine.AnimationCurve,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="curveColor"></param>
+            <param name="curveRect"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.CurveField.DrawAndUpdateValue">
+            <summary>
+            Apparently EditorGUI.CurveField is tightnly related to the inspector GUI and will throw an expection if the curve editor is opened without an inspector panel available.
+            To bypass this issue, we will disable the control's interactivity if no selection is available.
+            TODO :: probably need to find a more elegant solution as the current behavior limits the usefulness of this control.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.CurveField.TestValueEquality(UnityEngine.AnimationCurve,UnityEngine.AnimationCurve)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.CurveField.CurveColor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.CurveField.CurveRect">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.CurveField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.CurveField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.EnumMaskField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.EnumMaskField.#ctor(System.Enum,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.EnumMaskField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Enum,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.EnumMaskField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.EnumMaskField.TestValueEquality(System.Enum,System.Enum)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.EnumMaskField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.EnumMaskField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.FloatField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.FloatField.#ctor(System.Single,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.FloatField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.FloatField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.FloatField.TestValueEquality(System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.FloatField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.FloatField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.IntField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.IntField.#ctor(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.IntField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.IntField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.IntField.TestValueEquality(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.IntField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.IntField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.LabelField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.LabelField.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.LabelField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.LabelField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.LabelField.TestValueEquality(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.LabelField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.LabelField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.LayerField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.LayerField.#ctor(System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.LayerField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.LayerField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.LayerField.TestValueEquality(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.LayerField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.LayerField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.MaskField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.MaskField.#ctor(System.Int32,System.String[],System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="options"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.MaskField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32,System.String[],System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="options"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.MaskField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.MaskField.TestValueEquality(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.MaskField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.MaskField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.MaskField.Options">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.MultiFloatField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.MultiFloatField.#ctor(System.Single[],System.String[],System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="sublabels"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.MultiFloatField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Single[],System.String[],System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="sublabels"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.MultiFloatField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.MultiFloatField.TestValueEquality(System.Single[],System.Single[])">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.MultiFloatField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.MultiFloatField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.MultiFloatField.SubLabels">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.ObjectField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.ObjectField.#ctor(System.Type,System.Boolean,UnityEngine.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="type"></param>
+            <param name="allowSceneObjects"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.ObjectField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Type,System.Boolean,UnityEngine.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="type"></param>
+            <param name="allowSceneObjects"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.ObjectField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.ObjectField.TestValueEquality(UnityEngine.Object,UnityEngine.Object)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.ObjectField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.ObjectField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.ObjectField.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.ObjectField.AllowSceneObjects">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.PropertyField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.PropertyField.#ctor(UnityEditor.SerializedProperty,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+            <param name="includeChildren"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.PropertyField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEditor.SerializedProperty,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+            <param name="includeChildren"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.PropertyField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.PropertyField.OnLayout">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.PropertyField.TestValueEquality(UnityEditor.SerializedProperty,UnityEditor.SerializedProperty)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.PropertyField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.PropertyField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.PropertyField.IncludeChildren">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.RectField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.RectField.#ctor(UnityEngine.Rect,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.RectField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Rect,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.RectField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.RectField.TestValueEquality(UnityEngine.Rect,UnityEngine.Rect)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.RectField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.RectField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.TagField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.TagField.#ctor(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.TagField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.TagField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.TagField.TestValueEquality(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.TagField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.TagField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.TextField">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.TextField.#ctor(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+            <param name="passwordMask"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.TextField.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+            <param name="passwordMask"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.TextField.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.TextField.TestValueEquality(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.TextField.PasswordMask">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.TextField.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.TextField.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.Vector2Field">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector2Field.#ctor(UnityEngine.Vector2,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector2Field.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector2Field.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector2Field.TestValueEquality(UnityEngine.Vector2,UnityEngine.Vector2)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.Vector2Field.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.Vector2Field.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.Vector3Field">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector3Field.#ctor(UnityEngine.Vector3,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector3Field.#ctor(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector3Field.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector3Field.TestValueEquality(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.Vector3Field.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.Vector3Field.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Fields.Vector4Field">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector4Field.#ctor(UnityEngine.Vector4,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector4Field.#ctor(UnityEngine.Vector4,UnityEngine.Vector4,UnityEngine.Vector4,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector4Field.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Fields.Vector4Field.TestValueEquality(UnityEngine.Vector4,UnityEngine.Vector4)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Fields.Vector4Field.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Fields.Vector4Field.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Foldout">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Foldout.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="label"></param>
+            <param name="unfolded"></param>
+            <param name="toggleOnLabelClick"></param>
+        </member>
+        <member name="M:UForms.Controls.Foldout.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="label"></param>
+            <param name="unfolded"></param>
+            <param name="toggleOnLabelClick"></param>
+        </member>
+        <member name="M:UForms.Controls.Foldout.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Foldout.TestValueEquality(System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Foldout.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Foldout.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Foldout.ToggleOnLabelClick">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.HelpBox">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.HelpBox.#ctor(System.String,UnityEditor.MessageType)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="type"></param>
+        </member>
+        <member name="M:UForms.Controls.HelpBox.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,UnityEditor.MessageType)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="text"></param>
+            <param name="type"></param>
+        </member>
+        <member name="M:UForms.Controls.HelpBox.OnDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.HelpBox.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.HelpBox.Type">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.HelpBox.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Image">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Image.#ctor(UnityEngine.Texture,System.Nullable{UnityEngine.Rect},UnityEngine.ScaleMode,System.Boolean,System.Boolean,UnityEngine.Material)">
+            <summary>
+            
+            </summary>
+            <param name="tex"></param>
+            <param name="texCoords"></param>
+            <param name="scaleMode"></param>
+            <param name="drawAlpha"></param>
+            <param name="drawTransparent"></param>
+            <param name="mat"></param>
+        </member>
+        <member name="M:UForms.Controls.Image.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Texture,System.Nullable{UnityEngine.Rect},UnityEngine.ScaleMode,System.Boolean,System.Boolean,UnityEngine.Material)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="tex"></param>
+            <param name="texCoords"></param>
+            <param name="scaleMode"></param>
+            <param name="drawAlpha"></param>
+            <param name="drawTransparent"></param>
+            <param name="mat"></param>
+        </member>
+        <member name="M:UForms.Controls.Image.OnDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.DrawTexture">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.DrawMaterial">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.DrawTransparent">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.DrawAlpha">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.Scale">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.TexCoords">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Image.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Label">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Label.#ctor(System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="selectable"></param>
+        </member>
+        <member name="M:UForms.Controls.Label.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="text"></param>
+            <param name="selectable"></param>
+        </member>
+        <member name="M:UForms.Controls.Label.OnDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Label.Selectable">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Label.DropShadow">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Label.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Label.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.ProgressBar">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.ProgressBar.#ctor(System.String,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="text"></param>
+            <param name="progress"></param>
+        </member>
+        <member name="M:UForms.Controls.ProgressBar.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="text"></param>
+            <param name="progress"></param>
+        </member>
+        <member name="M:UForms.Controls.ProgressBar.OnDraw">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.ProgressBar.Text">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.ProgressBar.Progress">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.ProgressBar.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Sliders.FloatSlider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Sliders.FloatSlider.#ctor(System.Single,System.Single,System.String,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="leftValue"></param>
+            <param name="rightValue"></param>
+            <param name="label"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:UForms.Controls.Sliders.FloatSlider.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,System.Single,System.String,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="leftValue"></param>
+            <param name="rightValue"></param>
+            <param name="label"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:UForms.Controls.Sliders.FloatSlider.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Sliders.FloatSlider.TestValueEquality(System.Single,System.Single)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Sliders.FloatSlider.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.FloatSlider.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.FloatSlider.LeftValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.FloatSlider.RightValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Sliders.IntSlider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Sliders.IntSlider.#ctor(System.Int32,System.Int32,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="leftValue"></param>
+            <param name="rightValue"></param>
+            <param name="label"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:UForms.Controls.Sliders.IntSlider.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Int32,System.Int32,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="leftValue"></param>
+            <param name="rightValue"></param>
+            <param name="label"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:UForms.Controls.Sliders.IntSlider.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Sliders.IntSlider.TestValueEquality(System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Sliders.IntSlider.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.IntSlider.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.IntSlider.LeftValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.IntSlider.RightValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Sliders.MinMaxSlider">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Sliders.MinMaxSlider.#ctor(System.Single,System.Single,System.Single,System.Single,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="minLimit"></param>
+            <param name="maxLimit"></param>
+            <param name="minvalue"></param>
+            <param name="maxValue"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Sliders.MinMaxSlider.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.Single,System.Single,System.Single,System.Single,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="minLimit"></param>
+            <param name="maxLimit"></param>
+            <param name="minvalue"></param>
+            <param name="maxValue"></param>
+            <param name="label"></param>
+        </member>
+        <member name="M:UForms.Controls.Sliders.MinMaxSlider.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Sliders.MinMaxSlider.TestValueEquality(System.Single[],System.Single[])">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Sliders.MinMaxSlider.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.MinMaxSlider.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.MinMaxSlider.MinLimit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.MinMaxSlider.MaxLimit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.MinMaxSlider.MinValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Sliders.MinMaxSlider.MaxValue">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.TextArea">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.TextArea.#ctor(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:UForms.Controls.TextArea.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="value"></param>
+        </member>
+        <member name="M:UForms.Controls.TextArea.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.TextArea.TestValueEquality(System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.TextArea.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.TextArea.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Controls.Toggle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:UForms.Controls.Toggle.#ctor(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="label"></param>
+            <param name="value"></param>
+            <param name="labelOnRight"></param>
+        </member>
+        <member name="M:UForms.Controls.Toggle.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="position"></param>
+            <param name="size"></param>
+            <param name="label"></param>
+            <param name="value"></param>
+            <param name="labelOnRight"></param>
+        </member>
+        <member name="M:UForms.Controls.Toggle.DrawAndUpdateValue">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:UForms.Controls.Toggle.TestValueEquality(System.Boolean,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="oldval"></param>
+            <param name="newval"></param>
+            <returns></returns>
+        </member>
+        <member name="P:UForms.Controls.Toggle.UseBackingFieldChangeDetection">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Toggle.DefaultSize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:UForms.Controls.Toggle.LabelOnRight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.BackgroundColor">
+            <summary>
+            This decorator paint's the controls bounding screen rectangle with a solid color. Useful mainly for debugging.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.Decorator">
+            <summary>
+            Decorators provide a way to enhance a control's functionality in cases where the functionality is not a part of the core control and can be applied to any control.
+            </summary>
+        </member>
+        <member name="F:UForms.Decorators.Decorator.m_boundControl">
+            <summary>
+            Reference to the control this decorator is attached to.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.SetControl(UForms.Controls.Control)">
+            <summary>
+            Sets the attached control.
+            </summary>
+            <param name="control">Reference to the attached control.</param>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.BeforeDraw">
+            <summary>
+            Implementation of the BeforeDraw step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.Draw">
+            <summary>
+            Implementation of the Draw step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.AfterDraw">
+            <summary>
+            Implementation of the AfterDraw step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.Layout">
+            <summary>
+            Implementation of the Layout step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.AfterLayout">
+            <summary>
+            Implementation of the AfterLayout step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.OnBeforeDraw">
+            <summary>
+            Virtual method for the BeforeDraw step. Override this to add functionality at this step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.OnDraw">
+            <summary>
+            Virtual method for the Draw step. Override this to add functionality at this step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.OnAfterDraw">
+            <summary>
+            Virtual method for the AfterDraw step. Override this to add functionality at this step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.OnLayout">
+            <summary>
+            Virtual method for the Layout step. Override this to add functionality at this step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Decorator.OnAfterLayout">
+            <summary>
+            Virtual method for the AfterLayout step. Override this to add functionality at this step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.BackgroundColor.#ctor">
+            <summary>
+            Parameterless constructor.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.BackgroundColor.#ctor(UnityEngine.Color)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="color">The background color.</param>
+        </member>
+        <member name="M:UForms.Decorators.BackgroundColor.OnDraw">
+            <summary>
+            Implementation of the OnDraw step.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.BackgroundColor.BgColor">
+            <summary>
+            The background color.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.ClipContent">
+            <summary>
+            This decorator creates a clipping area for the contained children, based on the controls bounding rectangle.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.ClipContent.OnLayout">
+            <summary>
+            Implementation of the OnLayout step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.ClipContent.OnBeforeDraw">
+            <summary>
+            Implementation of the OnBeforeDraw step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.ClipContent.OnAfterDraw">
+            <summary>
+            Implementation of the OnAfterDraw step.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.FitContent">
+            <summary>
+            This decorator resizes the control to match the size of the contained content.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.FitContent.#ctor">
+            <summary>
+            Parameterless constructor.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.FitContent.#ctor(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="fitHorizontal">Should the control be resized horizontally.</param>
+            <param name="fitVertical">Should the control be resized vertically.</param>
+            <param name="allowShrinkHorizontal">Should the control be shrunk horizontally in case the content does not fill the control.</param>
+            <param name="allowShrinkVertical">Should the control be shrunk vertically in case the content does not fill the control.</param>
+        </member>
+        <member name="M:UForms.Decorators.FitContent.OnLayout">
+            <summary>
+            Implementation of the OnLayout step.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.FitContent.FitHorizontal">
+            <summary>
+            Should the control be resized horizontally.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.FitContent.FitVertical">
+            <summary>
+            Should the control be resized vertically.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.FitContent.AllowShrinkHorizontal">
+            <summary>
+            Should the control be shrunk horizontally in case the content does not fill the control.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.FitContent.AllowShrinkVertical">
+            <summary>
+            Should the control be shrunk vertically in case the content does not fill the control.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.Scrollbars">
+            <summary>
+            This decorator adds scrollbars to a control if it is too small to contain all of it's children.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Scrollbars.#ctor">
+            <summary>
+            Parameterless constructor.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Scrollbars.#ctor(System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="verticalScrollbar">Is vertical scrolling enabled.</param>
+            <param name="horizontalScrollbar">Is horizontal scrolling enabled.</param>
+            <param name="handleMouseWheel">Should mouse scroll be used to scroll the view vertically.</param>
+        </member>
+        <member name="M:UForms.Decorators.Scrollbars.OnLayout">
+            <summary>
+            Implementation of the OnLayout step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Scrollbars.OnBeforeDraw">
+            <summary>
+            Implementation of the OnBeforeDraw step.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.Scrollbars.OnAfterDraw">
+            <summary>
+            Implementation of the OnAfterDraw step.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.Scrollbars.VerticalScrollbar">
+            <summary>
+            Is vertical scrolling enabled.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.Scrollbars.HorizontalScrollbar">
+            <summary>
+            Is horizontal scrolling enabled.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.Scrollbars.HandleMouseWheel">
+            <summary>
+            Should mouse scroll be used to scroll the view vertically.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.StackContent">
+            <summary>
+            This decorator attempts to stack all the contents of this control in a predefined manner.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.StackContent.#ctor">
+            <summary>
+            Parameterless constructor.
+            </summary>
+        </member>
+        <member name="M:UForms.Decorators.StackContent.#ctor(UForms.Decorators.StackContent.StackMode,UForms.Decorators.StackContent.OverflowMode)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="mode">Stacking mode.</param>
+            <param name="overflow">Overflow handling mode.</param>
+        </member>
+        <member name="M:UForms.Decorators.StackContent.OnAfterLayout">
+            <summary>
+            Implementation of the OnAfterLayout step.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.StackContent.Mode">
+            <summary>
+            Stacking mode.
+            </summary>
+        </member>
+        <member name="P:UForms.Decorators.StackContent.Overflow">
+            <summary>
+            Overflow handling mode.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.StackContent.StackMode">
+            <summary>
+            Enumerates available stacking modes.
+            </summary>
+        </member>
+        <member name="F:UForms.Decorators.StackContent.StackMode.Vertical">
+            <summary>
+            Vertical stacking will stack elements from top to bottom.
+            </summary>
+        </member>
+        <member name="F:UForms.Decorators.StackContent.StackMode.Horizontal">
+            <summary>
+            Horizontal stacking will stack elements from left to right.
+            </summary>
+        </member>
+        <member name="T:UForms.Decorators.StackContent.OverflowMode">
+            <summary>
+            Enumerates overflow handling methods.
+            </summary>
+        </member>
+        <member name="F:UForms.Decorators.StackContent.OverflowMode.Flow">
+            <summary>
+            Allow contents to keep flowing if cannot be stacked to fit.
+            </summary>
+        </member>
+        <member name="F:UForms.Decorators.StackContent.OverflowMode.Contain">
+            <summary>
+            Attempt to contain overflowing elements within the control.
+            </summary>
+        </member>
+        <member name="T:UForms.Events.Click">
+            <summary>
+            Click event handler signature.
+            </summary>
+            <param name="sender">The object dispatching this event.</param>
+            <param name="args">Click event arguments.</param>
+            <param name="nativeEvent">The native Unity event object this event originated from. Can be null in certain cases such as buttons, make sure to null check before use.</param>
+        </member>
+        <member name="T:UForms.Events.MouseButton">
+            <summary>
+            A nicer enumeration for commonly used mouse buttons.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.MouseButton.Left">
+            <summary>
+            Left mouse button.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.MouseButton.Middle">
+            <summary>
+            Middle mouse button.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.MouseButton.Right">
+            <summary>
+            Right mouse button.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.MouseButton.Other">
+            <summary>
+            Other unspecified mouse button. Use the raw button value to determine which in this case.
+            </summary>
+        </member>
+        <member name="T:UForms.Events.ClickEventArgs">
+            <summary>
+            Click event arguments.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.ClickEventArgs.rawButton">
+            <summary>
+            The raw button value provided by Unity.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.ClickEventArgs.button">
+            <summary>
+            A nicer enumeration for commonly used mouse buttons.
+            </summary>
+        </member>
+        <member name="M:UForms.Events.ClickEventArgs.#ctor(System.Int32)">
+            <summary>
+            Constructor for <c>ClickEventArgs</c>.
+            </summary>
+            <param name="btn">Raw button value</param>
+        </member>
+        <member name="T:UForms.Events.Drag">
+            <summary>
+            Drag event handler signature.
+            </summary>
+            <param name="sender">The object dispatching this event.</param>
+            <param name="args">Drag event arguments.</param>
+            <param name="nativeEvent">The native Unity event object this event originated from. Can be null in certain cases such as buttons, make sure to null check before use.</param>
+        </member>
+        <member name="T:UForms.Events.IDraggable">
+            <summary>
+            Draggable element interface.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IDraggable.DragStarted">
+            <summary>
+            Drag started event.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IDraggable.DragMoved">
+            <summary>
+            Drag moved event.
+            </summary>
+        </member>
+        <member name="E:UForms.Events.IDraggable.DragEnded">
+            <summary>
+            Drag ended event.
+            </summary>
+        </member>
+        <member name="T:UForms.Events.DragEventArgs">
+            <summary>
+            Drag event arguments.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.DragEventArgs.initialPosition">
+            <summary>
+            The initial position of the drag action.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.DragEventArgs.currentPosition">
+            <summary>
+            The current position of the drag action.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.DragEventArgs.delta">
+            <summary>
+            The last position delta of the drag action.
+            </summary>
+        </member>
+        <member name="M:UForms.Events.DragEventArgs.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)">
+            <summary>
+            Constructor for <c>DragEventArgs</c>.
+            </summary>
+            <param name="initial">Initial drag position.</param>
+            <param name="current">Current drag position.</param>
+            <param name="d">Latest position delta.</param>
+        </member>
+        <member name="T:UForms.Events.Edit">
+            <summary>
+            Edit event handler signature.
+            </summary>
+            <param name="sender">The object dispatching this event.</param>
+            <param name="args">Edit event arguments.</param>
+            <param name="nativeEvent">The native Unity event object this event originated from. Can be null in certain cases such as buttons, make sure to null check before use.</param>
+        </member>
+        <member name="T:UForms.Events.EditEventArgs">
+            <summary>
+            Edit event arguments.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.EditEventArgs.oldValue">
+            <summary>
+            Previous value (the value changed from) as an object.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.EditEventArgs.newValue">
+            <summary>
+            Current value (the value changed to) as an object.
+            </summary>
+        </member>
+        <member name="F:UForms.Events.EditEventArgs.oldValueSupported">
+            <summary>
+            Describes if the element supports the <c>oldValue</c> field. Not all elements can provide the previous value, in which case this value will be set to <c>false</c>.
+            </summary>
+        </member>
+        <member name="M:UForms.Events.EditEventArgs.#ctor(System.Object,System.Object,System.Boolean)">
+            <summary>
+            Constructor for <c>EditEventArgs</c>
+            </summary>
+            <param name="oldVal">Old value. If not supported should be set to something sensible such as null.</param>
+            <param name="newVal">Current value.</param>
+            <param name="oldValSupported">Is the oldValue field supported?</param>
+        </member>
+        <member name="T:UForms.Graphics.BezierCurve">
+            <summary>
+            A bezier curve, defined by two points, and optionally two tangents.
+            </summary>
+        </member>
+        <member name="T:UForms.Graphics.Shape">
+            <summary>
+            EARLY IMPLEMENTATION 
+            Abstract base class for abstract graphics elements which are not controls and are rendered using a <c>GraphicsCanvas</c>.
+            </summary>
+        </member>
+        <member name="F:UForms.Graphics.Shape.m_rect">
+            <summary>
+            The shape's bounding rectangle.
+            </summary>
+        </member>
+        <member name="M:UForms.Graphics.Shape.Draw">
+            <summary>
+            Draw method used to render the shape.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.Shape.ZIndex">
+            <summary>
+            Shape z-index. Shapes with higher z-index will be rendered on top of shapes with a lower value.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.Shape.DrawColor">
+            <summary>
+            The line color for the shape.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.Shape.DrawEarly">
+            <summary>
+            Specifies wether a shape should be rendered before or after controls. If set to true the shape will be rendererd before rendering controls. It's important to note that z-index based sorting is applied only to shapes rendered on the same pass.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.Shape.ScreenRect">
+            <summary>
+            The shape's bounding rectangle.
+            </summary>
+        </member>
+        <member name="M:UForms.Graphics.BezierCurve.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Color,System.Single,UForms.Graphics.BezierCurve.TangentMode,UnityEngine.Vector2,UnityEngine.Vector2,System.Int32,System.Boolean)">
+            <summary>
+            Bezier curve constructor.
+            </summary>
+            <param name="from">First point.</param>
+            <param name="to">Second point.</param>
+            <param name="color">Line color.</param>
+            <param name="lineWidth">Line width.</param>
+            <param name="tangentMode">Tangent mode.</param>
+            <param name="fromTangent">First tangent.</param>
+            <param name="toTangent">Second tangent.</param>
+            <param name="zindex">Drawing order.</param>
+            <param name="drawEarly">If set to true, shape will render before controls.</param>
+        </member>
+        <member name="M:UForms.Graphics.BezierCurve.Draw">
+            <summary>
+            Draws method, used internally.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.LineWidth">
+            <summary>
+            The line width in pixels.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.Texture">
+            <summary>
+            The texture to use when rendering the line. If unspecified, will use a default solid color texture.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.Tangents">
+            <summary>
+            The tangents mode for the line.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.TangentDistance">
+            <summary>
+            The fixed tangent distance for automatic tangent modes.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.FromTangent">
+            <summary>
+            First tangent.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.ToTangent">
+            <summary>
+            Second tangent.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.From">
+            <summary>
+            First point.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.BezierCurve.To">
+            <summary>
+            Second point.
+            </summary>
+        </member>
+        <member name="T:UForms.Graphics.BezierCurve.TangentMode">
+            <summary>
+            Describes how the tangents should be handled.
+            </summary>
+        </member>
+        <member name="F:UForms.Graphics.BezierCurve.TangentMode.AutoX">
+            <summary>
+            Uniform tangents, constrained on the Y axis and derived from the line length on the X axis.
+            </summary>
+        </member>
+        <member name="F:UForms.Graphics.BezierCurve.TangentMode.AutoY">
+            <summary>
+            Uniform tangents, constrained on the X axis and derived from the line length on the Y axis.
+            </summary>
+        </member>
+        <member name="F:UForms.Graphics.BezierCurve.TangentMode.Manual">
+            <summary>
+            Tangents are specified by the user.
+            </summary>
+        </member>
+        <member name="T:UForms.Graphics.GraphicsCanvas">
+            <summary>
+            A decorator used for managing a display list and rendering of shapes.
+            </summary>
+        </member>
+        <member name="M:UForms.Graphics.GraphicsCanvas.#ctor">
+            <summary>
+            Constructor.
+            </summary>
+        </member>
+        <member name="M:UForms.Graphics.GraphicsCanvas.AddShape(UForms.Graphics.Shape)">
+            <summary>
+            Adds a shape to the display list.
+            </summary>
+            <param name="shape">Shape object to add.</param>
+            <returns>The shape object added.</returns>
+        </member>
+        <member name="M:UForms.Graphics.GraphicsCanvas.RemoveShape(UForms.Graphics.Shape)">
+            <summary>
+            Removes a shape from the display list.
+            </summary>
+            <param name="shape">Shape object to remove.</param>
+            <returns>The shape object removed.</returns>
+        </member>
+        <member name="M:UForms.Graphics.GraphicsCanvas.OnBeforeDraw">
+            <summary>
+            Implementation of the OnBeforeDraw step.
+            </summary>
+        </member>
+        <member name="M:UForms.Graphics.GraphicsCanvas.OnAfterDraw">
+            <summary>
+            Implementation of the OnAfterDraw step.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.GraphicsCanvas.Shapes">
+            <summary>
+            A list of all shapes on this canvas.
+            </summary>
+        </member>
+        <member name="T:UForms.Graphics.Line">
+            <summary>
+            A line shape defined by two screen points.
+            </summary>
+        </member>
+        <member name="M:UForms.Graphics.Line.#ctor(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Color,System.Int32,System.Boolean)">
+            <summary>
+            Line shape constructor.
+            </summary>
+            <param name="from">First point.</param>
+            <param name="to">Second point.</param>
+            <param name="color">Line color.</param>
+            <param name="zindex">Drawing order.</param>
+            <param name="drawEarly">If set to true, shape will render before controls.</param>
+        </member>
+        <member name="M:UForms.Graphics.Line.Draw">
+            <summary>
+            Draws method, used internally.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.Line.From">
+            <summary>
+            The first point of the line.
+            </summary>
+        </member>
+        <member name="P:UForms.Graphics.Line.To">
+            <summary>
+            The second point of the line.
+            </summary>
+        </member>
+    </members>
+</doc>

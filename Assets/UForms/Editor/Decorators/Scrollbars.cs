@@ -7,10 +7,24 @@ using UForms.Controls;
 
 namespace UForms.Decorators
 {
+    /// <summary>
+    /// This decorator adds scrollbars to a control if it is too small to contain all of it's children.
+    /// </summary>
     public class Scrollbars : Decorator
     {
+        /// <summary>
+        /// Is vertical scrolling enabled.
+        /// </summary>
         public bool VerticalScrollbar { get; set; }
+
+        /// <summary>
+        /// Is horizontal scrolling enabled.
+        /// </summary>
         public bool HorizontalScrollbar { get; set; }
+
+        /// <summary>
+        /// Should mouse scroll be used to scroll the view vertically.
+        /// </summary>
         public bool HandleMouseWheel { get; set; }
 
         private Vector2 m_scrollPosition;
@@ -19,7 +33,9 @@ namespace UForms.Decorators
 
         private const float SCROLLBAR_SIZE = 16.0f;
 
-
+        /// <summary>
+        /// Parameterless constructor.
+        /// </summary>
         public Scrollbars()
             : base()
         {
@@ -28,7 +44,12 @@ namespace UForms.Decorators
             HandleMouseWheel = true;
         }
 
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="verticalScrollbar">Is vertical scrolling enabled.</param>
+        /// <param name="horizontalScrollbar">Is horizontal scrolling enabled.</param>
+        /// <param name="handleMouseWheel">Should mouse scroll be used to scroll the view vertically.</param>
         public Scrollbars( bool verticalScrollbar, bool horizontalScrollbar, bool handleMouseWheel )
             : base()
         {
@@ -38,11 +59,17 @@ namespace UForms.Decorators
         }
 
 
+        /// <summary>
+        /// Implementation of the OnLayout step.
+        /// </summary>
         protected override void OnLayout()
         {
             m_boundControl.ResetPivotRoot = m_boundControl.ResetPivotRoot || m_doScrollbars;
         }
 
+        /// <summary>
+        /// Implementation of the OnBeforeDraw step.
+        /// </summary>
         protected override void OnBeforeDraw()
         {
             m_doScrollbars = false;
@@ -80,7 +107,10 @@ namespace UForms.Decorators
                 m_boundControl.ViewportOffset = Vector2.zero;
             }
         }
-
+        
+        /// <summary>
+        /// Implementation of the OnAfterDraw step.
+        /// </summary>
         protected override void OnAfterDraw()
         {
             if ( m_doScrollbars )

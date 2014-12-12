@@ -7,40 +7,74 @@ using UForms.Controls;
 
 namespace UForms.Decorators
 {
+    /// <summary>
+    /// This decorator attempts to stack all the contents of this control in a predefined manner.
+    /// </summary>
     public class StackContent : Decorator
     {
+        /// <summary>
+        /// Enumerates available stacking modes.
+        /// </summary>
         public enum StackMode
         {
+            /// <summary>
+            /// Vertical stacking will stack elements from top to bottom.
+            /// </summary>
             Vertical,
+
+            /// <summary>
+            /// Horizontal stacking will stack elements from left to right.
+            /// </summary>
             Horizontal
         }
 
+        /// <summary>
+        /// Enumerates overflow handling methods.
+        /// </summary>
         public enum OverflowMode
         {
+            /// <summary>
+            /// Allow contents to keep flowing if cannot be stacked to fit.
+            /// </summary>
             Flow,
+
+            /// <summary>
+            /// Attempt to contain overflowing elements within the control.
+            /// </summary>
             Contain
         }
 
-
+        /// <summary>
+        /// Stacking mode.
+        /// </summary>
         public StackMode Mode
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Overflow handling mode.
+        /// </summary>
         public OverflowMode Overflow
         {
             get;
             set;
         }
         
-
+        /// <summary>
+        /// Parameterless constructor.
+        /// </summary>
         public StackContent()
             : base()
         {
         }
 
-
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="mode">Stacking mode.</param>
+        /// <param name="overflow">Overflow handling mode.</param>
         public StackContent( StackMode mode, OverflowMode overflow )
             : base()
         {
@@ -48,7 +82,9 @@ namespace UForms.Decorators
             Overflow = overflow;
         }
 
-
+        /// <summary>
+        /// Implementation of the OnAfterLayout step.
+        /// </summary>
         protected override void OnAfterLayout()
         {
             if ( Overflow == OverflowMode.Flow )

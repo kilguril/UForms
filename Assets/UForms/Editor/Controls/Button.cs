@@ -5,33 +5,62 @@ using UForms.Events;
 
 namespace UForms.Controls
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Button : Control, IClickable
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public event Click Clicked;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public event Click MouseDown;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public event Click MouseUp;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public string Text { get; set; }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected override Vector2 DefaultSize
         {
             get { return new Vector2( 100.0f, 30.0f ); }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="text"></param>
         public Button( string text = "" ) : base()
         {
             Text = text;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="size"></param>
+        /// <param name="text"></param>
         public Button( Vector2 position, Vector2 size, string text = "") : base( position, size )
         {            
             Text = text;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         protected override void OnDraw()
         {
             if ( GUI.Button( ScreenRect, Text ) )
@@ -50,7 +79,10 @@ namespace UForms.Controls
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseDown( Event e )
         {
             if ( PointInControl( e.mousePosition ) )
@@ -62,7 +94,10 @@ namespace UForms.Controls
             }
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnMouseUp( Event e )
         {
             if ( PointInControl( e.mousePosition ) )

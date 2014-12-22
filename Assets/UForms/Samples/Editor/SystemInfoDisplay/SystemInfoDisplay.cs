@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UForms.Application;
 using UForms.Controls;
 using UForms.Controls.Fields;
+using UForms.Controls.Extended;
 using UForms.Decorators;
 using UForms.Events;
 

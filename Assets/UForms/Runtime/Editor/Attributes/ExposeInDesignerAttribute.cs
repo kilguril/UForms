@@ -8,7 +8,7 @@ namespace UForms.Attributes
         public readonly string      displayName;
         public readonly string      groupCategory;
 
-        public ExposeInDesignerAttribute( string name, string category = null )
+        public ExposeInDesignerAttribute( string name, string category )
         {
             displayName     = name;
             groupCategory   = category;

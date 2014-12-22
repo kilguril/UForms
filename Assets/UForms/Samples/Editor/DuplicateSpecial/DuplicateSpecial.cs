@@ -3,7 +3,6 @@ using UnityEditor;
 
 using System.Collections;
 
-using UForms;
 using UForms.Application;
 using UForms.Controls;
 using UForms.Controls.Fields;
@@ -34,7 +33,7 @@ public class DuplicateSpecial : UFormsApplication
     {
         Vector2 winSize = new Vector3( 312.0f, 265.0f );
         maxSize = winSize;
-        minSize = winSize;
+        minSize = winSize;        
 
         autoRepaintOnSceneChange = true;
 

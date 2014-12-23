@@ -8,7 +8,7 @@ using UForms.Controls;
 
 using UnityEngine;
 
-namespace UForms.Designer.Toolbox
+namespace UForms.Designer
 {
     // Caches all UForms Controls flagged with ExposeInDesigner attribute in current executing assembly (which should be Project.CSharp.Editor)
     public class ToolboxControlCache
@@ -47,18 +47,18 @@ namespace UForms.Designer.Toolbox
             {
                 if ( t.IsSubclassOf( typeof( Control ) ) )
                 {
-                    object[] attribs = t.GetCustomAttributes( typeof( ExposeInDesignerAttribute ), false );
+                    object[] attribs = t.GetCustomAttributes( typeof( ExposeControlAttribute ), false );
                     
                     if ( attribs.Length > 0 )
                     {
-                        CacheType( t, (ExposeInDesignerAttribute)attribs[0] );
+                        CacheType( t, (ExposeControlAttribute)attribs[0] );
                     }
                 }
             }
         }
 
 
-        private void CacheType( Type type, ExposeInDesignerAttribute attrib )
+        private void CacheType( Type type, ExposeControlAttribute attrib )
         {
             CachedControl control;
 

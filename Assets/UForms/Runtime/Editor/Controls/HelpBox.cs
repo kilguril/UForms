@@ -10,7 +10,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Help Box", "General" )]
+    [ExposeControl( "Help Box", "General" )]
     public class HelpBox : Control
     {
         /// <summary>
@@ -30,6 +30,12 @@ namespace UForms.Controls
         protected override Vector2 DefaultSize {
             get { return new Vector2( 200.0f, 32.0f ); }
         }
+
+
+        public HelpBox() : base()
+        {
+        }
+
 
         /// <summary>
         /// 

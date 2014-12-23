@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Text Field", "Fields" )]
+    [ExposeControl( "Text Field", "Fields" )]
     public class TextField : AbstractField< string >
     {
         /// <summary>
@@ -34,13 +34,17 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+        public TextField() : base() { }
+
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
         /// <param name="passwordMask"></param>
-        public TextField( string value = "", string label = "", bool passwordMask = false ) : base( value, label )
+        public TextField( string value, string label, bool passwordMask = false ) : base( value, label )
         {
             PasswordMask = passwordMask;
         }

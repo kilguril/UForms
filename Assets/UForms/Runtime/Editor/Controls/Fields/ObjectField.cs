@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Object Field", "Fields" )]
+    [ExposeControl( "Object Field", "Fields" )]
     public class ObjectField : AbstractField< Object >
     {   
         /// <summary>
@@ -39,6 +39,10 @@ namespace UForms.Controls.Fields
         /// </summary>
         public bool                 AllowSceneObjects { get; set; }
 
+
+        public ObjectField() : base ()
+        {
+        }
 
         /// <summary>
         /// 

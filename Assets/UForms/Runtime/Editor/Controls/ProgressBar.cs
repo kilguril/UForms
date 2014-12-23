@@ -10,7 +10,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Progress Bar", "General" )]
+    [ExposeControl( "Progress Bar", "General" )]
     public class ProgressBar : Control
     {
         /// <summary>
@@ -29,6 +29,12 @@ namespace UForms.Controls
         protected override Vector2 DefaultSize {
             get { return new Vector2( 200.0f, 16.0f ); }
         }
+
+
+        public ProgressBar() : base()
+        {
+        }
+
 
         /// <summary>
         /// 

@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Int Field", "Fields" )]
+    [ExposeControl( "Int Field", "Fields" )]
     public class IntField : AbstractField< int >
     {
         /// <summary>
@@ -29,12 +29,16 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public IntField() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public IntField( int value = 0, string label = "" ) : base( value, label )
+        public IntField( int value, string label) : base( value, label )
         {
             
         }

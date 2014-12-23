@@ -11,7 +11,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Text Area", "General" )]
+    [ExposeControl( "Text Area", "General" )]
     public class TextArea : AbstractField< string >
     {
         /// <summary>
@@ -29,6 +29,12 @@ namespace UForms.Controls
         {
             get { return true; }
         }
+
+
+        public TextArea() : base()
+        {
+        }
+
 
         /// <summary>
         /// 

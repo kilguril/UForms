@@ -11,7 +11,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
     /// 
-    [ExposeInDesigner( "Foldout", "General" )]
+    [ExposeControl( "Foldout", "General" )]
     public class Foldout : AbstractField< bool >
     {
         /// <summary>
@@ -34,6 +34,12 @@ namespace UForms.Controls
         /// 
         /// </summary>
         public bool ToggleOnLabelClick { get; set; }
+
+
+        public Foldout() : base()
+        {
+
+        }
 
         /// <summary>
         /// 

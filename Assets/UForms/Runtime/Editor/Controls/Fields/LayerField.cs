@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Layer Field", "Fields" )]
+    [ExposeControl( "Layer Field", "Fields" )]
     public class LayerField : AbstractField< int >
     {
         /// <summary>
@@ -29,12 +29,16 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public LayerField() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public LayerField( int value = 0, string label = "" ) : base( value, label )
+        public LayerField( int value, string label) : base( value, label )
         {
             
         }

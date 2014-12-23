@@ -10,8 +10,6 @@ namespace UForms.Controls.Sliders
     /// <summary>
     /// 
     /// </summary>
-
-    [ExposeInDesigner( "MinMax Slider", "Sliders" )]
     public class MinMaxSlider : AbstractField< float[] >
     {
         /// <summary>
@@ -49,7 +47,11 @@ namespace UForms.Controls.Sliders
         /// 
         /// </summary>
         public float MaxValue { get { return Value[ 1 ]; } }
-        
+
+
+        public MinMaxSlider() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>

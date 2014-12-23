@@ -11,7 +11,7 @@ namespace UForms.Controls.Sliders
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Float Slider", "Sliders" )]
+    [ExposeControl( "Float Slider", "Sliders" )]
     public class FloatSlider : AbstractField< float >
     {
         /// <summary>
@@ -39,7 +39,11 @@ namespace UForms.Controls.Sliders
         /// 
         /// </summary>
         public float RightValue     { get; set; }
-        
+
+
+        public FloatSlider() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>

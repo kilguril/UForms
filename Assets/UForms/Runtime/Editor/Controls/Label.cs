@@ -10,7 +10,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
     
-    [ExposeInDesigner( "Label", "General" )]
+    [ExposeControl( "Label", "General" )]
     public class Label : Control
     {
         /// <summary>
@@ -34,6 +34,12 @@ namespace UForms.Controls
         protected override Vector2 DefaultSize {
             get { return new Vector2( 100.0f, 30.0f ); }
         }
+
+
+        public Label() : base()
+        {
+        }
+
 
         /// <summary>
         /// 

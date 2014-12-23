@@ -10,8 +10,6 @@ namespace UForms.Controls.Fields
     /// <summary>
     /// 
     /// </summary>
-
-    [ExposeInDesigner( "Mask Field", "Fields" )]
     public class MaskField : AbstractField<int>
     {
         /// <summary>
@@ -36,13 +34,16 @@ namespace UForms.Controls.Fields
         public List<string> Options { get; private set; }
 
 
+        public MaskField() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="options"></param>
         /// <param name="label"></param>
-        public MaskField( int value = 0, string[] options = default(string[]), string label = "" ) : base( value, label )
+        public MaskField( int value, string[] options = default(string[]), string label = "" ) : base( value, label )
         {
             Options = new List<string>();
 

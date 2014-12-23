@@ -41,12 +41,20 @@ namespace UForms.Controls.Fields
         /// </summary>
         protected T         m_cachedValue;
 
+
+        public AbstractField()
+        {
+            Label = "";
+            m_cachedValue = default( T );
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public AbstractField( T value = default(T), string label = "" ) : base()
+        public AbstractField( T value, string label ) : base()
         {
             Label = label;
             m_cachedValue = value;

@@ -11,7 +11,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Toggle", "General" )]
+    [ExposeControl( "Toggle", "General" )]
     public class Toggle : AbstractField< bool >
     {
         /// <summary>
@@ -34,6 +34,12 @@ namespace UForms.Controls
         /// 
         /// </summary>
         public bool LabelOnRight { get; set; }
+
+
+        public Toggle() : base()
+        {
+        }
+
 
         /// <summary>
         /// 

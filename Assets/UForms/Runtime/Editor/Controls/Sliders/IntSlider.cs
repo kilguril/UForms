@@ -11,7 +11,7 @@ namespace UForms.Controls.Sliders
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Int Slider", "Sliders" )]
+    [ExposeControl( "Int Slider", "Sliders" )]
     public class IntSlider : AbstractField< int >
     {
         /// <summary>
@@ -39,7 +39,11 @@ namespace UForms.Controls.Sliders
         /// 
         /// </summary>
         public int RightValue   { get; set; }
-        
+
+
+        public IntSlider() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>

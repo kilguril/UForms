@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Color Field", "Fields" )]
+    [ExposeControl( "Color Field", "Fields" )]
     public class ColorField : AbstractField< Color >
     {
         /// <summary>
@@ -29,12 +29,18 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public ColorField() : base()
+        {
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public ColorField( Color value = default(Color), string label = "" ) : base( value, label )
+        public ColorField( Color value, string label ) : base( value, label )
         {
             
         }

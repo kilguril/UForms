@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Float Field", "Fields" )]
+    [ExposeControl( "Float Field", "Fields" )]
     public class FloatField : AbstractField< float >
     {
         /// <summary>
@@ -29,12 +29,17 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public FloatField() : base()
+        {
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public FloatField( float value = 0, string label = "" ) : base( value, label )
+        public FloatField( float value, string label ) : base( value, label )
         {
             
         }

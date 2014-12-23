@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
     
-    [ExposeInDesigner( "Bounds Field", "Fields" )]
+    [ExposeControl( "Bounds Field", "Fields" )]
     public class BoundsField : AbstractField< Bounds >
     {
         /// <summary>
@@ -29,12 +29,18 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public BoundsField() : base()
+        {
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public BoundsField( Bounds value = default(Bounds), string label = "" ) : base( value, label )
+        public BoundsField( Bounds value, string label) : base( value, label )
         {
             
         }

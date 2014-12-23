@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Vector3 Field", "Fields" )]
+    [ExposeControl( "Vector3 Field", "Fields" )]
     public class Vector3Field : AbstractField<Vector3>
     {
         /// <summary>
@@ -29,12 +29,16 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public Vector3Field() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public Vector3Field( Vector3 value = default(Vector3), string label = "" ) : base( value, label )
+        public Vector3Field( Vector3 value, string label ) : base( value, label )
         {
             
         }

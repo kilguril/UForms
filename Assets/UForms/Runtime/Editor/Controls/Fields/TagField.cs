@@ -10,7 +10,7 @@ namespace UForms.Controls.Fields
     /// 
     /// </summary>
 
-    [ExposeInDesigner( "Tag Field", "Fields" )]
+    [ExposeControl( "Tag Field", "Fields" )]
     public class TagField : AbstractField< string >
     {
         /// <summary>
@@ -29,12 +29,16 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public TagField() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public TagField( string value = "", string label = "" ) : base( value, label )
+        public TagField( string value, string label ) : base( value, label )
         {
             
         }

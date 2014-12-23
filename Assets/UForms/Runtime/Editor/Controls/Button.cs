@@ -10,7 +10,7 @@ namespace UForms.Controls
     /// 
     /// </summary>
     
-    [ExposeInDesigner("Button", "General")]
+    [ExposeControl("Button", "General")]
     public class Button : Control, IClickable
     {
         /// <summary>
@@ -39,6 +39,11 @@ namespace UForms.Controls
         protected override Vector2 DefaultSize
         {
             get { return new Vector2( 100.0f, 30.0f ); }
+        }
+
+        public Button() : base()
+        {
+
         }
 
         /// <summary>

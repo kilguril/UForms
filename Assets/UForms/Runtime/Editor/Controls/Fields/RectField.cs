@@ -11,7 +11,7 @@ namespace UForms.Controls.Fields
     /// </summary>
     
 
-    [ExposeInDesigner( "Rect Field", "Fields" )]
+    [ExposeControl( "Rect Field", "Fields" )]
     public class RectField : AbstractField< Rect >
     {
         /// <summary>
@@ -30,12 +30,16 @@ namespace UForms.Controls.Fields
             get { return true; }
         }
 
+
+        public RectField() : base() { }
+
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="value"></param>
         /// <param name="label"></param>
-        public RectField( Rect value = default(Rect), string label = "" ) : base( value, label )
+        public RectField( Rect value, string label ) : base( value, label )
         {
 
         }

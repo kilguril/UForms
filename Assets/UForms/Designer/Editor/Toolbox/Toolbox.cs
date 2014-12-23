@@ -8,25 +8,27 @@ using UForms.Controls;
 using UForms.Controls.Extended;
 using UForms.Decorators;
 
-using CachedControl = UForms.Designer.Toolbox.ToolboxControlCache.CachedControl;
+using CachedControl = UForms.Designer.ToolboxControlCache.CachedControl;
+using System;
 
-namespace UForms.Designer.Toolbox
+namespace UForms.Designer
 {
     public class Toolbox : UFormsApplication
     {
         private const float CONTROL_DISPLAY_HEIGHT = 22.0f;
 
-
-        [MenuItem( "UForms Designer/Test Toolbox" )]
-        private static void Run()
-        {
-            EditorWindow.GetWindow<Toolbox>();
-        }
-
         private ToolboxControlCache                     m_controlsCache;
         private Control                                 m_root;
 
-        private Dictionary< Button, CachedControl >     m_buttonMapping;        // Maps button to underlying cached control infomation
+        private Dictionary< Button, CachedControl >     m_buttonMapping;        // Maps button to underlying cached control infomation        
+
+        private UFormsDesigner                          m_designer;
+
+
+        public void SetDesignerContext( UFormsDesigner designer )
+        {
+            m_designer = designer;
+        }
 
         protected override void OnInitialize()
         {
@@ -66,6 +68,7 @@ namespace UForms.Designer.Toolbox
             AddChild( m_root );
         }
 
+
         void HandleControlButtonClick( Events.IClickable sender, Events.ClickEventArgs args, Event nativeEvent )
         {
             if ( sender is Button )
@@ -74,7 +77,8 @@ namespace UForms.Designer.Toolbox
 
                 if ( m_buttonMapping.ContainsKey( key ) )
                 {
-                    Debug.Log( "FOUND!!! " + m_buttonMapping[ key ].name );
+                    Type type = m_buttonMapping[ key ].type;
+                    m_designer.AddChildControl( type );
                 }
             }
         }

@@ -59,6 +59,7 @@ namespace UForms.Controls
         /// Dirty flag should be used to trigger a repaint on internal component changes, as otherwise repaint will only be invoked by specific editor events
         /// flag will propagate upwards and will be collected by the application from the root component if it reaches it.
         /// </summary>
+        [HideInInspector]
         public bool Dirty
         {
             get { return m_dirty; }
@@ -85,8 +86,19 @@ namespace UForms.Controls
         private uint m_dirtyFrame;
 
         /// <summary>
+        /// This field was added for use with the designer to avoid the need to create additional metadata. It is not used anywhere else currently
+        /// </summary>
+        
+        public string Id
+        {
+            get;
+            set; 
+        }
+
+        /// <summary>
         /// I honestly don't remember what this one does...
         /// </summary>
+        [HideInInspector]
         public Rect Bounds        
         {
             get             { return m_bounds; }
@@ -96,6 +108,7 @@ namespace UForms.Controls
         /// <summary>
         /// Final computed screen rect taking into account screen position, margins and size
         /// </summary>
+        [HideInInspector]
         public Rect ScreenRect
         {
             get         { return m_screenRect; }
@@ -106,6 +119,7 @@ namespace UForms.Controls
         /// <summary>
         /// Since click coordinates are based on the current viewport, we will need to know the viewport offset in case of scrolling
         /// </summary>
+        [HideInInspector]
         public Vector2 ViewportOffset
         {
             get         { return m_container == null ? m_viewportOffset : m_container.ViewportOffset + m_viewportOffset; }
@@ -116,6 +130,7 @@ namespace UForms.Controls
         /// <summary>
         /// Cached parent's screen position so deep elements don't have to traverse all the way up
         /// </summary>
+        [HideInInspector]
         public Vector2 ParentScreenPosition         
         {
             get             { return m_screenPosition; } 
@@ -254,6 +269,7 @@ namespace UForms.Controls
         /// <summary>
         /// Panels should override this property to specify they reset the pivot offset to 0,0
         /// </summary>
+        [HideInInspector]
         public bool ResetPivotRoot
         {
             get;
@@ -263,6 +279,7 @@ namespace UForms.Controls
         /// <summary>
         /// Default size for this control
         /// </summary>
+        [HideInInspector]
         protected virtual Vector2 DefaultSize
         {
             get { return Vector2.zero; }
@@ -271,11 +288,13 @@ namespace UForms.Controls
         /// <summary>
         /// Contained children elements.               
         /// </summary>
+        [HideInInspector]
         public      List<Control>     Children      { get; private set; }         
 
         /// <summary>
         /// 
         /// </summary>
+        [HideInInspector]
         public      List<Decorator>   Decorators { get; private set; }
 
         /// <summary>
@@ -302,7 +321,7 @@ namespace UForms.Controls
         private     UFormsApplication m_application;
 
         private     List< int >       m_pendingRemoval;
-
+        private     Queue< Control >  m_pendingAddition;
 
         #region Other events
 
@@ -474,7 +493,8 @@ namespace UForms.Controls
 
             ResetPivotRoot = false;
 
-            m_pendingRemoval = new List<int>();
+            m_pendingRemoval  = new List<int>();
+            m_pendingAddition = new Queue<Control>();
 
 #if UFORMS_DEBUG_RECTS
             AddDecorator( new BackgroundColor( new Color( Random.value, Random.value, Random.value ) ) );
@@ -517,7 +537,7 @@ namespace UForms.Controls
             child.m_container = this;
             child.SetApplicationContext( m_application );
 
-            Children.Add( child );
+            m_pendingAddition.Enqueue( child );
 
             return child;
         }
@@ -758,7 +778,18 @@ namespace UForms.Controls
 
                 m_pendingRemoval.Clear();
             }
-            
+
+            while ( m_pendingAddition.Count > 0 )
+            {
+                Control child = m_pendingAddition.Dequeue();
+
+                if ( child.Dirty )
+                {
+                    Dirty = true;
+                }
+
+                Children.Add( child );
+            }
 
             OnUpdate();
 

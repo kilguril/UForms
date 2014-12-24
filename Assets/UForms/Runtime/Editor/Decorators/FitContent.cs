@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UForms.Controls;
+using UForms.Attributes;
 
 namespace UForms.Decorators
 {
     /// <summary>
     /// This decorator resizes the control to match the size of the contained content.
     /// </summary>
+    /// 
+    [ExposeControl( "Fit Content", "Decorators" )]
     public class FitContent : Decorator
     {
         /// <summary>

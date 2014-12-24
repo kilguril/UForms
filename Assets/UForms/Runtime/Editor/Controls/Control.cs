@@ -815,25 +815,37 @@ namespace UForms.Controls
             else
             {
                 ParentScreenPosition = m_container.ParentScreenPosition + m_container.Position + m_container.MarginLeftTop;
-            }            
+            }
 
-            ScreenRect = new Rect(
-                ParentScreenPosition.x 
-                + ( PositionXUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( Position.x / 100.0f ) : Position.x )
-                + ( MarginLeftUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginLeftTop.x / 100.0f ) : MarginLeftTop.x ),
+            if ( m_container != null )
+            {
+                ScreenRect = new Rect(
+                    ParentScreenPosition.x
+                    + ( PositionXUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( Position.x / 100.0f ) : Position.x )
+                    + ( MarginLeftUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginLeftTop.x / 100.0f ) : MarginLeftTop.x ),
 
-                ParentScreenPosition.y
-                + ( PositionYUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( Position.y / 100.0f ) : Position.y )
-                + ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y ),
+                    ParentScreenPosition.y
+                    + ( PositionYUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( Position.y / 100.0f ) : Position.y )
+                    + ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y ),
 
-                ( WidthUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( Size.x / 100.0f ) : Size.x )
-                - ( MarginLeftUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginLeftTop.x / 100.0f ) : MarginLeftTop.x )
-                - ( MarginRightUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginRightBottom.x / 100.0f ) : MarginRightBottom.x ),
+                    ( WidthUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( Size.x / 100.0f ) : Size.x )
+                    - ( MarginLeftUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginLeftTop.x / 100.0f ) : MarginLeftTop.x )
+                    - ( MarginRightUnits == MetricsUnits.Percentage ? m_container.ScreenRect.width * ( MarginRightBottom.x / 100.0f ) : MarginRightBottom.x ),
 
-                ( HeightUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( Size.y / 100.0f ) : Size.y )
-                - ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y )
-                - ( MarginBottomUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginRightBottom.y / 100.0f ) : MarginRightBottom.y )
-            );
+                    ( HeightUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( Size.y / 100.0f ) : Size.y )
+                    - ( MarginTopUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginLeftTop.y / 100.0f ) : MarginLeftTop.y )
+                    - ( MarginBottomUnits == MetricsUnits.Percentage ? m_container.ScreenRect.height * ( MarginRightBottom.y / 100.0f ) : MarginRightBottom.y )
+                );
+            }
+            else
+            {
+                ScreenRect = new Rect(
+                    Position.x + MarginLeftTop.x,
+                    Position.y + MarginLeftTop.y,
+                    Size.x - MarginLeftTop.x - MarginRightBottom.x,
+                    Size.y - MarginLeftTop.y - MarginRightBottom.y
+                );
+            }
 
             foreach ( Decorator decorator in Decorators )
             {

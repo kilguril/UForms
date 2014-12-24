@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UForms.Controls;
+using UForms.Attributes;
 
 namespace UForms.Decorators
 {
     /// <summary>
     /// This decorator attempts to stack all the contents of this control in a predefined manner.
     /// </summary>
+    /// 
+    [ExposeControl( "Stack Content", "Decorators" )]
     public class StackContent : Decorator
     {
         /// <summary>

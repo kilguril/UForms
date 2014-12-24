@@ -17,11 +17,10 @@ namespace UForms.Designer
 
         private static readonly Dictionary< string, MenuOption > OPTIONS = new Dictionary<string, MenuOption>()
         {
-            { "New",             MenuOption.New      },
+            { "New",             MenuOption.New             },
             { "Load",            MenuOption.Load            },
             { "Save",            MenuOption.Save            },
             { "Show Toolbox",    MenuOption.ShowToolbox     },
-            { "Show Inspector",  MenuOption.ShowInspector   }
         };
 
 
@@ -31,14 +30,13 @@ namespace UForms.Designer
             Load,
             Save,
             ShowToolbox,
-            ShowInspector
         }
 
 
         private Dictionary< Button, MenuOption > m_menuOptions;
 
         public DesignerTopMenu()
-        {            
+        {
             AddDecorator( new StackContent( StackContent.StackMode.Horizontal, StackContent.OverflowMode.Flow ) );
 
             m_menuOptions = new Dictionary<Button, MenuOption>();
@@ -46,7 +44,7 @@ namespace UForms.Designer
             foreach( string key in OPTIONS.Keys )
             {
                 Button button = new Button( key );
-                button.SetHeight( 100.0f, MetricsUnits.Percentage );
+                button.SetHeight( 95.0f, MetricsUnits.Percentage );
                 button.Clicked += HandleOptionSelected;
 
                 m_menuOptions.Add( button, OPTIONS[ key ] );

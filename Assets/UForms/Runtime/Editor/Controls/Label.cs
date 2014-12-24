@@ -46,7 +46,7 @@ namespace UForms.Controls
         /// </summary>
         /// <param name="text"></param>
         /// <param name="selectable"></param>
-        public Label( string text = "", bool selectable = false ) : base()
+        public Label( string text, bool selectable = false ) : base()
         {
             Text = text;
             Selectable = selectable;

@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UForms.Controls;
+using UForms.Attributes;
 
 namespace UForms.Decorators
 {
     /// <summary>
     /// This decorator adds scrollbars to a control if it is too small to contain all of it's children.
     /// </summary>
+    
+    [ExposeControl( "Scrollbars", "Decorators" )]
     public class Scrollbars : Decorator
     {
         /// <summary>

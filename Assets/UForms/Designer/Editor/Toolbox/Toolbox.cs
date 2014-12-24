@@ -78,7 +78,15 @@ namespace UForms.Designer
                 if ( m_buttonMapping.ContainsKey( key ) )
                 {
                     Type type = m_buttonMapping[ key ].type;
-                    m_designer.AddChildControl( type );
+                    
+                    if ( m_buttonMapping[ key ].decorator )
+                    {
+                        m_designer.AddChildDecorator( type );
+                    }
+                    else
+                    {
+                        m_designer.AddChildControl( type );
+                    }
                 }
             }
         }

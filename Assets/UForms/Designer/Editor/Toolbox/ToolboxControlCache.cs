@@ -7,6 +7,7 @@ using UForms.Attributes;
 using UForms.Controls;
 
 using UnityEngine;
+using UForms.Decorators;
 
 namespace UForms.Designer
 {
@@ -18,6 +19,7 @@ namespace UForms.Designer
             public Type     type;
             public string   name;
             public string   category;
+            public bool     decorator;
         }
 
 
@@ -45,7 +47,7 @@ namespace UForms.Designer
 
             foreach ( Type t in types )
             {
-                if ( t.IsSubclassOf( typeof( Control ) ) )
+                if ( t.IsSubclassOf( typeof( Control ) ) || t.IsSubclassOf( typeof( Decorator ) ) )
                 {
                     object[] attribs = t.GetCustomAttributes( typeof( ExposeControlAttribute ), false );
                     
@@ -62,9 +64,10 @@ namespace UForms.Designer
         {
             CachedControl control;
 
-            control.type     = type;
-            control.name     = attrib.displayName;
-            control.category = attrib.groupCategory;
+            control.type      = type;
+            control.name      = attrib.displayName;
+            control.category  = attrib.groupCategory;
+            control.decorator = type.IsSubclassOf( typeof( Decorator ) );
 
             m_cachedControls.Add( control );
 

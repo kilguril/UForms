@@ -4,12 +4,15 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UForms.Controls;
+using UForms.Attributes;
 
 namespace UForms.Decorators
 {
     /// <summary>
     /// This decorator paint's the controls bounding screen rectangle with a solid color. Useful mainly for debugging.
     /// </summary>
+
+    [ExposeControl( "Background Color", "Decorators" )]
     public class BackgroundColor : Decorator
     {
         /// <summary>

@@ -41,7 +41,7 @@ namespace UForms.Controls
         /// </summary>
         /// <param name="text"></param>
         /// <param name="progress"></param>
-        public ProgressBar( string text = "", float progress = 0.0f ) : base()
+        public ProgressBar( string text, float progress = 0.0f ) : base()
         {
             Text     = text;
             Progress = progress;

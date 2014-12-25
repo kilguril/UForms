@@ -42,7 +42,7 @@ namespace UForms.Controls
         /// </summary>
         /// <param name="text"></param>
         /// <param name="type"></param>
-        public HelpBox( string text = "", MessageType type = MessageType.None ) : base()
+        public HelpBox( string text, MessageType type = MessageType.None ) : base()
         {
             Text = text;
             Type = type;

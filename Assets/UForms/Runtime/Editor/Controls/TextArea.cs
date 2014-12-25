@@ -40,7 +40,7 @@ namespace UForms.Controls
         /// 
         /// </summary>
         /// <param name="value"></param>
-        public TextArea( string value = "" ) : base( value, null )
+        public TextArea( string value ) : base( value, null )
         {
         }
 

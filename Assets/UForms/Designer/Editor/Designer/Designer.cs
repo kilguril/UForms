@@ -14,6 +14,7 @@ using UForms.Controls.Dropdowns;
 using UForms.Events;
 using System.Text.RegularExpressions;
 using System.Reflection;
+using System.IO;
 
 namespace UForms.Designer
 {
@@ -32,6 +33,8 @@ namespace UForms.Designer
             EditorWindow.GetWindow<UFormsDesigner>();
         }
 
+        private UFormsCodeGenerator m_generator;
+
         private DesignerTopMenu     m_menu;
         private Control             m_workarea;
         private Control             m_inspector;
@@ -48,7 +51,7 @@ namespace UForms.Designer
         private bool                m_dragging;
         private bool                m_pixelSnap;
 
-        private Dictionary< object, PropertyInfo > m_inspectorFields;
+        private Dictionary< object, PropertyInfo >   m_inspectorFields;
         private Dictionary< Control, HierarchyItem > m_hierarchyItems;
 
         private Vector2             m_viewportOffset = new Vector2( HIERARCHY_WIDTH, CONTROL_DISPLAY_HEIGHT );
@@ -153,7 +156,9 @@ namespace UForms.Designer
 
 
         protected override void OnInitialize()
-        {            
+        {
+            m_generator = new UFormsCodeGenerator();
+
             title = "Control Designer";
             
             m_menu = new DesignerTopMenu();
@@ -354,6 +359,41 @@ namespace UForms.Designer
             if ( m_toolbox != null )
             {
                 m_toolbox.Close();
+            }
+        }
+
+
+        private void SaveControl()
+        {
+            if ( m_root != null )
+            {                
+                if ( m_generator.ValidateIDs( m_root ) )
+                {
+                    string path = "";
+                    path = EditorUtility.SaveFilePanel( "Save Control", UnityEngine.Application.dataPath + "/Assets/", "", "cs" );
+
+                    // Skip path validation for now because it's a serious pain in the ass
+                    if ( !string.IsNullOrEmpty( path ) )
+                    {
+                        string layoutPath = m_generator.GenerateLayoutPath( path );
+                        string layout     = m_generator.GenerateLayout( m_root );
+                        string userCode   = m_generator.GenerateUseCode( m_root );
+
+                        if ( File.Exists( layoutPath ) )
+                        {
+                            File.Delete( layoutPath );
+                        }
+
+                        File.WriteAllText( layoutPath, layout );
+
+                        if ( !File.Exists( path ) )
+                        {
+                            File.WriteAllText( path, userCode );
+                        }
+
+                        AssetDatabase.Refresh();
+                    }
+                }
             }
         }
 
@@ -582,6 +622,10 @@ namespace UForms.Designer
 
                 case DesignerTopMenu.MenuOption.New:
                     NewControl();
+                break;
+
+                case DesignerTopMenu.MenuOption.Save:
+                    SaveControl();
                 break;
             }
         }

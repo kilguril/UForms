@@ -51,7 +51,7 @@ namespace UForms.Controls.Sliders
         /// <param name="rightValue"></param>
         /// <param name="label"></param>
         /// <param name="value"></param>
-        public IntSlider( int leftValue = 0, int rightValue = 0, string label = "", int value = 0 ) : base( value, label )
+        public IntSlider( int leftValue, int rightValue, string label = "", int value = 0 ) : base( value, label )
         {
             LeftValue   = leftValue;
             RightValue  = rightValue;

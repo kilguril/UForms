@@ -60,7 +60,7 @@ namespace UForms.Controls.Sliders
         /// <param name="minvalue"></param>
         /// <param name="maxValue"></param>
         /// <param name="label"></param>
-        public MinMaxSlider( float minLimit = 0, float maxLimit = 0, float minvalue = 0, float maxValue = 0, string label = "" ) : base( null, label )
+        public MinMaxSlider( float minLimit, float maxLimit, float minvalue, float maxValue, string label = "" ) : base( null, label )
         {
             m_cachedValue = new float[ 2 ]
             {

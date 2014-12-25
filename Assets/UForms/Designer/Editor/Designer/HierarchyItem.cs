@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using UForms.Controls;
 using UForms.Controls.Fields;
 using UForms.Decorators;
+using System;
 
 
 namespace UForms.Designer
@@ -66,9 +67,20 @@ namespace UForms.Designer
 
 
             int i = 0;
+            int count = 0;
+
+            Control c = (Control)Activator.CreateInstance( control.GetType() );
+            int builtinDecorators = c.Decorators.Count;
             
             foreach ( Decorator d in control.Decorators )
             {
+                count++;
+
+                if ( count <= builtinDecorators )
+                {
+                    continue;
+                }
+
                 DecoratorItem item = new DecoratorItem( d );
                 AddChild( item );
 

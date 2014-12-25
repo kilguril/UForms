@@ -47,7 +47,7 @@ namespace UForms.Controls
         /// <param name="label"></param>
         /// <param name="value"></param>
         /// <param name="labelOnRight"></param>
-        public Toggle( string label = "", bool value = false, bool labelOnRight = true ) : base( value, label )
+        public Toggle( string label, bool value = false, bool labelOnRight = true ) : base( value, label )
         {
             LabelOnRight = labelOnRight;
         }

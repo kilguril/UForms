@@ -51,7 +51,7 @@ namespace UForms.Controls.Sliders
         /// <param name="rightValue"></param>
         /// <param name="label"></param>
         /// <param name="value"></param>
-        public FloatSlider( float leftValue = 0, float rightValue = 0, string label = "", float value = 0 ) : base( value, label )
+        public FloatSlider( float leftValue, float rightValue, string label = "", float value = 0 ) : base( value, label )
         {
             LeftValue   = leftValue;
             RightValue  = rightValue;

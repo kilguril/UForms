@@ -50,7 +50,7 @@ namespace UForms.Controls
         /// 
         /// </summary>
         /// <param name="text"></param>
-        public Button( string text = "" ) : base()
+        public Button( string text ) : base()
         {
             Text = text;
         }
